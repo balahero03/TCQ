@@ -1,0 +1,27 @@
+/* TCQ Landing Page Styles */
+
+main {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Responsive grid collapse */
+@media (max-width: 768px) {
+  section > div > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Timeline horizontal scroll */
+.timeline-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(240,234,226,0.3) transparent;
+}
+.timeline-scroll::-webkit-scrollbar {
+  height: 3px;
+}
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background: rgba(240,234,226,0.3);
+  border-radius: 2px;
+}
