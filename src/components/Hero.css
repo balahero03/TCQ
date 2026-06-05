@@ -1,0 +1,276 @@
+/* Hero.css */
+
+.hero-section {
+  min-height: 100vh;
+  background-color: #F7EAEB;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  color: #1F090C;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-divider {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: rgba(31, 9, 12, 0.1);
+  z-index: 1;
+}
+
+.hero-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  padding: 0 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-logo {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  height: 60px;
+  width: auto;
+  display: block;
+  filter: brightness(0);
+  pointer-events: none;
+}
+
+.hero-nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.hero-main {
+  flex: 1;
+  display: flex;
+  position: relative;
+  z-index: 10;
+  padding: 0 40px;
+  flex-direction: row;
+}
+
+.hero-left-column {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  padding-top: 80px;
+  padding-right: 20px;
+}
+
+.hero-typography-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.hero-heading {
+  margin: 0;
+  color: #1F090C;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero-text-wrapper {
+  margin-top: 1.5rem;
+  max-width: 500px;
+}
+
+.hero-paragraph {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.6;
+  font-weight: 400;
+  color: #383B3D;
+  margin: 0;
+}
+
+.hero-button-container {
+  display: flex;
+  gap: 16px;
+  margin-top: 2rem;
+}
+
+.explore-button {
+  background-color: #1F090C;
+  color: #FFFFFF;
+  padding: 14px 28px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.explore-button:hover {
+  background-color: #383B3D;
+}
+
+.hero-right-column {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.quiz-card-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+}
+
+.quiz-card-inner {
+  position: relative;
+  z-index: 3;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(31, 9, 12, 0.12);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 24px 48px rgba(31, 9, 12, 0.06);
+  display: flex;
+  flex-direction: column;
+  height: 620px;
+}
+
+/* Mobile Menu Styles */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1F090C;
+  z-index: 60;
+  padding: 8px;
+  margin-left: auto;
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #F7EAEB;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+.mobile-menu-link {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #1F090C;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ══════════════════════════════════
+   RESPONSIVE MEDIA QUERIES
+  ══════════════════════════════════ */
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .hero-main {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+
+  .hero-left-column {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    padding-top: 40px;
+    padding-right: 0;
+  }
+
+  .hero-right-column {
+    padding: 40px 0;
+  }
+
+  .hero-typography-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .hero-header {
+    padding: 0 20px;
+    height: 80px;
+  }
+
+  .hero-divider {
+    top: 80px;
+  }
+
+  .hero-logo {
+    top: 16px;
+    left: 16px;
+    height: 48px;
+    z-index: 60;
+  }
+
+  .hero-nav {
+    display: none;
+    /* Hide TrueFocus nav on mobile */
+  }
+
+  .mobile-menu-btn {
+    display: block;
+    /* Show hamburger button */
+  }
+
+  .hero-text-wrapper {
+    margin-top: 2rem;
+  }
+
+  .hero-paragraph {
+    font-size: 1.05rem;
+  }
+
+  .quiz-card-wrapper {
+    margin: 0 auto;
+  }
+
+  .quiz-card-inner {
+    padding: 24px;
+    height: auto;
+    min-height: 580px;
+    /* Let it be a bit more flexible on mobile */
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  .explore-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-button-container {
+    width: 100%;
+    padding: 0 20px;
+  }
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import IntroAnimation from './components/IntroAnimation';
 import Hero from './components/Hero';
 import WhatIsTCQ from './components/WhatIsTCQ';
@@ -8,14 +8,23 @@ import Contact from './components/Contact';
 import './App.css';
 
 function App() {
-  const [introComplete, setIntroComplete] = useState(false);
+  // showContent: render Hero behind the fading overlay as logo starts flying
+  const [showContent, setShowContent] = useState(false);
+  // logoLanded: flying logo has reached top-left → reveal Hero's own logo
+  const [logoLanded, setLogoLanded] = useState(false);
+
+  const handleStartFly = useCallback(() => setShowContent(true), []);
+  const handleLanded = useCallback(() => setLogoLanded(true), []);
 
   return (
     <>
-      <IntroAnimation onComplete={() => setIntroComplete(true)} />
-      {introComplete && (
+      <IntroAnimation
+        onStartFly={handleStartFly}
+        onLanded={handleLanded}
+      />
+      {showContent && (
         <main>
-          <Hero />
+          <Hero logoLanded={logoLanded} />
           <WhatIsTCQ />
           <WhoIsBehind />
           <Services />
