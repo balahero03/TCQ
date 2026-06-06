@@ -1,8 +1,12 @@
-import { useRef, useState } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence, useInView, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BlobCursor from './BlobCursor';
 import drVishnuImg from '../assets/dr_vishnu_aravind.jpg';
 import CardSwap, { Card } from './CardSwap';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const timeline = [
   { year: '2019', role: 'Red Bull', sub: 'Marketing Ambassador' },
@@ -12,6 +16,214 @@ const timeline = [
   { year: '2024', role: "R Ashwin's Youtube", sub: 'Content Team' },
   { year: '2025', role: 'Sri Ramachandra Hospital', sub: 'M.D. Preventive Medicine' },
 ];
+
+function OrganicTimeline() {
+  const pinRef = useRef(null);
+  const scrollContentRef = useRef(null);
+  const pathRef = useRef(null);
+  const nodesRef = useRef([]);
+
+  // Calculate layout parameters
+  const step = 100 / (timeline.length + 1); // vertical percentage spacing
+  
+  // Dynamically generate the smooth wavy SVG path and node coordinates
+  const { pathData, nodes } = useMemo(() => {
+    const d = [`M 50 0`];
+    const n = [];
+    
+    timeline.forEach((item, i) => {
+      const isNodeLeft = i % 2 === 0;
+      const x = isNodeLeft ? 30 : 70; // Left or Right peak (less extreme width)
+      const y = (i + 1) * step;
+      
+      const prevX = i === 0 ? 50 : (isNodeLeft ? 70 : 30);
+      const prevY = i === 0 ? 0 : i * step;
+      
+      // Smooth cubic bezier curve to next point
+      d.push(`C ${prevX} ${prevY + step/2}, ${x} ${y - step/2}, ${x} ${y}`);
+      n.push({ x, y, isNodeLeft, data: item });
+    });
+    
+    // Line exiting the bottom
+    const lastX = n[n.length - 1].x;
+    const lastY = n[n.length - 1].y;
+    d.push(`C ${lastX} ${lastY + step/2}, 50 ${lastY + step/2}, 50 100`);
+    
+    return { pathData: d.join(" "), nodes: n };
+  }, []);
+
+  useEffect(() => {
+    // GSAP Context for React 18 strict-mode safety
+    let ctx = gsap.context(() => {
+      const path = pathRef.current;
+      const length = path.getTotalLength();
+      
+      // Setup dash array for DrawSVG effect
+      gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+      
+      // Initial state for nodes and content to hide them before scroll
+      nodesRef.current.forEach(el => {
+        if (!el) return;
+        gsap.set(el.querySelector('.organic-node'), { scale: 0, opacity: 0 });
+        gsap.set(el.querySelector('.organic-content'), { opacity: 0, y: 30 });
+      });
+
+      // Master Timeline for ScrollTrigger
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinRef.current,
+          start: "top top",
+          end: `+=${timeline.length * 800}`, // Long scroll distance for scrubbing
+          scrub: true, // Direct tracking instead of 1s lag smoothing
+          pin: true, // Lock the screen while animating
+        }
+      });
+
+      // 1. Camera Pan: move the 220vh tall content up by 120vh so we reach the bottom perfectly
+      tl.to(scrollContentRef.current, { y: "-120vh", ease: "none", duration: 1 }, 0);
+
+      // 2. Draw the line down over the entire scroll duration
+      tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, 0);
+
+      // 3. Trigger node and content reveals exactly when the line reaches them
+      nodesRef.current.forEach((el, i) => {
+        if (!el) return;
+        const nodePoint = el.querySelector('.organic-node');
+        const content = el.querySelector('.organic-content');
+        
+        // Time on the timeline (0 to 1) matches the percentage position.
+        const progressTime = (i + 1) * step / 100;
+
+        // Pop the hand-drawn node
+        tl.to(nodePoint, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.08,
+          ease: "back.out(2)",
+        }, progressTime - 0.05);
+
+        // Drift and fade in the content
+        tl.to(content, {
+          opacity: 1,
+          y: 0,
+          duration: 0.12,
+          ease: "power2.out",
+        }, progressTime - 0.03);
+      });
+
+    }, pinRef);
+
+    return () => ctx.revert();
+  }, [nodes, step]);
+
+  return (
+    <div style={{ background: '#FFFFFF' }}>
+      <div ref={pinRef} style={{ width: '100%', height: '100vh', position: 'relative', overflow: 'hidden', fontFamily: "'Outfit', sans-serif" }}>
+        
+        {/* Scrolling Canvas (220vh gives HUGE gaps between nodes) */}
+        <div ref={scrollContentRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '220vh', willChange: 'transform' }}>
+          
+          {/* Title Header matching WhatIsTCQ style - now scrolls away naturally */}
+          <div style={{ position: 'absolute', top: '7vh', left: '5vw', zIndex: 3 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+              <div style={{ width: '2rem', height: '2px', background: '#8D424E' }} />
+              <div style={{ fontSize: '0.7rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#8D424E', fontWeight: 700 }}>
+                Journey
+              </div>
+            </div>
+            <div style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#1F090C', letterSpacing: '-0.04em', lineHeight: 1, textTransform: 'uppercase' }}>
+              A Timeline
+            </div>
+          </div>
+
+          {/* Dynamic Wavy SVG Background */}
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none' }}>
+            {/* Subtle background track */}
+            <path d={pathData} fill="none" stroke="rgba(141,66,78,0.1)" strokeWidth="0.5" />
+            
+            {/* Active animated stroke (vectorEffect removed for 10x performance boost) */}
+            <path 
+              ref={pathRef} 
+              d={pathData} 
+              fill="none" 
+              stroke="#8D424E" 
+              strokeWidth="1.5" 
+              strokeLinecap="round"
+            />
+          </svg>
+
+          {/* Nodes & Alternating Content Blocks */}
+          {nodes.map((node, i) => (
+            <div
+              key={i}
+              ref={el => nodesRef.current[i] = el}
+              style={{
+                position: 'absolute',
+                top: `${node.y}%`,
+                left: 0,
+                width: '100%',
+                zIndex: 2,
+              }}
+            >
+              {/* Central Organic Node */}
+              <div
+                className="organic-node"
+                style={{
+                  position: 'absolute',
+                  left: `${node.x}%`,
+                  transform: 'translate(-50%, -50%)',
+                  width: 100,
+                  height: 60,
+                  background: '#8D424E',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#FFFFFF',
+                  fontWeight: 800,
+                  fontSize: '1.2rem',
+                  letterSpacing: '0.05em',
+                  // Hand-drawn morphing oval shape
+                  borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%',
+                  // Removed box shadow for pure performance
+                }}
+              >
+                {node.data.year}
+              </div>
+
+              {/* Alternating Content Block */}
+              <div
+                className="organic-content"
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  // Switch sides based on node position
+                  left: node.isNodeLeft ? `${node.x + 8}%` : 'auto',
+                  right: !node.isNodeLeft ? `${100 - node.x + 8}%` : 'auto',
+                  width: 'clamp(280px, 35vw, 420px)',
+                  padding: '2.5rem',
+                  background: '#FFFFFF',
+                  borderRadius: 24,
+                  border: '1px solid rgba(31,9,12,0.1)',
+                  // Removed box shadow for pure performance
+                  zIndex: 10,
+                }}
+              >
+                <h3 style={{ fontSize: 'clamp(1.5rem, 2vw, 2rem)', color: '#1F090C', marginBottom: '0.6rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                  {node.data.role}
+                </h3>
+                <div style={{ width: 40, height: 3, background: '#8D424E', marginBottom: '1rem', borderRadius: 2 }} />
+                <p style={{ color: '#383B3D', fontSize: 'clamp(0.95rem, 1.3vw, 1.1rem)', lineHeight: 1.75, margin: 0 }}>
+                  {node.data.sub}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function WhoIsBehind() {
   const trackRef = useRef(null);
@@ -217,92 +429,8 @@ export default function WhoIsBehind() {
         </div>
       </div>
 
-      {/* Horizontal scrolling timeline */}
-      <div style={{ position: 'relative', zIndex: 1, background: '#1F090C', padding: '60px 0', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 6vw', marginBottom: '2rem' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.6 }}
-            style={{ fontSize: '0.7rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}
-          >
-            Journey
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}
-          >
-            A Timeline
-          </motion.div>
-        </div>
-
-        {/* Timeline track */}
-        <div style={{ overflowX: 'auto', paddingBottom: '20px' }} className="timeline-scroll">
-          <motion.div
-            ref={trackRef}
-            style={{ display: 'flex', gap: '0', padding: '0 6vw', width: 'max-content' }}
-          >
-            {timeline.map((item, i) => (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.1, margin: '-40px' }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                onHoverStart={() => setActiveIdx(i)}
-                onHoverEnd={() => setActiveIdx(null)}
-                style={{
-                  width: 200,
-                  flexShrink: 0,
-                  paddingRight: '3rem',
-                  borderRight: i < timeline.length - 1 ? '1px solid rgba(255,255,255,0.15)' : 'none',
-                  paddingLeft: i === 0 ? 0 : '3rem',
-                  cursor: 'default',
-                }}
-              >
-                {/* Year */}
-                <motion.div
-                  animate={{ color: activeIdx === i ? '#FFFFFF' : 'rgba(255,255,255,0.4)' }}
-                  style={{
-                    fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
-                    fontWeight: 900,
-                    letterSpacing: '-0.05em',
-                    lineHeight: 1,
-                    marginBottom: '1rem',
-                    fontFamily: 'Inter, sans-serif',
-                  }}
-                >
-                  {item.year}
-                </motion.div>
-
-                {/* Dot */}
-                <motion.div
-                  animate={{ background: activeIdx === i ? '#FFFFFF' : 'rgba(255,255,255,0.4)' }}
-                  style={{ width: 8, height: 8, borderRadius: '50%', marginBottom: '1rem' }}
-                />
-
-                {/* Role */}
-                <motion.div
-                  animate={{ opacity: activeIdx === i ? 1 : 0.7 }}
-                  style={{ fontWeight: 700, fontSize: '0.95rem', color: '#FFFFFF', lineHeight: 1.3, marginBottom: '4px' }}
-                >
-                  {item.role}
-                </motion.div>
-                <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.4 }}>
-                  {item.sub}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Timeline base line */}
-        <div style={{ maxWidth: 'calc(6 * 200px + 5 * 6rem)', margin: '1.5rem 6vw 0', height: '1px', background: 'rgba(255,255,255,0.15)' }} />
-      </div>
+      {/* GSAP Organic Timeline */}
+      <OrganicTimeline />
     </section>
   );
 }

@@ -4,6 +4,7 @@ import logoImg from '../assets/logo.png';
 import BlurText from './BlurText';
 import TrueFocus from './TrueFocus';
 import confetti from 'canvas-confetti';
+import BlobCursor from './BlobCursor';
 import './Hero.css'; // Responsive styles
 
 export default function Hero({ logoLanded }) {
@@ -15,6 +16,24 @@ export default function Hero({ logoLanded }) {
 
   return (
     <section ref={ref} className="hero-section">
+      <BlobCursor
+        blobType="circle"
+        fillColor="#FFFFFF"
+        trailCount={3}
+        sizes={[87, 60, 60]}
+        innerSizes={[100, 20, 20]}
+        innerColor="#FFFFFF"
+        opacities={[1, 1, 1]}
+        shadowColor="#FFFFFF"
+        shadowBlur={23}
+        shadowOffsetX={27}
+        shadowOffsetY={13}
+        filterStdDeviation={30}
+        useFilter={true}
+        fastDuration={0.1}
+        slowDuration={0.54}
+        zIndex={9999}
+      />
       {/* Clean Horizontal Rule for Header */}
       <div className="hero-divider" />
 
