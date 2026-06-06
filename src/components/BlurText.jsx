@@ -25,8 +25,14 @@ export default function BlurText({
   initialBlur = 'blur(12px)',
 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-50px' });
+  const inView = useInView(ref, { once: false, margin: '-50px' });
   const [completed, setCompleted] = useState(0);
+
+  useEffect(() => {
+    if (!inView) {
+      setCompleted(0);
+    }
+  }, [inView]);
 
   const tokens =
     animateBy === 'characters'

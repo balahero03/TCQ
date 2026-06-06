@@ -35,7 +35,8 @@ export default function Hero({ logoLanded }) {
         {/* Nav links (Desktop) */}
         <motion.nav
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           className="hero-nav"
         >
@@ -103,7 +104,8 @@ export default function Hero({ logoLanded }) {
         <div className="hero-left-column">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 0.8, delay: startDelay / 1000 }}
             className="hero-typography-container"
           >
@@ -143,7 +145,8 @@ export default function Hero({ logoLanded }) {
             <div className="hero-text-wrapper">
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ duration: 0.6, delay: (startDelay + 300) / 1000 }}
                 className="hero-paragraph"
               >
@@ -154,7 +157,8 @@ export default function Hero({ logoLanded }) {
             <div className="hero-button-container">
               <motion.button
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: false, amount: 0.1 }}
                 transition={{ delay: (startDelay + 400) / 1000, duration: 0.5 }}
                 className="explore-button"
               >
@@ -287,7 +291,8 @@ function QuizCard({ startDelay }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: false, amount: 0.1 }}
       transition={{ duration: 1, delay: (startDelay + 500) / 1000, ease: [0.16, 1, 0.3, 1] }}
       className="quiz-card-wrapper"
     >
