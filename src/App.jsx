@@ -3,7 +3,7 @@ import IntroAnimation from './components/IntroAnimation';
 import Hero from './components/Hero';
 import WhatIsTCQ from './components/WhatIsTCQ';
 import WhoIsBehind from './components/WhoIsBehind';
-import Services from './components/Services';
+import WhatWeDo from './components/WhatWeDo';
 import Contact from './components/Contact';
 import './App.css';
 
@@ -29,7 +29,7 @@ function App() {
           <Hero logoLanded={logoLanded} />
           <WhatIsTCQ />
           <WhoIsBehind />
-          <Services />
+          <WhatWeDo />
           <Contact />
         </main>
       )}

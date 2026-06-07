@@ -2,11 +2,12 @@ import { useRef, useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence, useInView, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import BlobCursor from './BlobCursor';
 import drVishnuImg from '../assets/dr_vishnu_aravind.jpg';
 import CardSwap, { Card } from './CardSwap';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const timeline = [
   { year: '2019', role: 'Red Bull', sub: 'Marketing Ambassador' },
@@ -21,27 +22,49 @@ function OrganicTimeline() {
   const pinRef = useRef(null);
   const scrollContentRef = useRef(null);
   const pathRef = useRef(null);
+  const runnerRef = useRef(null);
   const nodesRef = useRef([]);
 
   // Calculate layout parameters
   const step = 100 / (timeline.length + 1); // vertical percentage spacing
   
   // Dynamically generate the smooth wavy SVG path and node coordinates
-  const { pathData, nodes } = useMemo(() => {
+  const { pathData, nodes, decorations } = useMemo(() => {
     const d = [`M 50 0`];
     const n = [];
+    const decs = [];
     
     timeline.forEach((item, i) => {
       const isNodeLeft = i % 2 === 0;
-      const x = isNodeLeft ? 30 : 70; // Left or Right peak (less extreme width)
+      const x = isNodeLeft ? 25 : 75; // Increased width (wider path)
       const y = (i + 1) * step;
       
-      const prevX = i === 0 ? 50 : (isNodeLeft ? 70 : 30);
+      const prevX = i === 0 ? 50 : (isNodeLeft ? 75 : 25);
       const prevY = i === 0 ? 0 : i * step;
       
       // Smooth cubic bezier curve to next point
       d.push(`C ${prevX} ${prevY + step/2}, ${x} ${y - step/2}, ${x} ${y}`);
       n.push({ x, y, isNodeLeft, data: item });
+
+      // Deterministic pseudo-random generation for decorations
+      decs.push({
+        id: `circle-${i}`,
+        x: isNodeLeft ? x + 15 + (i * 1.5 % 5) : x - 15 - (i * 2.5 % 5),
+        y: y - step/2 + (i * 2 % 5),
+        size: 8 + (i * 3 % 8),
+        type: 'circle',
+        anim: i % 2 === 0 ? 'floatSlow' : 'floatFast',
+        delay: (i * 0.7) % 2
+      });
+      decs.push({
+        id: `shape-${i}`,
+        x: isNodeLeft ? x - 12 - (i * 3 % 10) : x + 12 + (i * 2 % 10),
+        y: y - step/4 + (i * 4 % 10),
+        size: 12 + (i * 5 % 6),
+        type: i % 2 === 0 ? 'plus' : 'star',
+        anim: i % 2 === 0 ? 'floatFast' : 'floatSlow',
+        delay: (i * 1.1) % 2
+      });
     });
     
     // Line exiting the bottom
@@ -49,8 +72,8 @@ function OrganicTimeline() {
     const lastY = n[n.length - 1].y;
     d.push(`C ${lastX} ${lastY + step/2}, 50 ${lastY + step/2}, 50 100`);
     
-    return { pathData: d.join(" "), nodes: n };
-  }, []);
+    return { pathData: d.join(" "), nodes: n, decorations: decs };
+  }, [step]);
 
   useEffect(() => {
     // GSAP Context for React 18 strict-mode safety
@@ -74,7 +97,7 @@ function OrganicTimeline() {
           trigger: pinRef.current,
           start: "top top",
           end: `+=${timeline.length * 800}`, // Long scroll distance for scrubbing
-          scrub: true, // Direct tracking instead of 1s lag smoothing
+          scrub: 0.5, // 0.5 gives a tight, extremely responsive but smoothed scroll feel
           pin: true, // Lock the screen while animating
         }
       });
@@ -85,31 +108,98 @@ function OrganicTimeline() {
       // 2. Draw the line down over the entire scroll duration
       tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, 0);
 
-      // 3. Trigger node and content reveals exactly when the line reaches them
+      // 3. Animate spacecraft along the path in sync with drawing
+      gsap.set(runnerRef.current, { opacity: 1 });
+      tl.to(runnerRef.current, {
+        motionPath: {
+          path: path,
+          align: path,
+          alignOrigin: [0.5, 0.5], // Center the spacecraft on the line
+          autoRotate: 90, // Points the nose of the upward-facing rocket down the path
+          start: 0,
+          end: 1,
+        },
+        ease: "none",
+        duration: 1,
+      }, 0);
+
+      // 4. Trigger node and content reveals exactly when the line reaches them
       nodesRef.current.forEach((el, i) => {
         if (!el) return;
         const nodePoint = el.querySelector('.organic-node');
         const content = el.querySelector('.organic-content');
+        const particles = el.querySelectorAll('.burst-particle');
         
         // Time on the timeline (0 to 1) matches the percentage position.
         const progressTime = (i + 1) * step / 100;
+
+        // Celebration Particle Burst!
+        if (particles.length > 0) {
+          tl.fromTo(particles, 
+            { opacity: 1, scale: 1.5, x: "-50%", y: "-50%" },
+            { 
+              opacity: 0, 
+              scale: 0.2,
+              x: (idx, target) => {
+                const angle = parseInt(target.getAttribute('data-angle'));
+                return `calc(-50% + ${Math.cos(angle * Math.PI / 180) * 50}px)`;
+              },
+              y: (idx, target) => {
+                const angle = parseInt(target.getAttribute('data-angle'));
+                return `calc(-50% + ${Math.sin(angle * Math.PI / 180) * 50}px)`;
+              },
+              ease: "power2.out", 
+              duration: 0.1 
+            }, 
+            progressTime - 0.02
+          );
+        }
 
         // Pop the hand-drawn node
         tl.to(nodePoint, {
           scale: 1,
           opacity: 1,
-          duration: 0.08,
           ease: "back.out(2)",
-        }, progressTime - 0.05);
+          duration: 0.05
+        }, progressTime - 0.02);
 
-        // Drift and fade in the content
+        // Slide in the content block
         tl.to(content, {
           opacity: 1,
           y: 0,
-          duration: 0.12,
-          ease: "power2.out",
-        }, progressTime - 0.03);
+          ease: "power3.out",
+          duration: 0.1
+        }, progressTime - 0.02);
       });
+
+      // 5. Final Cinematic U-Turn Fly-Off Sequence
+      // Break away, perform a swooping 180-degree U-turn, and blast off to the top-left
+      const ww = window.innerWidth;
+      const wh = window.innerHeight;
+
+      tl.to(runnerRef.current, {
+        motionPath: {
+          path: [
+            { x: `+=${ww * 0.10}`, y: `+=${wh * 0.15}` }, // Drop down and right (anticipation)
+            { x: `+=${ww * 0.30}`, y: `-=${wh * 0.10}` }, // Sweep wide to the right and turn up
+            { x: 0,                y: `-=${wh * 0.50}` }, // Cross back over the center
+            { x: `-=${ww * 1.5}`,  y: `-=${wh * 1.5}` }   // Warp speed out top-left
+          ],
+          curviness: 1.5,
+          autoRotate: 90 // Seamlessly tracks the 180-degree curve
+        },
+        scale: 150, // Massive cinematic scale
+        filter: "blur(20px)", // Realistic motion blur
+        ease: "power4.in", // Smooth entry, extreme exit velocity
+        duration: 0.45 // Cinematic duration
+      }, ">");
+
+      // Fade out at the absolute last moment
+      tl.to(runnerRef.current, {
+        opacity: 0,
+        ease: "power2.in",
+        duration: 0.05
+      }, "<0.40");
 
     }, pinRef);
 
@@ -137,20 +227,70 @@ function OrganicTimeline() {
           </div>
 
           {/* Dynamic Wavy SVG Background */}
+          {/* Removed SVG filter: drop-shadow for massive performance boost and stutter elimination */}
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none' }}>
             {/* Subtle background track */}
-            <path d={pathData} fill="none" stroke="rgba(141,66,78,0.1)" strokeWidth="0.5" />
+            <path d={pathData} fill="none" stroke="rgba(141,66,78,0.1)" strokeWidth="0.3" />
             
-            {/* Active animated stroke (vectorEffect removed for 10x performance boost) */}
+            {/* Decorative dashed background track (Widened dashes dramatically to eliminate GPU rendering lag) */}
+            <path d={pathData} fill="none" stroke="rgba(141,66,78,0.1)" strokeWidth="0.2" strokeDasharray="16 24" transform="translate(1.5, 0)" />
+
+            {/* Active animated stroke (Hardware Accelerated) */}
             <path 
               ref={pathRef} 
               d={pathData} 
               fill="none" 
               stroke="#8D424E" 
-              strokeWidth="1.5" 
+              strokeWidth="0.8" 
               strokeLinecap="round"
+              style={{ willChange: 'stroke-dashoffset, stroke-dasharray' }}
             />
           </svg>
+
+          {/* 3D Spacecraft traveling along the path */}
+          <div 
+            ref={runnerRef} 
+            style={{ 
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              width: '36px', 
+              height: '36px',
+              zIndex: 30,
+              opacity: 0,
+              pointerEvents: 'none',
+              transform: 'translate(-50%, -50%)',
+              willChange: 'transform' // Forces GPU acceleration
+            }}
+          >
+            <svg viewBox="0 0 32 32" width="100%" height="100%" style={{ overflow: 'visible' }}>
+              {/* Spacecraft drop shadow */}
+              <ellipse cx="16" cy="18" rx="8" ry="12" fill="rgba(141,66,78,0.25)" />
+              {/* Glow */}
+              <ellipse cx="16" cy="16" rx="14" ry="14" fill="rgba(141,66,78,0.15)" />
+              
+              {/* Animated Engine Flame */}
+              <g className="rocket-flame" style={{ transformOrigin: "16px 26px" }}>
+                 <path d="M 12 26 C 12 26 16 36 20 26 Z" fill="#E67E22" />
+                 <path d="M 14 26 C 14 26 16 32 18 26 Z" fill="#F1C40F" />
+              </g>
+
+              {/* Spacecraft Body */}
+              <path d="M 16 2 C 16 2 24 10 24 20 C 24 26 16 28 16 28 C 16 28 8 26 8 20 C 8 10 16 2 16 2 Z" fill="#1F090C" />
+              
+              {/* Left Fin */}
+              <path d="M 8 20 L 2 28 L 10 25 Z" fill="#8D424E" stroke="#1F090C" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              {/* Right Fin */}
+              <path d="M 24 20 L 30 28 L 22 25 Z" fill="#8D424E" stroke="#1F090C" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              
+              {/* Window */}
+              <circle cx="16" cy="14" r="3.5" fill="#FFFFFF" />
+              <circle cx="16" cy="14" r="2" fill="rgba(141,66,78,0.4)" />
+              
+              {/* Nose cone tip */}
+              <path d="M 16 2 L 14 7 Q 16 8 18 7 Z" fill="#8D424E" />
+            </svg>
+          </div>
 
           {/* Nodes & Alternating Content Blocks */}
           {nodes.map((node, i) => (
@@ -165,29 +305,35 @@ function OrganicTimeline() {
                 zIndex: 2,
               }}
             >
-              {/* Central Organic Node */}
+              {/* Central Year Node - Sleek Pill Badge */}
               <div
                 className="organic-node"
                 style={{
                   position: 'absolute',
                   left: `${node.x}%`,
                   transform: 'translate(-50%, -50%)',
-                  width: 100,
-                  height: 60,
-                  background: '#8D424E',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#FFFFFF',
-                  fontWeight: 800,
-                  fontSize: '1.2rem',
-                  letterSpacing: '0.05em',
-                  // Hand-drawn morphing oval shape
-                  borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%',
-                  // Removed box shadow for pure performance
+                  zIndex: 20,
                 }}
               >
-                {node.data.year}
+                <div className="organic-node-container" style={{ transform: node.isNodeLeft ? 'translateX(-50%)' : 'translateX(50%)' }}>
+                  <div className="organic-node">
+                    {/* Particle Burst Celebration */}
+                    <div className="burst-particle" data-angle="0" />
+                    <div className="burst-particle" data-angle="45" />
+                    <div className="burst-particle" data-angle="90" />
+                    <div className="burst-particle" data-angle="135" />
+                    <div className="burst-particle" data-angle="180" />
+                    <div className="burst-particle" data-angle="225" />
+                    <div className="burst-particle" data-angle="270" />
+                    <div className="burst-particle" data-angle="315" />
+                    
+                    <div className="year-pill">
+                      <span className="year-pill-dot" />
+                      <span className="year-pill-text">{node.data.year}</span>
+                      <span className="year-pill-dot" />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Alternating Content Block */}
@@ -196,26 +342,38 @@ function OrganicTimeline() {
                 style={{
                   position: 'absolute',
                   top: '50%',
-                  transform: 'translateY(-50%)',
-                  // Switch sides based on node position
+                  // Switch sides based on node position - closer gap to path
                   left: node.isNodeLeft ? `${node.x + 8}%` : 'auto',
                   right: !node.isNodeLeft ? `${100 - node.x + 8}%` : 'auto',
                   width: 'clamp(280px, 35vw, 420px)',
-                  padding: '2.5rem',
-                  background: '#FFFFFF',
-                  borderRadius: 24,
-                  border: '1px solid rgba(31,9,12,0.1)',
-                  // Removed box shadow for pure performance
                   zIndex: 10,
                 }}
               >
-                <h3 style={{ fontSize: 'clamp(1.5rem, 2vw, 2rem)', color: '#1F090C', marginBottom: '0.6rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                  {node.data.role}
-                </h3>
-                <div style={{ width: 40, height: 3, background: '#8D424E', marginBottom: '1rem', borderRadius: 2 }} />
-                <p style={{ color: '#383B3D', fontSize: 'clamp(0.95rem, 1.3vw, 1.1rem)', lineHeight: 1.75, margin: 0 }}>
-                  {node.data.sub}
-                </p>
+                <div className="content-inner">
+                  {/* Bold Year Number Accent */}
+                  <div style={{
+                    fontSize: 'clamp(3rem, 5vw, 4.5rem)',
+                    fontWeight: 900,
+                    background: 'linear-gradient(135deg, #8D424E 30%, #d27786 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    lineHeight: 1,
+                    letterSpacing: '-0.04em',
+                    marginBottom: '0.5rem',
+                    fontFamily: "'Outfit', sans-serif",
+                  }}>
+                    {node.data.year}
+                  </div>
+
+                  <h3 style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', color: '#1F090C', marginBottom: '0.6rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+                    {node.data.role}
+                  </h3>
+                  <div style={{ width: 40, height: 3, background: 'linear-gradient(90deg, #8D424E, #d27786)', marginBottom: '0.8rem', borderRadius: 2 }} />
+                  <p style={{ color: '#666', fontSize: 'clamp(0.85rem, 1.2vw, 1rem)', lineHeight: 1.7, margin: 0 }}>
+                    {node.data.sub}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
@@ -324,15 +482,96 @@ export default function WhoIsBehind() {
             margin-top: 1rem;
           }
         }
-      `}</style>
 
-      <BlobCursor
-        blobType="circle"
-        fillColor="rgba(141, 66, 78, 0.08)"
-        innerColor="rgba(141, 66, 78, 0.15)"
-        shadowColor="rgba(141, 66, 78, 0.1)"
-        zIndex={0}
-      />
+        /* New Joyful Timeline Styles */
+        @keyframes floatSlow {
+          0% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(10deg); }
+          100% { transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes floatFast {
+          0% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-25px) rotate(-15deg); }
+          100% { transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes pillPulse {
+          0% { box-shadow: 0 0 0 0 rgba(141,66,78,0.3); }
+          100% { box-shadow: 0 0 0 8px rgba(141,66,78,0); }
+        }
+        .joy-bg-el {
+          position: absolute;
+          pointer-events: none;
+          z-index: 1;
+        }
+        .content-inner {
+          padding: 2.5rem;
+          background: rgba(255, 255, 255, 0.98); /* Less transparency, removed backdrop-filter for scroll performance */
+          border-radius: 24px;
+          border: 1px solid rgba(141,66,78,0.15);
+          box-shadow: 0 12px 30px rgba(141, 66, 78, 0.08);
+          transform: translateY(-50%);
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          position: relative;
+          overflow: hidden;
+          cursor: default;
+        }
+        .content-inner:hover {
+          transform: translateY(-52%) scale(1.03);
+          box-shadow: 0 20px 40px rgba(141, 66, 78, 0.15);
+          border-color: rgba(141, 66, 78, 0.4);
+        }
+        .year-pill {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 16px;
+          background: #1F090C;
+          border-radius: 40px;
+          border: 1.5px solid rgba(141,66,78,0.5);
+          box-shadow: 0 4px 16px rgba(141,66,78,0.25);
+          animation: pillPulse 2s infinite;
+          white-space: nowrap;
+        }
+        .year-pill-text {
+          color: #FFFFFF;
+          font-weight: 700;
+          font-size: 0.95rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-family: 'Outfit', sans-serif;
+        }
+        .year-pill-dot {
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: #8D424E;
+          opacity: 0.7;
+        }
+
+        /* Spacecraft & Particles */
+        @keyframes flameFlicker {
+          0% { transform: scaleY(1); opacity: 1; }
+          50% { transform: scaleY(1.3); opacity: 0.8; }
+          100% { transform: scaleY(0.9); opacity: 1; }
+        }
+        .rocket-flame {
+          animation: flameFlicker 0.1s infinite alternate;
+        }
+        .burst-particle {
+          position: absolute;
+          top: 50%; 
+          left: 50%;
+          width: 8px; 
+          height: 8px;
+          background: #8D424E;
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          pointer-events: none;
+          z-index: -1;
+        }
+      `}</style>
 
       {/* Static intro block with CardSwap */}
       <div className="wib-container">
