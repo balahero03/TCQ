@@ -4,23 +4,33 @@ import ScrollStack, { ScrollStackItem } from './ScrollStack';
 const services = [
   {
     id: 1,
-    title: "Quizzes & Trivia",
-    description: "We design razor-sharp quiz experiences that challenge, entertain, and ignite the competitive spirit in every participant."
+    tag: "TCQ FOR BRANDS",
+    title: "For Brands",
+    description: "We help brands build meaningful communities through highly engaging, interactive, learning-led experiences. We curate partnerships, foster collaborations, and design live and digital formats centred on knowledge."
   },
   {
     id: 2,
-    title: "Workshops & Lectures",
-    description: "We curate immersive knowledge sessions that bring experts, stories, and ideas together in unforgettable formats."
+    tag: "TCQ QUIZZES",
+    title: "Quizzes",
+    description: "Every question blends a puzzle with a story, so participants leave not just with results, but with stories they remember for life. With nearly 15 years of experience, we specialise in marketing and seamlessly integrating brands into our quizzes."
   },
   {
     id: 3,
-    title: "Community & Culture",
-    description: "We build vibrant spaces where curiosity thrives — connecting people through shared learning and cultural experiences."
+    tag: "TCQ CIRCLES",
+    title: "Circles",
+    description: "Our flagship monthly live event series featuring lectures, panel discussions, interviews, workshops, and curated performances. Designed for a limited audience where diverse fields intersect and engage with new niches."
   },
   {
     id: 4,
-    title: "Digital & Content",
-    description: "We craft compelling digital narratives and content strategies that extend the TCQ experience beyond physical events."
+    tag: "TCQ WRITES",
+    title: "Writes",
+    description: "Our newsletter celebrating Chennai as the melting pot of cultures and new experiences. We spotlight events and stories often overlooked by mainstream media, collaborating with small brands and artists."
+  },
+  {
+    id: 5,
+    tag: "TCQ TEACHES",
+    title: "Teaches",
+    description: "We work with schools and colleges to cultivate healthier learning practices — quizzing, public speaking, and performing arts — partnering with prestigious institutions across Chennai to nurture curiosity from a young age."
   }
 ];
 
@@ -164,6 +174,21 @@ const WhatWeDo = () => {
 
                 {/* Content at bottom */}
                 <div>
+                  {/* Wing tag */}
+                  <div style={{
+                    display: 'inline-block',
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: '#8D424E',
+                    background: 'rgba(141,66,78,0.08)',
+                    padding: '4px 10px',
+                    borderRadius: '3px',
+                    marginBottom: '0.9rem'
+                  }}>
+                    {service.tag}
+                  </div>
                   <h3 style={{
                     fontSize: 'clamp(1.6rem, 4vw, 3.5rem)',
                     fontWeight: 900,
@@ -174,14 +199,7 @@ const WhatWeDo = () => {
                     margin: '0 0 0.75rem 0',
                     fontFamily: "'Outfit', sans-serif"
                   }}>
-                    {service.title.split(' & ').length > 1 ? (
-                      <>
-                        {service.title.split(' & ')[0]} &amp;<br />
-                        {service.title.split(' & ')[1]}
-                      </>
-                    ) : (
-                      service.title
-                    )}
+                    {service.title}
                   </h3>
                   <p style={{
                     fontSize: 'clamp(0.8rem, 1.1vw, 1.05rem)',
