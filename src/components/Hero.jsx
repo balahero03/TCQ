@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import logoImg from '../assets/logo.png';
 import BlurText from './BlurText';
 import TrueFocus from './TrueFocus';
-import confetti from 'canvas-confetti';
 import BlobCursor from './BlobCursor';
 import './Hero.css'; // Responsive styles
 
@@ -134,7 +133,7 @@ export default function Hero({ logoLanded }) {
                 initialDelay={startDelay}
                 delay={0}
                 initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(3rem, 9vw, 8.5rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0 }}
+                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0 }}
               />
               <BlurText
                 text="curiosity"
@@ -142,7 +141,7 @@ export default function Hero({ logoLanded }) {
                 delay={0}
                 initialBlur="blur(30px)"
                 style={{
-                  fontSize: 'clamp(3rem, 9vw, 8.5rem)',
+                  fontSize: 'clamp(4rem, 11vw, 11rem)',
                   fontWeight: 400,
                   fontFamily: "'Georgia', 'Playfair Display', serif",
                   fontStyle: 'italic',
@@ -157,7 +156,7 @@ export default function Hero({ logoLanded }) {
                 initialDelay={startDelay + 500}
                 delay={0}
                 initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(3rem, 9vw, 8.5rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0 }}
+                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0 }}
               />
             </h1>
 
@@ -187,17 +186,12 @@ export default function Hero({ logoLanded }) {
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: Quiz Card (Stacked Effect) */}
-        <div className="hero-right-column">
-          <QuizCard startDelay={startDelay} />
-        </div>
-
       </div>
     </section>
   );
 }
 
-/* ── Interactive 5-Question Quiz Component ── */
+/* ── Interactive 5-Question Quiz Component (unused) ── */
 function QuizCard({ startDelay }) {
   const questions = [
     {
