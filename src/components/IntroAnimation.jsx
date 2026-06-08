@@ -126,28 +126,32 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
             {/* ── Centered logo + wordmark (measured before fly) ── */}
             {phase === 'logo' && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.6, filter: 'blur(20px)' }}
+                initial={{ opacity: 0, scale: 0.3, y: 40, filter: 'blur(24px)' }}
                 animate={{
-                  opacity: 1, scale: 1, filter: 'blur(0px)',
-                  transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+                  opacity: 1, scale: 1, y: 0, filter: 'blur(0px)',
+                  transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
                 }}
-                style={{ display: 'flex', alignItems: 'center', gap: '2rem', zIndex: 2 }}
+                style={{ display: 'flex', alignItems: 'center', gap: '2.5rem', zIndex: 2 }}
               >
                 {/* ref lives here so we can capture its screen position */}
-                <img
+                <motion.img
                   ref={logoRef}
                   src={logoImg}
                   alt="The Curiosity Quotient Logo"
-                  style={{ height: '110px', width: 'auto', display: 'block' }}
+                  initial={{ scale: 0.4, rotate: -10, opacity: 0 }}
+                  animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                  style={{ height: '200px', width: 'auto', display: 'block' }}
                 />
                 <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0, transition: { delay: 0.5, duration: 0.6 } }}
+                  initial={{ opacity: 0, x: 30, scale: 0.85 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  transition={{ delay: 0.45, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     color: '#F0EAE2',
                     fontFamily: 'Inter, sans-serif',
                     fontWeight: 300,
-                    fontSize: '1.1rem',
+                    fontSize: '1.6rem',
                     letterSpacing: '0.35em',
                     textTransform: 'uppercase',
                     lineHeight: 1.6,
@@ -205,10 +209,10 @@ function CatsSVG() {
   return (
     <svg
       viewBox="25 798 995 372"
-      style={{ width: '100%', maxWidth: '1200px', height: 'auto', maxHeight: '70vh' }}
+      style={{ width: '80%', maxWidth: '800px', height: 'auto', maxHeight: '50vh' }}
       fill="none"
       stroke="#F0EAE2"
-      strokeWidth="4"
+      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
