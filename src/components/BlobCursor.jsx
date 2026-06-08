@@ -85,7 +85,7 @@ export default function BlobCursor({
     <div
       ref={containerRef}
       className="blob-container"
-      style={{ zIndex, position: 'absolute', inset: 0 }}
+      style={{ zIndex }}
     >
       {useFilter && (
         <svg style={{ position: 'absolute', width: 0, height: 0 }}>
