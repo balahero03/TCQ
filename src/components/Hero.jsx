@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import logoImg from '../assets/logo.png';
 import BlurText from './BlurText';
 import TrueFocus from './TrueFocus';
@@ -22,13 +22,36 @@ export default function Hero({ logoLanded }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const startDelay = 500;
 
+  // ── Cursor parallax: normalised mouse position (-0.5 … 0.5) ──
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 60, damping: 18, mass: 0.6 });
+  const sy = useSpring(my, { stiffness: 60, damping: 18, mass: 0.6 });
+
+  const handleMouseMove = (e) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+
+  // Different parallax depths for layered movement
+  const orb1X = useTransform(sx, (v) => v * 60);
+  const orb1Y = useTransform(sy, (v) => v * 60);
+  const orb2X = useTransform(sx, (v) => v * -45);
+  const orb2Y = useTransform(sy, (v) => v * -45);
+  const catX = useTransform(sx, (v) => v * 28);
+  const catY = useTransform(sy, (v) => v * 22);
+
   return (
-    <section ref={ref} className="hero-section">
+    <section ref={ref} className="hero-section" onMouseMove={handleMouseMove}>
+      {/* ── Breathing gradient wash ── */}
+      <div className="hero-gradient-wash" />
 <div className="hero-divider" />
 
-      {/* ── Ambient floating glow orbs ── */}
-      <div className="hero-orb hero-orb-1" />
-      <div className="hero-orb hero-orb-2" />
+      {/* ── Ambient floating glow orbs (cursor parallax) ── */}
+      <motion.div className="hero-orb hero-orb-1" style={{ x: orb1X, y: orb1Y }} />
+      <motion.div className="hero-orb hero-orb-2" style={{ x: orb2X, y: orb2Y }} />
 
       {/* ── Twinkling sparkle particles ── */}
       {SPARKLES.map((s, i) => (
@@ -36,7 +59,7 @@ export default function Hero({ logoLanded }) {
           key={i}
           className="hero-sparkle"
           style={{ top: s.top, left: s.left, width: s.size, height: s.size }}
-          animate={{ opacity: [0, 1, 0], scale: [0.4, 1, 0.4] }}
+          animate={{ opacity: [0, 1, 0], scale: [0.3, 1.2, 0.3], y: [0, -16, 0] }}
           transition={{ duration: s.dur, delay: s.delay, repeat: Infinity, ease: 'easeInOut' }}
         />
       ))}
@@ -44,34 +67,61 @@ export default function Hero({ logoLanded }) {
       {/* ── Full-section cat backdrop ── */}
       <motion.div
         className="hero-cat-backdrop"
-        animate={{ y: [0, -14, 0] }}
-        transition={{ duration: 7, ease: 'easeInOut', repeat: Infinity, delay: 5 }}
+        style={{ x: catX, y: catY }}
       >
+        <motion.div
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 7, ease: 'easeInOut', repeat: Infinity, delay: 5 }}
+        >
         <svg viewBox="25 798 1010 310" className="hero-cat-backdrop-svg"
           fill="none" stroke="rgba(141,66,78,0.28)" strokeWidth="1.2"
           strokeLinecap="round" strokeLinejoin="round"
           preserveAspectRatio="xMidYMid meet"
         >
+          <defs>
+            <linearGradient id="catStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#8D424E" />
+              <stop offset="50%" stopColor="#D6838B" />
+              <stop offset="100%" stopColor="#8D424E" />
+            </linearGradient>
+          </defs>
+
+          {/* faint static base outline */}
+          <path d={CAT_PATH} stroke="rgba(141,66,78,0.14)" />
+
+          {/* gradient stroke that draws in on load */}
           <motion.path
             d={CAT_PATH}
+            stroke="url(#catStroke)"
+            strokeWidth="1.4"
             pathLength="1"
             strokeDasharray="1"
             strokeDashoffset="1"
             animate={{ strokeDashoffset: 0 }}
             transition={{ duration: 4, ease: 'easeInOut', delay: 1.2 }}
           />
-          {/* glowing dot travelling endlessly along the cats' tail-line */}
-          <motion.circle
-            r="4"
-            fill="#8D424E"
-            style={{ filter: 'drop-shadow(0 0 6px rgba(141,66,78,0.9))' }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 5, delay: 5.2, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <animateMotion dur="5s" begin="5.2s" repeatCount="indefinite" rotate="auto" path={CAT_PATH} />
-          </motion.circle>
+
+          {/* comet head + trailing followers, looping endlessly along the path */}
+          {[
+            { r: 5, fill: '#8D424E', glow: 10, begin: '5.2s' },
+            { r: 3.5, fill: '#B85E6A', glow: 7, begin: '5.35s' },
+            { r: 2.5, fill: '#D6838B', glow: 5, begin: '5.5s' },
+            { r: 1.8, fill: '#E6BABE', glow: 3, begin: '5.62s' },
+          ].map((d, i) => (
+            <motion.circle
+              key={i}
+              r={d.r}
+              fill={d.fill}
+              style={{ filter: `drop-shadow(0 0 ${d.glow}px ${d.fill})` }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 1, 0.9] }}
+              transition={{ duration: 1, delay: 5.2, ease: 'easeOut' }}
+            >
+              <animateMotion dur="7s" begin={d.begin} repeatCount="indefinite" rotate="auto" path={CAT_PATH} />
+            </motion.circle>
+          ))}
         </svg>
+        </motion.div>
         <div className="hero-cat-fade" />
       </motion.div>
 
@@ -151,8 +201,8 @@ export default function Hero({ logoLanded }) {
             <h1 className="hero-heading">
               <BlurText text="Making" initialDelay={startDelay} delay={0} initialBlur="blur(30px)"
                 style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0, lineHeight: 1.0 }} />
-              <BlurText text="curiosity" initialDelay={startDelay + 250} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(3.6rem, 10vw, 10rem)', fontWeight: 400, fontFamily: "'Georgia', 'Playfair Display', serif", fontStyle: 'italic', color: '#8D424E', display: 'block', margin: 0, padding: 0, lineHeight: 1.05 }} />
+              <BlurText text="curiosity" className="hero-curiosity-shimmer" initialDelay={startDelay + 250} delay={0} initialBlur="blur(30px)"
+                style={{ fontSize: 'clamp(3.6rem, 10vw, 10rem)', fontWeight: 400, fontFamily: "'Georgia', 'Playfair Display', serif", fontStyle: 'italic', display: 'block', margin: 0, padding: 0, lineHeight: 1.05 }} />
               <BlurText text="social." initialDelay={startDelay + 500} delay={0} initialBlur="blur(30px)"
                 style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0, lineHeight: 1.0 }} />
             </h1>

@@ -12,12 +12,44 @@
 }
 
 /* ── Cat backdrop: right 55%, vertically centred, full cats visible ── */
+/* ── Shimmering gradient "curiosity" word ── */
+.hero-curiosity-shimmer,
+.hero-curiosity-shimmer span {
+  background: linear-gradient(100deg, #8D424E 0%, #D6838B 25%, #8D424E 50%, #D6838B 75%, #8D424E 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hero-shimmer 5s linear infinite;
+}
+@keyframes hero-shimmer {
+  to { background-position: 200% center; }
+}
+
+/* ── Breathing gradient wash ── */
+.hero-gradient-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 80% 35%, rgba(214,131,139,0.18), transparent 70%),
+    radial-gradient(50% 60% at 15% 80%, rgba(141,66,78,0.10), transparent 70%);
+  animation: hero-wash 12s ease-in-out infinite alternate;
+}
+@keyframes hero-wash {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.08); }
+}
+
 .hero-orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
 }
 .hero-orb-1 {
   width: 420px;
@@ -46,10 +78,11 @@
 .hero-sparkle {
   position: absolute;
   border-radius: 50%;
-  background: #8D424E;
-  box-shadow: 0 0 8px rgba(141, 66, 78, 0.8);
+  background: radial-gradient(circle, #E6BABE 0%, #8D424E 70%, transparent 100%);
+  box-shadow: 0 0 10px rgba(214, 131, 139, 0.9);
   z-index: 1;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .hero-cat-backdrop {
