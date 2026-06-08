@@ -18,8 +18,8 @@ export default function Hero({ logoLanded }) {
 
       {/* ── Full-section cat backdrop ── */}
       <div className="hero-cat-backdrop">
-        <svg viewBox="25 798 995 372" className="hero-cat-backdrop-svg"
-          fill="none" stroke="rgba(141,66,78,0.22)" strokeWidth="1.2"
+        <svg viewBox="25 798 1010 310" className="hero-cat-backdrop-svg"
+          fill="none" stroke="rgba(141,66,78,0.28)" strokeWidth="1.2"
           strokeLinecap="round" strokeLinejoin="round"
           preserveAspectRatio="xMidYMid meet"
         >
@@ -32,6 +32,7 @@ export default function Hero({ logoLanded }) {
             transition={{ duration: 4, ease: 'easeInOut', delay: 1.2 }}
           />
         </svg>
+        <div className="hero-cat-fade" />
       </div>
 
       <header className="hero-header">
@@ -109,11 +110,11 @@ export default function Hero({ logoLanded }) {
           >
             <h1 className="hero-heading">
               <BlurText text="Making" initialDelay={startDelay} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0 }} />
+                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0, lineHeight: 1.0 }} />
               <BlurText text="curiosity" initialDelay={startDelay + 250} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 400, fontFamily: "'Georgia', 'Playfair Display', serif", fontStyle: 'italic', color: '#8D424E', display: 'block', margin: 0, padding: 0 }} />
+                style={{ fontSize: 'clamp(3.6rem, 10vw, 10rem)', fontWeight: 400, fontFamily: "'Georgia', 'Playfair Display', serif", fontStyle: 'italic', color: '#8D424E', display: 'block', margin: 0, padding: 0, lineHeight: 1.05 }} />
               <BlurText text="social." initialDelay={startDelay + 500} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0 }} />
+                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0, lineHeight: 1.0 }} />
             </h1>
 
             <div className="hero-text-wrapper">
@@ -136,7 +137,8 @@ export default function Hero({ logoLanded }) {
                 transition={{ delay: (startDelay + 400) / 1000, duration: 0.5 }}
                 className="explore-button"
               >
-                <span style={{ color: '#E6BABE', fontSize: '1.2rem', lineHeight: 1 }}>+</span> Explore TCQ
+                Explore TCQ
+                <span className="btn-arrow" style={{ color: '#E6BABE', fontSize: '1rem', lineHeight: 1 }}>→</span>
               </motion.button>
             </div>
           </motion.div>
