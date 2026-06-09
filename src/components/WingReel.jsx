@@ -198,87 +198,84 @@ function WingPin({ wing, index }) {
         invalidateOnRefresh: true,
       });
 
-      // ── Title panel: tag / heading / blurb / hint cascade in ──
+      // ── Title panel cascade — plain ScrollTrigger on the section (fires
+      //    reliably when the wing pins; no containerAnimation guesswork). ──
       const titleBits = pinRef.current.querySelectorAll('.wr-intro-inner > *');
-      gsap.from(titleBits, {
-        opacity: 0,
-        y: 40,
-        duration: 0.5,
-        stagger: 0.12,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: pinRef.current,
-          containerAnimation: tween,
-          start: reverse ? 'right right' : 'left left',
-          toggleActions: 'play none none reverse',
-        },
-      });
-      // ghost number drifts up
-      gsap.from(pinRef.current.querySelector('.wr-ghost-no'), {
-        opacity: 0,
-        yPercent: 12,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: pinRef.current,
-          containerAnimation: tween,
-          start: reverse ? 'right right' : 'left left',
-          toggleActions: 'play none none reverse',
-        },
-      });
+      gsap.fromTo(
+        titleBits,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power3.out',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: pinRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
 
-      // ── Each event panel reveals as it enters the viewport ──
+      // ── Each event panel reveals as it scrolls into view. Use fromTo with
+      //    immediateRender:false so nothing is ever left stuck invisible. ──
       const events = gsap.utils.toArray(pinRef.current.querySelectorAll('.wr-event'));
       events.forEach((panel) => {
         const photos = panel.querySelectorAll('.wr-frame');
         const cap = panel.querySelector('.wr-caption');
 
-        const st = {
-          trigger: panel,
-          containerAnimation: tween,
-          start: 'left center',
-          end: 'right center',
-          toggleActions: 'play none none reverse',
-        };
-
-        // animate opacity only on the frames — their transform & filter are
-        // owned by CSS (polaroid fan rotation + cursor-tilt hover), so GSAP
-        // must not write to those properties or it would clobber them.
-        gsap.from(photos, {
-          opacity: 0,
-          duration: 0.7,
-          stagger: 0.12,
-          ease: 'power2.out',
-          scrollTrigger: { ...st, start: 'left 85%' },
-        });
-        gsap.from(cap, {
-          opacity: 0,
-          y: 30,
-          duration: 0.6,
-          ease: 'power3.out',
-          scrollTrigger: { ...st, start: 'left 70%' },
-        });
-
-        // gentle parallax: photos drift as the panel crosses the screen
+        // opacity only on frames — their transform & filter are owned by CSS
+        // (polaroid fan rotation + cursor-tilt hover); never write those here.
         gsap.fromTo(
-          panel.querySelector('.wr-photos'),
-          { xPercent: reverse ? -6 : 6 },
+          photos,
+          { opacity: 0 },
           {
-            xPercent: reverse ? 6 : -6,
-            ease: 'none',
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.12,
+            ease: 'power2.out',
+            immediateRender: false,
             scrollTrigger: {
               trigger: panel,
               containerAnimation: tween,
-              start: 'left right',
-              end: 'right left',
-              scrub: true,
+              start: 'left 90%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+        gsap.fromTo(
+          cap,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            ease: 'power3.out',
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: tween,
+              start: 'left 75%',
+              toggleActions: 'play none none none',
             },
           }
         );
       });
     }, pinRef);
 
-    return () => ctx.revert();
+    // Stacked pinned sections shift each other's measurements — refresh once
+    // everything has mounted so each wing's start/end is correct.
+    const refresh = () => ScrollTrigger.refresh();
+    const t = setTimeout(refresh, 200);
+    window.addEventListener('load', refresh);
+
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener('load', refresh);
+      ctx.revert();
+    };
   }, [reverse]);
 
   const onSpot = (e) => {
