@@ -139,7 +139,7 @@ function EventPanel({ event, index }) {
   );
 }
 
-function WingTitlePanel({ wing }) {
+function WingTitlePanel({ wing, reverse }) {
   return (
     <div className="wr-panel wr-wingtitle" data-wing={wing.no}>
       <span className="wr-ghost-no">{wing.no}</span>
@@ -147,56 +147,140 @@ function WingTitlePanel({ wing }) {
         <span className="wr-tag">{wing.tag}</span>
         <h2 className="wr-title">{wing.title}</h2>
         <p className="wr-blurb">{wing.blurb}</p>
+        <span className="wr-scroll-hint">
+          {reverse && <span aria-hidden="true">←</span>}
+          scroll to explore
+          {!reverse && <span aria-hidden="true">→</span>}
+        </span>
       </div>
     </div>
   );
 }
 
-export default function WingReel() {
+/* ── One wing = its own pinned horizontal reel. ──
+   Direction alternates (boustrophedon / snake):
+     even index → travels →  (panels reveal left-to-right)
+     odd  index → travels ←  (panels reveal right-to-left)
+   When a reel reaches its end the pin releases and the page
+   scrolls DOWN to the next wing, which runs the opposite way. */
+function WingPin({ wing, index }) {
   const pinRef = useRef(null);
   const trackRef = useRef(null);
   const [spot, setSpot] = useState({ x: 50, y: 50, on: false });
-  const [activeWing, setActiveWing] = useState(0); // index into WINGS
+  const reverse = index % 2 === 1;
 
-  // ── Horizontal scroll-driven track (pin the screen, translate sideways) ──
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isMobile = window.matchMedia('(max-width: 820px)').matches;
-    if (reduce || isMobile) return; // mobile falls back to native horizontal swipe (CSS)
+    if (reduce || isMobile) return; // touch: native swipe (CSS)
 
     const ctx = gsap.context(() => {
       const track = trackRef.current;
-      const distance = () => track.scrollWidth - window.innerWidth;
+      const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
-      const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
+      // Reverse wings are laid out row-reverse: title sits at the right,
+      // events to its left. Start shifted left (title in view) and slide the
+      // track rightward to 0, revealing events — opposite travel to forward wings.
+      if (reverse) gsap.set(track, { x: () => -distance() });
+
+      const tween = gsap.to(track, {
+        x: () => (reverse ? 0 : -distance()),
+        ease: 'none',
+      });
 
       ScrollTrigger.create({
         trigger: pinRef.current,
         start: 'top top',
-        end: () => `+=${distance() + window.innerHeight}`,
+        end: () => `+=${distance() + window.innerHeight * 0.5}`,
         pin: true,
         scrub: 0.6,
         animation: tween,
         invalidateOnRefresh: true,
       });
 
-      // Update the active-wing indicator as each wing-title panel reaches centre
-      const titles = gsap.utils.toArray('.wr-wingtitle');
-      titles.forEach((el, i) => {
-        ScrollTrigger.create({
-          trigger: el,
+      // ── Title panel: tag / heading / blurb / hint cascade in ──
+      const titleBits = pinRef.current.querySelectorAll('.wr-intro-inner > *');
+      gsap.from(titleBits, {
+        opacity: 0,
+        y: 40,
+        duration: 0.5,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: pinRef.current,
+          containerAnimation: tween,
+          start: reverse ? 'right right' : 'left left',
+          toggleActions: 'play none none reverse',
+        },
+      });
+      // ghost number drifts up
+      gsap.from(pinRef.current.querySelector('.wr-ghost-no'), {
+        opacity: 0,
+        yPercent: 12,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: pinRef.current,
+          containerAnimation: tween,
+          start: reverse ? 'right right' : 'left left',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      // ── Each event panel reveals as it enters the viewport ──
+      const events = gsap.utils.toArray(pinRef.current.querySelectorAll('.wr-event'));
+      events.forEach((panel) => {
+        const photos = panel.querySelectorAll('.wr-frame');
+        const cap = panel.querySelector('.wr-caption');
+
+        const st = {
+          trigger: panel,
           containerAnimation: tween,
           start: 'left center',
           end: 'right center',
-          onToggle: (self) => { if (self.isActive) setActiveWing(i); },
+          toggleActions: 'play none none reverse',
+        };
+
+        // animate opacity only on the frames — their transform & filter are
+        // owned by CSS (polaroid fan rotation + cursor-tilt hover), so GSAP
+        // must not write to those properties or it would clobber them.
+        gsap.from(photos, {
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: { ...st, start: 'left 85%' },
         });
+        gsap.from(cap, {
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          ease: 'power3.out',
+          scrollTrigger: { ...st, start: 'left 70%' },
+        });
+
+        // gentle parallax: photos drift as the panel crosses the screen
+        gsap.fromTo(
+          panel.querySelector('.wr-photos'),
+          { xPercent: reverse ? -6 : 6 },
+          {
+            xPercent: reverse ? 6 : -6,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: tween,
+              start: 'left right',
+              end: 'right left',
+              scrub: true,
+            },
+          }
+        );
       });
     }, pinRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [reverse]);
 
-  // ── Cursor spotlight position (whole section) ──
   const onSpot = (e) => {
     const r = pinRef.current?.getBoundingClientRect();
     if (!r) return;
@@ -207,6 +291,39 @@ export default function WingReel() {
     });
   };
 
+  return (
+    <section
+      className={`wr-section ${reverse ? 'wr-section--reverse' : ''}`}
+      ref={pinRef}
+      onMouseMove={onSpot}
+      onMouseLeave={() => setSpot((s) => ({ ...s, on: false }))}
+    >
+      <div
+        className="wr-spotlight"
+        style={{
+          opacity: spot.on ? 1 : 0,
+          background: `radial-gradient(420px circle at ${spot.x}% ${spot.y}%, rgba(214,131,139,0.16), transparent 70%)`,
+        }}
+      />
+      <div className="wr-thread" />
+
+      {/* small fixed direction cue */}
+      <div className="wr-dirhint" aria-hidden="true">
+        <span className="wr-dirhint-no">{wing.no}</span>
+        <span className="wr-dirhint-arrow">{reverse ? '←' : '→'}</span>
+      </div>
+
+      <div className="wr-track" ref={trackRef}>
+        <WingTitlePanel wing={wing} reverse={reverse} />
+        {wing.events.map((ev, i) => (
+          <EventPanel key={ev.name} event={ev} index={i} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default function WingReel() {
   return (
     <>
       {/* ════════ Opening: its own vertical page (normal scroll) ════════ */}
@@ -231,52 +348,14 @@ export default function WingReel() {
         <MagneticCards />
       </section>
 
-      {/* ════════ Pinned horizontal reel of the five wings ════════ */}
-      <section
-        className="wr-section"
-        ref={pinRef}
-        onMouseMove={onSpot}
-        onMouseLeave={() => setSpot((s) => ({ ...s, on: false }))}
-      >
-        {/* cursor spotlight wash */}
-        <div
-          className="wr-spotlight"
-          style={{
-            opacity: spot.on ? 1 : 0,
-            background: `radial-gradient(420px circle at ${spot.x}% ${spot.y}%, rgba(214,131,139,0.16), transparent 70%)`,
-          }}
-        />
+      {/* ════════ Each wing: its own pinned reel, alternating direction ════════ */}
+      {WINGS.map((wing, i) => (
+        <WingPin key={wing.id} wing={wing} index={i} />
+      ))}
 
-        {/* the connecting thread runs through the whole reel */}
-        <div className="wr-thread" />
-
-        {/* fixed wing progress indicator */}
-        <div className="wr-indicator" aria-hidden="true">
-          <span className="wr-indicator-no">{WINGS[activeWing].no}</span>
-          <span className="wr-indicator-name">{WINGS[activeWing].title}</span>
-          <div className="wr-indicator-dots">
-            {WINGS.map((w, i) => (
-              <span key={w.id} className={i === activeWing ? 'on' : ''} />
-            ))}
-          </div>
-        </div>
-
-        <div className="wr-track" ref={trackRef}>
-          {/* ── Each wing: title panel, then its event panels ── */}
-          {WINGS.map((wing) => (
-            <div className="wr-winggroup" key={wing.id}>
-              <WingTitlePanel wing={wing} />
-              {wing.events.map((ev, i) => (
-                <EventPanel key={ev.name} event={ev} index={i} />
-              ))}
-            </div>
-          ))}
-
-          {/* ── Closing cap ── */}
-          <div className="wr-panel wr-endcap">
-            <span className="wr-endcap-word">make curiosity social</span>
-          </div>
-        </div>
+      {/* ════════ Closing cap ════════ */}
+      <section className="wr-endcap">
+        <span className="wr-endcap-word">make curiosity social</span>
       </section>
     </>
   );

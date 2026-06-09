@@ -10,6 +10,8 @@
   overflow: hidden;
   height: 100vh;            /* pinned viewport on desktop */
 }
+/* alternate the tint so each wing reads as its own page */
+.wr-section--reverse { background: #f3e3e5; }
 
 /* cursor spotlight wash over the whole reel */
 .wr-spotlight {
@@ -43,6 +45,8 @@
   position: relative;
   z-index: 2;
 }
+/* reverse wings overflow to the left so they reveal right-to-left */
+.wr-section--reverse .wr-track { flex-direction: row-reverse; }
 
 .wr-panel {
   flex: 0 0 auto;
@@ -56,46 +60,40 @@
 /* groups don't lay out — children flatten into the flex track */
 .wr-winggroup { display: contents; }
 
-/* ── Fixed wing indicator (top-right) ── */
-.wr-indicator {
+/* ── Direction cue (top-right): wing number + travel arrow ── */
+.wr-dirhint {
   position: absolute;
   top: clamp(1.5rem, 4vh, 2.5rem);
   right: clamp(1.5rem, 4vw, 3rem);
   z-index: 5;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.6rem;
   pointer-events: none;
 }
-.wr-indicator-no {
-  font-size: 1.6rem;
+.wr-dirhint-no {
+  font-size: 1.5rem;
   font-weight: 900;
-  color: #8D424E;
+  color: rgba(141, 66, 78, 0.5);
   letter-spacing: -0.02em;
 }
-.wr-indicator-name {
-  font-size: 0.72rem;
+.wr-dirhint-arrow {
+  font-size: 1.3rem;
   font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(31, 9, 12, 0.55);
+  color: #8D424E;
+  animation: wr-dir-nudge 1.4s ease-in-out infinite;
 }
-.wr-indicator-dots {
-  display: flex;
-  gap: 5px;
-  margin-left: 0.4rem;
-  align-self: center;
+.wr-section--reverse .wr-dirhint { left: clamp(1.5rem, 4vw, 3rem); right: auto; flex-direction: row-reverse; }
+@keyframes wr-dir-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
 }
-.wr-indicator-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(141, 66, 78, 0.25);
-  transition: background 0.3s, transform 0.3s;
+.wr-section--reverse .wr-dirhint-arrow {
+  animation: wr-dir-nudge-rev 1.4s ease-in-out infinite;
 }
-.wr-indicator-dots span.on {
-  background: #8D424E;
-  transform: scale(1.35);
+@keyframes wr-dir-nudge-rev {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
 }
 
 /* ── Opening: two columns — text left, big wheel right ── */
@@ -461,11 +459,15 @@
   margin: 0;
 }
 
-/* ── End cap ── */
+/* ── End cap (full-width closing section) ── */
 .wr-endcap {
-  width: 70vw;
+  background: #6B2737;
+  min-height: 60vh;
+  display: flex;
   justify-content: center;
   align-items: center;
+  padding: 8vh 6vw;
+  box-sizing: border-box;
 }
 .wr-endcap-word {
   font-size: clamp(2rem, 6vw, 6rem);
@@ -474,7 +476,8 @@
   letter-spacing: -0.03em;
   line-height: 1;
   text-align: center;
-  background: linear-gradient(100deg, #8D424E, #D6838B, #8D424E);
+  max-width: 16ch;
+  background: linear-gradient(100deg, #F0EAE2, #E6BABE, #F0EAE2);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -497,14 +500,16 @@
   .wr-spotlight { display: none; }
   .wr-thread { display: none; }
 
-  .wr-track {
+  /* every wing scrolls as a native swipe row — never reverse on touch */
+  .wr-track,
+  .wr-section--reverse .wr-track {
     width: 100%;
     flex-direction: row;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: 0;
-    transform: none !important;   /* GSAP never runs here, but be safe */
+    transform: none !important;
     padding-bottom: 1rem;
   }
   .wr-panel {
@@ -512,13 +517,7 @@
     padding: 0 6vw;
     height: auto;
   }
-  .wr-opening-page {
-    grid-template-columns: 1fr;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10vh 6vw;
-  }
+
   /* opening stacks: text over the magnetic card field */
   .wr-opening-page {
     grid-template-columns: 1fr;
@@ -532,7 +531,6 @@
     margin-top: 2rem;
   }
   .wr-mcard { width: clamp(120px, 38vw, 170px); }
-  .wr-opening,
   .wr-wingtitle { width: 88vw; }
   .wr-event { width: 88vw; }
   .wr-photos--fan .wr-frame {
@@ -544,8 +542,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
   .wr-photos--grid .wr-frame { width: 38vw; }
-  .wr-indicator { display: none; }
-  .wr-endcap { display: none; }
+  .wr-dirhint { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
