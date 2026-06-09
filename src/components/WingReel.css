@@ -459,25 +459,21 @@
   margin: 0;
 }
 
-/* ── End cap (full-width closing section) ── */
-.wr-endcap {
-  background: #6B2737;
-  min-height: 60vh;
-  display: flex;
+/* ── End cap — the closing line is the LAST PANEL inside wing 05's reel ── */
+.wr-endcap-panel {
   justify-content: center;
   align-items: center;
-  padding: 8vh 6vw;
-  box-sizing: border-box;
+  width: 80vw;
 }
 .wr-endcap-word {
-  font-size: clamp(2rem, 6vw, 6rem);
+  font-size: clamp(2.5rem, 7vw, 7rem);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.03em;
-  line-height: 1;
+  line-height: 0.95;
   text-align: center;
-  max-width: 16ch;
-  background: linear-gradient(100deg, #F0EAE2, #E6BABE, #F0EAE2);
+  max-width: 14ch;
+  background: linear-gradient(100deg, #8D424E, #D6838B, #8D424E);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;

@@ -163,7 +163,7 @@ function WingTitlePanel({ wing, reverse }) {
      odd  index → travels ←  (panels reveal right-to-left)
    When a reel reaches its end the pin releases and the page
    scrolls DOWN to the next wing, which runs the opposite way. */
-function WingPin({ wing, index }) {
+function WingPin({ wing, index, isLast }) {
   const pinRef = useRef(null);
   const trackRef = useRef(null);
   const [spot, setSpot] = useState({ x: 50, y: 50, on: false });
@@ -315,6 +315,12 @@ function WingPin({ wing, index }) {
         {wing.events.map((ev, i) => (
           <EventPanel key={ev.name} event={ev} index={i} />
         ))}
+        {/* final wing carries the closing line as its last panel */}
+        {isLast && (
+          <div className="wr-panel wr-endcap-panel">
+            <span className="wr-endcap-word">make curiosity social</span>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -345,15 +351,16 @@ export default function WingReel() {
         <MagneticCards />
       </section>
 
-      {/* ════════ Each wing: its own pinned reel, alternating direction ════════ */}
+      {/* ════════ Each wing: its own pinned reel, alternating direction.
+          The last wing carries the closing line as its final panel. ════════ */}
       {WINGS.map((wing, i) => (
-        <WingPin key={wing.id} wing={wing} index={i} />
+        <WingPin
+          key={wing.id}
+          wing={wing}
+          index={i}
+          isLast={i === WINGS.length - 1}
+        />
       ))}
-
-      {/* ════════ Closing cap ════════ */}
-      <section className="wr-endcap">
-        <span className="wr-endcap-word">make curiosity social</span>
-      </section>
     </>
   );
 }
