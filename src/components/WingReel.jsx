@@ -1,10 +1,81 @@
 import { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { WINGS } from './wingsData';
 import './WingReel.css';
 
 gsap.registerPlugin(ScrollTrigger);
+
+/* ── Static scatter positions for the 5 cards (% of the play area) ──
+   Each card also carries a "depth" — nearer cards (bigger depth) react
+   more strongly to the cursor, giving a parallax/magnetic feel. */
+const CARD_LAYOUT = [
+  { x: 16, y: 14, r: -7, depth: 1.0 },
+  { x: 60, y: 8,  r: 6,  depth: 0.7 },
+  { x: 8,  y: 56, r: 5,  depth: 0.85 },
+  { x: 52, y: 52, r: -5, depth: 1.15 },
+  { x: 34, y: 80, r: 8,  depth: 0.6 },
+];
+
+function MagneticCard({ wing, layout, mx, my }) {
+  // pull toward the cursor, scaled by the card's depth
+  const tx = useTransform(mx, (v) => v * 40 * layout.depth);
+  const ty = useTransform(my, (v) => v * 40 * layout.depth);
+  const x = useSpring(tx, { stiffness: 120, damping: 16, mass: 0.5 });
+  const y = useSpring(ty, { stiffness: 120, damping: 16, mass: 0.5 });
+
+  return (
+    <motion.div
+      className="wr-mcard"
+      style={{
+        left: `${layout.x}%`,
+        top: `${layout.y}%`,
+        x,
+        y,
+        rotate: layout.r,
+        zIndex: Math.round(layout.depth * 10),
+      }}
+      whileHover={{ scale: 1.08, rotate: 0, zIndex: 30 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    >
+      <span className="wr-mcard-no">{wing.no}</span>
+      <span className="wr-mcard-name">{wing.title}</span>
+      <span className="wr-mcard-tag">{wing.tag}</span>
+      <span className="wr-mcard-spark" aria-hidden="true">✦</span>
+    </motion.div>
+  );
+}
+
+function MagneticCards() {
+  const areaRef = useRef(null);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+
+  const onMove = (e) => {
+    const r = areaRef.current?.getBoundingClientRect();
+    if (!r) return;
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
+  return (
+    <div
+      className="wr-magnet"
+      ref={areaRef}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+    >
+      {WINGS.map((w, i) => (
+        <MagneticCard key={w.id} wing={w} layout={CARD_LAYOUT[i]} mx={mx} my={my} />
+      ))}
+    </div>
+  );
+}
 
 /* A single photo frame: placeholder until a real `src` is provided.
    Tilts in 3D toward the cursor and brightens under the spotlight. */
@@ -151,18 +222,13 @@ export default function WingReel() {
             End-to-end experiences designed to make curiosity social. Say hello
             to the five wings of TCQ.
           </p>
-          <ol className="wr-opening-list">
-            {WINGS.map((w) => (
-              <li key={w.id}>
-                <span className="wr-opening-no">{w.no}</span>
-                <span className="wr-opening-name">{w.title}</span>
-              </li>
-            ))}
-          </ol>
           <span className="wr-scroll-hint">
             scroll to explore <span aria-hidden="true">↓</span>
           </span>
         </div>
+
+        {/* Right side: magnetic wing cards that drift toward the cursor */}
+        <MagneticCards />
       </section>
 
       {/* ════════ Pinned horizontal reel of the five wings ════════ */}
