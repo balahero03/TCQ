@@ -144,6 +144,20 @@
   pointer-events: none;
 }
 
+.hero-wordmark {
+  position: absolute;
+  top: 42px;
+  left: 92px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #1F090C;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
 .hero-nav {
   display: flex;
   align-items: center;
@@ -307,6 +321,12 @@
     z-index: 60;
   }
 
+  .hero-wordmark {
+    top: 30px;
+    left: 74px;
+    font-size: 0.72rem;
+  }
+
   .hero-nav { display: none; }
   .mobile-menu-btn { display: block; }
 
@@ -323,6 +343,8 @@
 }
 
 @media (max-width: 480px) {
+  .hero-wordmark { display: none; }
+
   .explore-button {
     width: 100%;
     justify-content: center;

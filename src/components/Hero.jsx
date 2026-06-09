@@ -150,6 +150,14 @@ export default function Hero({ logoLanded }) {
           transition={{ duration: 0.15, ease: 'easeOut' }}
           className="hero-logo"
         />
+        <motion.span
+          className="hero-wordmark"
+          initial={{ opacity: 0, x: -8 }}
+          animate={{ opacity: logoLanded ? 1 : 0, x: logoLanded ? 0 : -8 }}
+          transition={{ duration: 0.4, ease: 'easeOut', delay: 0.15 }}
+        >
+        The Curiosity Quotient
+        </motion.span>
         <motion.nav
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
