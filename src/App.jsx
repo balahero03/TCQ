@@ -3,7 +3,7 @@ import IntroAnimation from './components/IntroAnimation';
 import Hero from './components/Hero';
 import WhatIsTCQ from './components/WhatIsTCQ';
 import WhoIsBehind from './components/WhoIsBehind';
-import WhatWeDo from './components/WhatWeDo';
+import WingReel from './components/WingReel';
 import Contact from './components/Contact';
 import BlobCursor from './components/BlobCursor';
 import './App.css';
@@ -46,7 +46,7 @@ function App() {
           <Hero logoLanded={logoLanded} />
           <WhatIsTCQ />
           <WhoIsBehind />
-          <WhatWeDo />
+          <WingReel />
           <Contact />
         </main>
         </>

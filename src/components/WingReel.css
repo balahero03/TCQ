@@ -1,0 +1,453 @@
+/* ════════════════════════════════════════════════════════════
+   WingReel — pinned horizontal "Curiosity Reel" for a TCQ wing
+   ════════════════════════════════════════════════════════════ */
+
+.wr-section {
+  position: relative;
+  background: #F7EAEB;
+  color: #1F090C;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  height: 100vh;            /* pinned viewport on desktop */
+}
+
+/* cursor spotlight wash over the whole reel */
+.wr-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: multiply;
+}
+
+/* the connecting thread — a hairline that runs through every panel */
+.wr-thread {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 62%;
+  height: 1.5px;
+  z-index: 1;
+  background: linear-gradient(90deg, transparent, rgba(141,66,78,0.35) 8%, rgba(141,66,78,0.35) 92%, transparent);
+  pointer-events: none;
+}
+
+/* ── Horizontal track ── */
+.wr-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+  position: relative;
+  z-index: 2;
+}
+
+.wr-panel {
+  flex: 0 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(2rem, 6vw, 7rem);
+  box-sizing: border-box;
+}
+
+/* groups don't lay out — children flatten into the flex track */
+.wr-winggroup { display: contents; }
+
+/* ── Fixed wing indicator (top-right) ── */
+.wr-indicator {
+  position: absolute;
+  top: clamp(1.5rem, 4vh, 2.5rem);
+  right: clamp(1.5rem, 4vw, 3rem);
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+.wr-indicator-no {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #8D424E;
+  letter-spacing: -0.02em;
+}
+.wr-indicator-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(31, 9, 12, 0.55);
+}
+.wr-indicator-dots {
+  display: flex;
+  gap: 5px;
+  margin-left: 0.4rem;
+  align-self: center;
+}
+.wr-indicator-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(141, 66, 78, 0.25);
+  transition: background 0.3s, transform 0.3s;
+}
+.wr-indicator-dots span.on {
+  background: #8D424E;
+  transform: scale(1.35);
+}
+
+/* ── Opening: its own vertical page ── */
+.wr-opening-page {
+  min-height: 100vh;
+  background: #F7EAEB;
+  color: #1F090C;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  padding: 6vh clamp(2rem, 8vw, 9rem);
+  box-sizing: border-box;
+}
+.wr-opening {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 720px;
+}
+.wr-opening-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #8D424E;
+  margin-bottom: 1.2rem;
+}
+.wr-opening-title {
+  font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin: 0 0 1.5rem;
+  color: #1F090C;
+}
+.wr-opening-accent {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: #8D424E;
+}
+.wr-opening-sub {
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.65;
+  color: #5a4044;
+  max-width: 460px;
+  margin: 0 0 2.2rem;
+}
+.wr-opening-list {
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 2rem;
+}
+.wr-opening-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+.wr-opening-no {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #8D424E;
+}
+.wr-opening-name {
+  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  font-weight: 700;
+  color: #1F090C;
+  letter-spacing: -0.01em;
+}
+
+/* ── Wing title panel ── */
+.wr-wingtitle {
+  position: relative;
+  width: 100vw;
+  max-width: 760px;
+}
+.wr-ghost-no {
+  position: absolute;
+  left: clamp(1rem, 3vw, 3rem);
+  bottom: 6%;
+  font-size: clamp(14rem, 30vw, 30rem);
+  font-weight: 900;
+  line-height: 0.7;
+  color: rgba(31, 9, 12, 0.05);
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  z-index: 0;
+}
+.wr-intro-inner { position: relative; z-index: 1; }
+.wr-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #8D424E;
+  background: rgba(141, 66, 78, 0.08);
+  padding: 5px 12px;
+  border-radius: 4px;
+  margin-bottom: 1.25rem;
+}
+.wr-title {
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin: 0 0 1.5rem;
+  color: #1F090C;
+}
+.wr-blurb {
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.65;
+  color: #5a4044;
+  max-width: 480px;
+  margin: 0 0 2.5rem;
+}
+.wr-scroll-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8D424E;
+  font-weight: 600;
+}
+.wr-scroll-hint span {
+  animation: wr-nudge 1.4s ease-in-out infinite;
+}
+@keyframes wr-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+/* ── Event panel ── */
+.wr-event {
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.8rem;
+  width: auto;
+}
+
+.wr-photos {
+  display: flex;
+  align-items: center;
+  perspective: 1200px;
+}
+
+/* fan layout: overlapping polaroids */
+.wr-photos--fan .wr-frame {
+  width: clamp(180px, 22vw, 320px);
+  margin-left: -3.5vw;
+  transform: rotate(calc((var(--i) - 1) * 4deg));
+}
+.wr-photos--fan .wr-frame:first-child { margin-left: 0; }
+.wr-photos--fan .wr-frame:hover { z-index: 5; }
+
+/* hero layout: one cinematic frame */
+.wr-photos--hero .wr-frame {
+  width: clamp(420px, 52vw, 760px);
+}
+
+/* grid layout: contact-sheet (e.g. Writes' 6 article cards) */
+.wr-photos--grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+  perspective: 1400px;
+}
+.wr-photos--grid .wr-frame {
+  width: clamp(150px, 15vw, 230px);
+  aspect-ratio: 3 / 4 !important;
+}
+
+/* ── Photo frame ── */
+.wr-frame {
+  position: relative;
+  margin: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #efd9db;
+  box-shadow: 0 10px 30px rgba(31, 9, 12, 0.14);
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s, filter 0.35s;
+  --rx: 0deg;
+  --ry: 0deg;
+  filter: saturate(0.85) brightness(0.96);
+}
+.wr-frame:hover {
+  transform: rotate(0deg) translateY(-10px) rotateX(var(--rx)) rotateY(var(--ry)) scale(1.04);
+  box-shadow: 0 24px 60px rgba(31, 9, 12, 0.28);
+  filter: saturate(1.05) brightness(1.04);
+  z-index: 6;
+}
+.wr-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* moving sheen on hover */
+.wr-frame-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.35) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.wr-frame:hover .wr-frame-sheen {
+  opacity: 1;
+  animation: wr-sheen 0.9s ease-out;
+}
+@keyframes wr-sheen {
+  from { background-position: 150% 0; }
+  to { background-position: -50% 0; }
+}
+
+/* placeholder (until real photos are dropped in) */
+.wr-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background:
+    repeating-linear-gradient(45deg, rgba(141,66,78,0.05) 0 14px, rgba(141,66,78,0.09) 14px 28px),
+    linear-gradient(135deg, #f3e0e2, #e8cdd0);
+  color: #8D424E;
+}
+.wr-ph-icon { font-size: 1.6rem; opacity: 0.55; }
+.wr-ph-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.6;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+/* ── Caption tab (matches the deck's maroon caption style) ── */
+.wr-caption {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #6B2737;
+  color: #F0EAE2;
+  padding: 1rem 1.6rem;
+  border-radius: 8px;
+  align-self: flex-start;
+  box-shadow: 0 12px 30px rgba(107, 39, 55, 0.3);
+  max-width: 520px;
+}
+.wr-caption-index {
+  font-size: 2rem;
+  font-weight: 900;
+  color: rgba(240, 234, 226, 0.45);
+  line-height: 1;
+}
+.wr-caption-title {
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  font-weight: 800;
+  margin: 0 0 0.2rem;
+  letter-spacing: -0.01em;
+}
+.wr-caption-venue {
+  font-size: 0.85rem;
+  color: rgba(240, 234, 226, 0.7);
+  margin: 0;
+}
+
+/* ── End cap ── */
+.wr-endcap {
+  width: 70vw;
+  justify-content: center;
+  align-items: center;
+}
+.wr-endcap-word {
+  font-size: clamp(2rem, 6vw, 6rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-align: center;
+  background: linear-gradient(100deg, #8D424E, #D6838B, #8D424E);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: wr-shine 5s linear infinite;
+}
+@keyframes wr-shine {
+  to { background-position: 200% center; }
+}
+
+/* ════════════════════════════════════════════════
+   MOBILE / TOUCH — drop the pin, native horizontal swipe
+   ════════════════════════════════════════════════ */
+@media (max-width: 820px) {
+  .wr-section {
+    height: auto;
+    padding: 4rem 0;
+  }
+  .wr-spotlight { display: none; }
+  .wr-thread { display: none; }
+
+  .wr-track {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+    transform: none !important;   /* GSAP never runs here, but be safe */
+    padding-bottom: 1rem;
+  }
+  .wr-panel {
+    scroll-snap-align: center;
+    padding: 0 6vw;
+    height: auto;
+  }
+  .wr-opening,
+  .wr-wingtitle { width: 88vw; }
+  .wr-event { width: 88vw; }
+  .wr-photos--fan .wr-frame {
+    width: 60vw;
+    margin-left: -10vw;
+  }
+  .wr-photos--hero .wr-frame { width: 84vw; }
+  .wr-photos--grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .wr-photos--grid .wr-frame { width: 38vw; }
+  .wr-indicator { display: none; }
+  .wr-endcap { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wr-scroll-hint span,
+  .wr-frame:hover .wr-frame-sheen { animation: none; }
+}
