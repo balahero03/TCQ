@@ -77,11 +77,10 @@
 }
 .hero-sparkle {
   position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, #E6BABE 0%, #8D424E 70%, transparent 100%);
-  box-shadow: 0 0 10px rgba(214, 131, 139, 0.9);
   z-index: 1;
   pointer-events: none;
+  overflow: visible;
+  filter: drop-shadow(0 0 6px currentColor);
   will-change: transform, opacity;
 }
 
