@@ -15,12 +15,14 @@ export default function CountUp({
   const inView = useInView(ref, { once: false, amount: 0.1 });
 
   useEffect(() => {
-    if (!inView) {
-      setCount(from);
-      return;
-    }
     let startTime;
     let animationFrame;
+
+    if (!inView) {
+      // Re-arm to the starting value once the element leaves the viewport.
+      animationFrame = requestAnimationFrame(() => setCount(from));
+      return () => cancelAnimationFrame(animationFrame);
+    }
 
     const updateCount = (timestamp) => {
       if (!startTime) startTime = timestamp;

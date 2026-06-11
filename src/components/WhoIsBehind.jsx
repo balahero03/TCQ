@@ -1,9 +1,8 @@
-import { useRef, useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence, useInView, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { useRef, useEffect, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import BlobCursor from './BlobCursor';
 import drVishnuImg from '../assets/dr_vishnu_aravind.jpg';
 import CardSwap, { Card } from './CardSwap';
 
@@ -29,11 +28,10 @@ function OrganicTimeline() {
   const step = 100 / (timeline.length + 1); // vertical percentage spacing
   
   // Dynamically generate the smooth wavy SVG path and node coordinates
-  const { pathData, nodes, decorations } = useMemo(() => {
+  const { pathData, nodes } = useMemo(() => {
     const d = [`M 50 0`];
     const n = [];
-    const decs = [];
-    
+
     timeline.forEach((item, i) => {
       const isNodeLeft = i % 2 === 0;
       const x = isNodeLeft ? 25 : 75; // Increased width (wider path)
@@ -45,34 +43,14 @@ function OrganicTimeline() {
       // Smooth cubic bezier curve to next point
       d.push(`C ${prevX} ${prevY + step/2}, ${x} ${y - step/2}, ${x} ${y}`);
       n.push({ x, y, isNodeLeft, data: item });
-
-      // Deterministic pseudo-random generation for decorations
-      decs.push({
-        id: `circle-${i}`,
-        x: isNodeLeft ? x + 15 + (i * 1.5 % 5) : x - 15 - (i * 2.5 % 5),
-        y: y - step/2 + (i * 2 % 5),
-        size: 8 + (i * 3 % 8),
-        type: 'circle',
-        anim: i % 2 === 0 ? 'floatSlow' : 'floatFast',
-        delay: (i * 0.7) % 2
-      });
-      decs.push({
-        id: `shape-${i}`,
-        x: isNodeLeft ? x - 12 - (i * 3 % 10) : x + 12 + (i * 2 % 10),
-        y: y - step/4 + (i * 4 % 10),
-        size: 12 + (i * 5 % 6),
-        type: i % 2 === 0 ? 'plus' : 'star',
-        anim: i % 2 === 0 ? 'floatFast' : 'floatSlow',
-        delay: (i * 1.1) % 2
-      });
     });
-    
+
     // Line exiting the bottom
     const lastX = n[n.length - 1].x;
     const lastY = n[n.length - 1].y;
     d.push(`C ${lastX} ${lastY + step/2}, 50 ${lastY + step/2}, 50 100`);
-    
-    return { pathData: d.join(" "), nodes: n, decorations: decs };
+
+    return { pathData: d.join(" "), nodes: n };
   }, [step]);
 
   useEffect(() => {
@@ -383,54 +361,38 @@ function OrganicTimeline() {
   );
 }
 
+const wordVariants = {
+  hidden: { opacity: 0, y: 50, filter: 'blur(5px)' },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 1.1,
+      delay: i * 0.12,
+      ease: [0.2, 0.65, 0.3, 0.9],
+    },
+  }),
+};
+
+const Word = ({ word, index, style }) => (
+  <motion.span
+    custom={index}
+    variants={wordVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: false, amount: 0.1, margin: '0px' }}
+    style={{ display: 'inline-block', ...style }}
+  >
+    {word}
+  </motion.span>
+);
+
 export default function WhoIsBehind() {
-  const trackRef = useRef(null);
   const sectionRef = useRef(null);
-  const introContainerRef = useRef(null);
-  const [activeIdx, setActiveIdx] = useState(null);
-
-  // Horizontal scroll via vertical scroll for timeline
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // Vertical scroll progress for sticky text reveal
-  const { scrollYProgress: introProgress } = useScroll({
-    target: introContainerRef,
-    offset: ['start start', 'end end'],
-  });
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-55%']);
-
-  const wordVariants = {
-    hidden: { opacity: 0, y: 50, filter: 'blur(5px)' },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: {
-        duration: 1.1,
-        delay: i * 0.12,
-        ease: [0.2, 0.65, 0.3, 0.9],
-      },
-    }),
-  };
-
-  const Word = ({ word, index, style }) => (
-    <motion.span
-      custom={index}
-      variants={wordVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.1, margin: '0px' }}
-      style={{ display: 'inline-block', ...style }}
-    >
-      {word}
-    </motion.span>
-  );
 
   return (
-    <section ref={sectionRef} style={{ background: '#F7EAEB', paddingBottom: 0, fontFamily: "'Inter', sans-serif", position: 'relative', overflow: 'clip' }}>
+    <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#F7EAEB', paddingBottom: 0, fontFamily: "'Inter', sans-serif", position: 'relative', overflow: 'clip' }}>
 
       <style>{`
         .wib-container {

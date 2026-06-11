@@ -30,7 +30,9 @@ export default function BlurText({
 
   useEffect(() => {
     if (!inView) {
-      setCompleted(0);
+      // Re-arm the completion counter once the element leaves the viewport.
+      const frame = requestAnimationFrame(() => setCompleted(0));
+      return () => cancelAnimationFrame(frame);
     }
   }, [inView]);
 

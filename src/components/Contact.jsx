@@ -28,6 +28,7 @@ const letter = {
 export default function Contact() {
   return (
     <section
+      id="contact"
       style={{
         position: 'relative',
         overflow: 'hidden',
@@ -410,7 +411,7 @@ export default function Contact() {
             <a href="tel:+918754400743" className="ctf-link" style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', color: 'rgba(240,234,226,0.75)' }}>
               +91 87544 00743
             </a>
-            <a href="https://linktr.ee/tcq_india" className="ctf-pill" style={{ marginTop: '0.4rem' }}>
+            <a href="https://linktr.ee/tcq_india" target="_blank" rel="noopener noreferrer" className="ctf-pill" style={{ marginTop: '0.4rem' }}>
               linktr.ee/tcq_india <span aria-hidden="true">↗</span>
             </a>
           </div>
@@ -423,7 +424,7 @@ export default function Contact() {
             VoidTheory
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <a href="https://instagram.com/voidtheory_it" className="ctf-credit-link">
+            <a href="https://instagram.com/voidtheory_it" target="_blank" rel="noopener noreferrer" className="ctf-credit-link">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
               @voidtheory_it
             </a>

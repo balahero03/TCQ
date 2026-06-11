@@ -3,35 +3,35 @@ import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import CountUp from './CountUp';
 
+const wordVariants = {
+  hidden: { opacity: 0, y: 50, filter: 'blur(5px)' },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 1.1,
+      delay: i * 0.12,
+      ease: [0.2, 0.65, 0.3, 0.9],
+    },
+  }),
+};
+
+const Word = ({ word, index }) => (
+  <motion.span
+    custom={index}
+    variants={wordVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: false, amount: 0.1, margin: '0px' }}
+    style={{ display: 'inline-block' }}
+  >
+    {word}
+  </motion.span>
+);
+
 export default function WhatIsTCQ() {
   const containerRef = useRef(null);
-
-  const wordVariants = {
-    hidden: { opacity: 0, y: 50, filter: 'blur(5px)' },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: {
-        duration: 1.1,
-        delay: i * 0.12,
-        ease: [0.2, 0.65, 0.3, 0.9],
-      },
-    }),
-  };
-
-  const Word = ({ word, index }) => (
-    <motion.span
-      custom={index}
-      variants={wordVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false, amount: 0.1, margin: '0px' }}
-      style={{ display: 'inline-block' }}
-    >
-      {word}
-    </motion.span>
-  );
 
   return (
     <section ref={containerRef} style={{

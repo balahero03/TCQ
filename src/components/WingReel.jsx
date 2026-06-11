@@ -330,7 +330,7 @@ export default function WingReel() {
   return (
     <>
       {/* ════════ Opening: its own vertical page (normal scroll) ════════ */}
-      <section className="wr-opening-page">
+      <section id="what-we-do" className="wr-opening-page">
         <div className="wr-opening">
           <span className="wr-opening-eyebrow">What we do</span>
           <h2 className="wr-opening-title">

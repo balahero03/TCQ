@@ -83,6 +83,14 @@ const TrueFocus = ({
               '--glow-color': glowColor,
               transition: `filter ${animationDuration}s ease`
             }}
+            onClick={(e) => {
+              const id = word.toLowerCase().replace(/[^a-z]+/g, '-');
+              const target = document.getElementById(id);
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >

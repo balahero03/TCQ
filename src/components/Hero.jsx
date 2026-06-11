@@ -30,6 +30,12 @@ export default function Hero({ logoLanded }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const startDelay = 500;
 
+  // Smooth-scroll to a section by id, closing the mobile menu if open.
+  const scrollToSection = (id) => {
+    setIsMobileMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   // ── Cursor parallax: normalised mouse position (-0.5 … 0.5) ──
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -206,9 +212,9 @@ export default function Hero({ logoLanded }) {
                 <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
-            <a href="#" className="mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>Who's behind TCQ</a>
-            <a href="#" className="mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>What we do</a>
-            <a href="#" className="mobile-menu-link" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+            <a href="#who-s-behind-tcq" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); scrollToSection('who-s-behind-tcq'); }}>Who's behind TCQ</a>
+            <a href="#what-we-do" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); scrollToSection('what-we-do'); }}>What we do</a>
+            <a href="#contact" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -250,6 +256,7 @@ export default function Hero({ logoLanded }) {
                 viewport={{ once: false, amount: 0.1 }}
                 transition={{ delay: (startDelay + 400) / 1000, duration: 0.5 }}
                 className="explore-button"
+                onClick={() => scrollToSection('what-we-do')}
               >
                 Explore TCQ
                 <span className="btn-arrow" style={{ color: '#E6BABE', fontSize: '1rem', lineHeight: 1 }}>→</span>
