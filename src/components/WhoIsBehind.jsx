@@ -8,13 +8,16 @@ import CardSwap, { Card } from './CardSwap';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
+// `img: null` is a placeholder — drop a real image in (import from
+// ../assets/timeline/<file> and replace null) and it appears automatically
+// in the open space beside each milestone as it unlocks.
 const timeline = [
-  { year: '2019', role: 'Red Bull', sub: 'Marketing Ambassador' },
-  { year: '2020', role: 'Fully Filmy', sub: 'Content Creator' },
-  { year: '2021', role: 'Greater Chennai Corporation', sub: 'Medical Officer during Pandemic' },
-  { year: '2023', role: 'Jio Cinemas', sub: 'Fan Commentator for IPL' },
-  { year: '2024', role: "R Ashwin's Youtube", sub: 'Content Team' },
-  { year: '2025', role: 'Sri Ramachandra Hospital', sub: 'M.D. Preventive Medicine' },
+  { year: '2019', role: 'Red Bull', sub: 'Marketing Ambassador', img: null },
+  { year: '2020', role: 'Fully Filmy', sub: 'Content Creator', img: null },
+  { year: '2021', role: 'Greater Chennai Corporation', sub: 'Medical Officer during Pandemic', img: null },
+  { year: '2023', role: 'Jio Cinemas', sub: 'Fan Commentator for IPL', img: null },
+  { year: '2024', role: "R Ashwin's Youtube", sub: 'Content Team', img: null },
+  { year: '2025', role: 'Sri Ramachandra Hospital', sub: 'M.D. Preventive Medicine', img: null },
 ];
 
 function OrganicTimeline() {
@@ -67,6 +70,8 @@ function OrganicTimeline() {
         if (!el) return;
         gsap.set(el.querySelector('.organic-node'), { scale: 0, opacity: 0 });
         gsap.set(el.querySelector('.organic-content'), { opacity: 0, y: 30 });
+        const img = el.querySelector('.organic-image');
+        if (img) gsap.set(img, { opacity: 0, y: 30, scale: 0.85 });
       });
 
       // Master Timeline for ScrollTrigger
@@ -106,6 +111,7 @@ function OrganicTimeline() {
         if (!el) return;
         const nodePoint = el.querySelector('.organic-node');
         const content = el.querySelector('.organic-content');
+        const image = el.querySelector('.organic-image');
         const particles = el.querySelectorAll('.burst-particle');
         
         // Time on the timeline (0 to 1) matches the percentage position.
@@ -148,6 +154,17 @@ function OrganicTimeline() {
           ease: "power3.out",
           duration: 0.1
         }, progressTime - 0.02);
+
+        // Reveal the milestone image in the open space opposite the content
+        if (image) {
+          tl.to(image, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            ease: "back.out(1.6)",
+            duration: 0.12
+          }, progressTime - 0.02);
+        }
       });
 
       // 5. Final Cinematic U-Turn Fly-Off Sequence
@@ -353,6 +370,35 @@ function OrganicTimeline() {
                   </p>
                 </div>
               </div>
+
+              {/* Milestone image — sits in the open space opposite the content,
+                  reveals in sync with the node unlock. */}
+              <div
+                className="organic-image"
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  // Mirror of the content block: opposite side of the node.
+                  right: node.isNodeLeft ? `${100 - node.x + 8}%` : 'auto',
+                  left: !node.isNodeLeft ? `${node.x + 8}%` : 'auto',
+                  zIndex: 9,
+                }}
+              >
+                <div className="organic-image-frame">
+                  {node.data.img ? (
+                    <img src={node.data.img} alt={node.data.role} loading="lazy" />
+                  ) : (
+                    <div className="organic-image-ph">
+                      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <path d="M21 15l-5-5L5 21" />
+                      </svg>
+                      <span className="organic-image-ph-label">{node.data.year}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -481,6 +527,59 @@ export default function WhoIsBehind() {
           transform: translateY(-52%) scale(1.03);
           box-shadow: 0 20px 40px rgba(141, 66, 78, 0.15);
           border-color: rgba(141, 66, 78, 0.4);
+        }
+
+        /* Milestone image placeholder (opposite side of the content) */
+        .organic-image-frame {
+          width: clamp(150px, 18vw, 240px);
+          aspect-ratio: 4 / 3;
+          transform: translateY(-50%) rotate(-2deg);
+          border-radius: 18px;
+          overflow: hidden;
+          background: #FFFFFF;
+          padding: 8px;
+          border: 1px solid rgba(141,66,78,0.15);
+          box-shadow: 0 12px 30px rgba(141, 66, 78, 0.1);
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+          cursor: default;
+        }
+        .organic-image-frame:hover {
+          transform: translateY(-50%) rotate(0deg) scale(1.04);
+          box-shadow: 0 20px 40px rgba(141, 66, 78, 0.18);
+        }
+        .organic-image-frame img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 12px;
+          display: block;
+        }
+        .organic-image-ph {
+          width: 100%;
+          height: 100%;
+          border-radius: 12px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          color: rgba(141,66,78,0.55);
+          background:
+            repeating-linear-gradient(45deg, rgba(141,66,78,0.05) 0 10px, rgba(141,66,78,0.09) 10px 20px),
+            #F7EAEB;
+          border: 1.5px dashed rgba(141,66,78,0.3);
+        }
+        .organic-image-ph-label {
+          font-family: 'Outfit', sans-serif;
+          font-weight: 700;
+          font-size: 0.75rem;
+          letter-spacing: 0.15em;
+          color: rgba(141,66,78,0.6);
+        }
+
+        /* On mobile the path collapses — hide the side image to avoid overlap */
+        @media (max-width: 768px) {
+          .organic-image { display: none; }
         }
         .year-pill {
           display: flex;
