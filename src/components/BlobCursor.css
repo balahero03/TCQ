@@ -6,14 +6,11 @@
   mix-blend-mode: difference;
 }
 
-.cursor-dot {
+.cursor-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  /* GSAP owns the transform: xPercent/yPercent centre it on the pointer,
-     x/y follow, rotation aims along travel, scaleX stretches dot → line. */
-  border-radius: 999px;
-  will-change: transform;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
 }
 
