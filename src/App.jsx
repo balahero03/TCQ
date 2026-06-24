@@ -26,9 +26,9 @@ function App() {
         <>
           <BlobCursor
             fillColor="#FFFFFF"
-            dotSize={10}
-            lineWidth={3}
-            fade={0.06}
+            dotSize={18}
+            lineWidth={4}
+            trailLength={18}
             zIndex={9999}
           />
         <main>
