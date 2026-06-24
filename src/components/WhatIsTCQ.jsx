@@ -88,6 +88,7 @@ export default function WhatIsTCQ() {
 
         /* Bold sans-serif words */
         .tcq-bold-word {
+          font-family: 'League Spartan', sans-serif;
           font-size: clamp(2.5rem, 9.5vw, 11rem);
           font-weight: 800;
           letter-spacing: -0.04em;

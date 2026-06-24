@@ -282,6 +282,7 @@ export default function Contact() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
           style={{
+            fontFamily: "'League Spartan', sans-serif",
             fontSize: 'clamp(3rem, 9vw, 8rem)',
             fontWeight: 900,
             letterSpacing: '-0.04em',

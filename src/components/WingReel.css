@@ -128,6 +128,7 @@
   margin-bottom: 1.6rem;
 }
 .wr-opening-title {
+  font-family: 'League Spartan', sans-serif;
   font-size: clamp(3.4rem, 8vw, 7.5rem);
   font-weight: 900;
   line-height: 0.92;
@@ -281,6 +282,7 @@
   margin-bottom: 1.25rem;
 }
 .wr-title {
+  font-family: 'League Spartan', sans-serif;
   font-size: clamp(3rem, 8vw, 7rem);
   font-weight: 900;
   text-transform: uppercase;

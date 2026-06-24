@@ -149,8 +149,8 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   transition={{ delay: 0.45, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     color: '#F0EAE2',
-                    fontFamily: 'Inter, sans-serif',
-                    fontWeight: 300,
+                    fontFamily: 'Fredoka, sans-serif',
+                    fontWeight: 500,
                     fontSize: '1.6rem',
                     letterSpacing: '0.35em',
                     textTransform: 'uppercase',

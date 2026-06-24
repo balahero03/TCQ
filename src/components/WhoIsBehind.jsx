@@ -659,6 +659,7 @@ export default function WhoIsBehind() {
             />
             <h2
               style={{
+                fontFamily: "'League Spartan', sans-serif",
                 fontSize: 'clamp(2.8rem, 10vw, 7rem)',
                 fontWeight: 800,
                 lineHeight: 1.05,
