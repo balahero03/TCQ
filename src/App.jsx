@@ -25,21 +25,9 @@ function App() {
       {showContent && (
         <>
           <BlobCursor
-            blobType="circle"
             fillColor="#FFFFFF"
-            trailCount={3}
-            sizes={[55, 38, 38]}
-            innerSizes={[60, 14, 14]}
-            innerColor="#FFFFFF"
-            opacities={[1, 1, 1]}
-            shadowColor="#FFFFFF"
-            shadowBlur={23}
-            shadowOffsetX={27}
-            shadowOffsetY={13}
-            filterStdDeviation={30}
-            useFilter={true}
-            fastDuration={0.1}
-            slowDuration={0.54}
+            dotSize={12}
+            maxStretch={7}
             zIndex={9999}
           />
         <main>
