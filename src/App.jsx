@@ -25,7 +25,7 @@ function App() {
       {showContent && (
         <>
           <BlobCursor
-            fillColor="#FFFFFF"
+            fillColor="#B85E6A"
             dotSize={18}
             lineWidth={4}
             trailLength={18}

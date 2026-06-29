@@ -33,7 +33,7 @@ export default function WhatIsTCQ() {
         /* ════════ HEADING — clean editorial statement ════════ */
         .tcq-hero {
           width: 100%;
-          max-width: 1100px;
+          max-width: 1400px;
           margin: 0 auto;
         }
 
@@ -64,23 +64,25 @@ export default function WhatIsTCQ() {
           padding: 0;
           font-family: 'League Spartan', sans-serif;
           font-weight: 800;
-          font-size: clamp(2.6rem, 7.5vw, 7rem);
-          line-height: 1.02;
+          font-size: clamp(3rem, 8.5vw, 8.5rem);
+          line-height: 1.05;
           letter-spacing: -0.03em;
           color: #1F090C;
         }
-        /* the accent phrase in cursive, inline & flowing with the sentence */
+        /* the accent phrase in cursive, on its own line below "What is the" */
         .tcq-heading .accent {
           font-family: 'Pacifico', cursive;
           font-weight: 400;
-          letter-spacing: -0.01em;
+          letter-spacing: -0.02em;
           background: linear-gradient(120deg, #B85E6A 0%, #D6838B 55%, #8D424E 100%);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
-          /* cursive needs a touch more room than the caps it sits beside */
-          font-size: 1.18em;
-          line-height: 0.9;
+          font-size: 1em;          /* same scale as the caps so it fits on one line */
+          line-height: 1.1;
+          display: inline-block;
+          padding-bottom: 0.1em;   /* room for descenders (Q, y) */
+          white-space: nowrap;     /* keep "Curiosity Quotient?" on one line */
         }
 
         /* ── BOTTOM BAND: content grid ── */
