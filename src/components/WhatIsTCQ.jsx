@@ -3,33 +3,6 @@ import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import CountUp from './CountUp';
 
-const wordVariants = {
-  hidden: { opacity: 0, y: 50, filter: 'blur(5px)' },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 1.1,
-      delay: i * 0.12,
-      ease: [0.2, 0.65, 0.3, 0.9],
-    },
-  }),
-};
-
-const Word = ({ word, index }) => (
-  <motion.span
-    custom={index}
-    variants={wordVariants}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: false, amount: 0.1, margin: '0px' }}
-    style={{ display: 'inline-block' }}
-  >
-    {word}
-  </motion.span>
-);
-
 export default function WhatIsTCQ() {
   const containerRef = useRef(null);
 
@@ -47,75 +20,67 @@ export default function WhatIsTCQ() {
           width: 100%;
         }
 
-        /* ── TOP BAND ── */
+        /* ── TOP BAND ── fills the upper viewport ── */
         .tcq-top-band {
-          padding: 7vh 5vw 3vh 5vw;
+          min-height: 68vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 8vh 6vw;
           border-bottom: 1px solid rgba(31,9,12,0.08);
         }
 
+        /* ════════ HEADING — clean editorial statement ════════ */
+        .tcq-hero {
+          width: 100%;
+          max-width: 1100px;
+          margin: 0 auto;
+        }
+
+        /* small eyebrow label above the heading */
         .tcq-eyebrow-row {
           display: flex;
           align-items: center;
-          gap: 1rem;
-          margin-bottom: 5vh;
+          gap: 0.85rem;
+          margin-bottom: clamp(1.5rem, 4vh, 3rem);
         }
         .tcq-eyebrow-rule {
-          width: 2rem;
+          width: 2.5rem;
           height: 2px;
           background: #8D424E;
-          flex-shrink: 0;
         }
         .tcq-eyebrow {
-          font-size: 0.7rem;
-          letter-spacing: 0.25em;
+          font-family: 'League Spartan', sans-serif;
+          font-size: 0.75rem;
+          letter-spacing: 0.3em;
           text-transform: uppercase;
           color: #8D424E;
           font-weight: 700;
         }
 
-        /* ── Heading: words flow freely, line-by-line ── */
+        /* the heading itself — one tight refined statement */
         .tcq-heading {
           margin: 0;
           padding: 0;
-        }
-
-        /* Each line is a row */
-        .tcq-heading-line {
-          display: block;
-          line-height: 0.88;
-          margin-bottom: 0.06em;
-        }
-
-        /* Bold sans-serif words */
-        .tcq-bold-word {
           font-family: 'League Spartan', sans-serif;
-          font-size: clamp(2.5rem, 9.5vw, 11rem);
           font-weight: 800;
-          letter-spacing: -0.04em;
-          text-transform: uppercase;
+          font-size: clamp(2.6rem, 7.5vw, 7rem);
+          line-height: 1.02;
+          letter-spacing: -0.03em;
           color: #1F090C;
-          display: inline-block;
-          margin-right: 0.2em;
         }
-        .tcq-bold-word:last-child {
-          margin-right: 0;
-        }
-
-        /* Pacifico line — its own dedicated row, pushed right */
-        .tcq-cursive-line {
-          display: flex;
-          justify-content: flex-end;
-          padding-right: 1vw;
-          margin-top: 0.05em;
-        }
-        .tcq-cursive-word {
+        /* the accent phrase in cursive, inline & flowing with the sentence */
+        .tcq-heading .accent {
           font-family: 'Pacifico', cursive;
-          font-size: clamp(2.2rem, 8.5vw, 10rem);
           font-weight: 400;
-          color: #8D424E;
           letter-spacing: -0.01em;
-          line-height: 1;
-          display: inline-block;
+          background: linear-gradient(120deg, #B85E6A 0%, #D6838B 55%, #8D424E 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          /* cursive needs a touch more room than the caps it sits beside */
+          font-size: 1.18em;
+          line-height: 0.9;
         }
 
         /* ── BOTTOM BAND: content grid ── */
@@ -201,10 +166,7 @@ export default function WhatIsTCQ() {
             font-size: clamp(2rem, 11vw, 5rem);
           }
           .tcq-cursive-word {
-            font-size: clamp(1.8rem, 10vw, 4.5rem);
-          }
-          .tcq-cursive-line {
-            justify-content: flex-start;
+            font-size: clamp(1.8rem, 9vw, 4rem);
           }
           .tcq-bottom-band {
             grid-template-columns: 1fr;
@@ -225,45 +187,44 @@ export default function WhatIsTCQ() {
 
 
 
-          <h2 className="tcq-heading">
+          <motion.div
+            className="tcq-hero"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.1, margin: '0px' }}
+          >
+            <motion.div
+              className="tcq-eyebrow-row"
+              variants={{
+                hidden: { opacity: 0, x: -20 },
+                visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+              }}
+            >
+              <span className="tcq-eyebrow-rule" />
+              <span className="tcq-eyebrow">About TCQ</span>
+            </motion.div>
 
-            {/* Line 1: WHAT IS */}
-            <span className="tcq-heading-line">
-              {['WHAT', 'IS'].map((w, i) => (
-                <span key={w} className="tcq-bold-word">
-                  <Word word={w} index={i} />
-                </span>
-              ))}
-            </span>
-
-            {/* Line 2: THE */}
-            <span className="tcq-heading-line">
-              <span className="tcq-bold-word">
-                <Word word="THE" index={2} />
-              </span>
-            </span>
-
-            {/* Line 3: CURIOSITY */}
-            <span className="tcq-heading-line">
-              <span className="tcq-bold-word">
-                <Word word="CURIOSITY" index={3} />
-              </span>
-            </span>
-
-            {/* Line 4: Pacifico "Quotient?" — right-aligned, its own row */}
-            <span className="tcq-cursive-line">
+            <h2 className="tcq-heading">
               <motion.span
-                className="tcq-cursive-word"
-                initial={{ opacity: 0, x: 40, rotate: 6 }}
-                whileInView={{ opacity: 1, x: 0, rotate: -3 }}
-                viewport={{ once: false, amount: 0.1, margin: '0px' }}
-                transition={{ duration: 1.4, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                style={{ display: 'block' }}
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] } },
+                }}
               >
-                Quotient?
+                What is the
               </motion.span>
-            </span>
-
-          </h2>
+              <motion.span
+                style={{ display: 'block' }}
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] } },
+                }}
+              >
+                <span className="accent">Curiosity Quotient?</span>
+              </motion.span>
+            </h2>
+          </motion.div>
         </div>
 
         {/* ─── BOTTOM BAND ─── */}
