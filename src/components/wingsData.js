@@ -51,10 +51,10 @@ export const WINGS = [
       'Every question blends a puzzle with a story, so participants leave not just with results but with stories they remember for life. With nearly 15 years of experience, we specialise in marketing and seamlessly integrating brands into our quizzes.',
     events: [
       {
-        name: "Fundamavan '26",
-        venue: 'SSN Instincts Flagship General Quiz',
+        name: '6 to 60 Quizzes',
+        venue: '15 weeks of endless curiosity at KIS Cafe',
         layout: 'fan',
-        photos: [ph(3, 4), ph(4, 3), ph(16, 9)],
+        photos: [ph(3, 4), ph(3, 4), ph(3, 4)],
       },
       {
         name: 'Abuzz 2025',
@@ -63,10 +63,10 @@ export const WINGS = [
         photos: [ph(4, 3), ph(4, 3), ph(16, 9)],
       },
       {
-        name: '6 to 60 Quizzes',
-        venue: '15 weeks of endless curiosity at KIS Cafe',
+        name: "Fundamavan '26",
+        venue: 'SSN Instincts Flagship General Quiz',
         layout: 'fan',
-        photos: [ph(3, 4), ph(3, 4), ph(3, 4)],
+        photos: [ph(3, 4), ph(4, 3), ph(16, 9)],
       },
     ],
   },

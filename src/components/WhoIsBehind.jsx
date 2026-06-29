@@ -167,34 +167,9 @@ function OrganicTimeline() {
         }
       });
 
-      // 5. Final Cinematic U-Turn Fly-Off Sequence
-      // Break away, perform a swooping 180-degree U-turn, and blast off to the top-left
-      const ww = window.innerWidth;
-      const wh = window.innerHeight;
-
-      tl.to(runnerRef.current, {
-        motionPath: {
-          path: [
-            { x: `+=${ww * 0.10}`, y: `+=${wh * 0.15}` }, // Drop down and right (anticipation)
-            { x: `+=${ww * 0.30}`, y: `-=${wh * 0.10}` }, // Sweep wide to the right and turn up
-            { x: 0,                y: `-=${wh * 0.50}` }, // Cross back over the center
-            { x: `-=${ww * 1.5}`,  y: `-=${wh * 1.5}` }   // Warp speed out top-left
-          ],
-          curviness: 1.5,
-          autoRotate: 90 // Seamlessly tracks the 180-degree curve
-        },
-        scale: 150, // Massive cinematic scale
-        filter: "blur(20px)", // Realistic motion blur
-        ease: "power4.in", // Smooth entry, extreme exit velocity
-        duration: 0.45 // Cinematic duration
-      }, ">");
-
-      // Fade out at the absolute last moment
-      tl.to(runnerRef.current, {
-        opacity: 0,
-        ease: "power2.in",
-        duration: 0.05
-      }, "<0.40");
+      // The rocket simply rides the path to the bottom and stays there —
+      // no scale-up, blur, or fade-off. It remains visible at the end of
+      // the line, having flown over the whole timeline.
 
     }, pinRef);
 

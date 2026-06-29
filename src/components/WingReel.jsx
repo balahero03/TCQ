@@ -18,6 +18,34 @@ const CARD_LAYOUT = [
   { x: 34, y: 80, r: 8,  depth: 0.6 },
 ];
 
+// Each wing section gets a stable id derived from its number so cards can
+// scroll straight to it.
+const wingSectionId = (wing) => `wing-${wing.no}`;
+
+// Smoothly scroll to an element over a fixed duration with an ease — native
+// `scrollIntoView({behavior:'smooth'})` whips across the long pinned reels too
+// fast, so we drive the scroll ourselves for a gentle, consistent glide.
+function smoothScrollTo(el, duration = 1400) {
+  if (!el) return;
+  const startY = window.scrollY;
+  const targetY = startY + el.getBoundingClientRect().top;
+  const distance = targetY - startY;
+  if (Math.abs(distance) < 1) return;
+
+  // easeInOutCubic — slow start, slow finish, smooth middle.
+  const ease = (t) =>
+    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  let startTime = null;
+  const step = (now) => {
+    if (startTime === null) startTime = now;
+    const t = Math.min((now - startTime) / duration, 1);
+    window.scrollTo(0, startY + distance * ease(t));
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
 function MagneticCard({ wing, layout, mx, my }) {
   // pull toward the cursor, scaled by the card's depth
   const tx = useTransform(mx, (v) => v * 40 * layout.depth);
@@ -25,9 +53,23 @@ function MagneticCard({ wing, layout, mx, my }) {
   const x = useSpring(tx, { stiffness: 120, damping: 16, mass: 0.5 });
   const y = useSpring(ty, { stiffness: 120, damping: 16, mass: 0.5 });
 
+  const goToWing = () => {
+    smoothScrollTo(document.getElementById(wingSectionId(wing)));
+  };
+
   return (
     <motion.div
       className="wr-mcard"
+      role="link"
+      tabIndex={0}
+      aria-label={`Go to ${wing.title}`}
+      onClick={goToWing}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          goToWing();
+        }
+      }}
       style={{
         left: `${layout.x}%`,
         top: `${layout.y}%`,
@@ -35,6 +77,7 @@ function MagneticCard({ wing, layout, mx, my }) {
         y,
         rotate: layout.r,
         zIndex: Math.round(layout.depth * 10),
+        cursor: 'pointer',
       }}
       whileHover={{ scale: 1.08, rotate: 0, zIndex: 30 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -290,6 +333,7 @@ function WingPin({ wing, index, isLast }) {
 
   return (
     <section
+      id={wingSectionId(wing)}
       className={`wr-section ${reverse ? 'wr-section--reverse' : ''}`}
       ref={pinRef}
       onMouseMove={onSpot}
