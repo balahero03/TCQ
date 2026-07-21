@@ -25,8 +25,8 @@ export const WINGS = [
       {
         name: 'Typical Chennai Quiz',
         venue: 'For KYN app, 2025',
-        layout: 'fan',
-        photos: [ph(4, 3), ph(3, 4), ph(4, 3)],
+        layout: 'split',
+        photos: [ph(3, 4), ph(16, 9)],
       },
       {
         name: 'Walls on Wheels',
@@ -37,8 +37,8 @@ export const WINGS = [
       {
         name: 'TCQ Jams',
         venue: 'For KIS Cafe, a music-themed cafe at Adyar',
-        layout: 'fan',
-        photos: [ph(3, 4), ph(3, 4), ph(3, 4)],
+        layout: 'collage',
+        photos: [ph(16, 10), ph(3, 4)],
       },
     ],
   },
@@ -59,8 +59,8 @@ export const WINGS = [
       {
         name: 'Abuzz 2025',
         venue: 'Inter-school Quiz Finals — PSBB Group of Schools',
-        layout: 'fan',
-        photos: [ph(4, 3), ph(4, 3), ph(16, 9)],
+        layout: 'strip',
+        photos: [ph(1, 1), ph(1, 1), ph(1, 1)],
       },
       {
         name: "Fundamavan '26",
@@ -81,8 +81,8 @@ export const WINGS = [
       {
         name: 'Circles, Season One',
         venue: 'Indie Music · Stargazing · Madras History · an Umpire’s POV of cricket',
-        layout: 'fan',
-        photos: [ph(3, 4), ph(4, 3), ph(3, 4)],
+        layout: 'split',
+        photos: [ph(3, 4), ph(16, 9)],
       },
       {
         name: 'Hysterically Speaking / Vinyl Destination',
@@ -122,14 +122,14 @@ export const WINGS = [
       {
         name: 'Intellect Club',
         venue: 'MOP Vaishnav College for Women, 2024–2026',
-        layout: 'fan',
-        photos: [ph(4, 3), ph(3, 4), ph(4, 3)],
+        layout: 'collage',
+        photos: [ph(16, 10), ph(3, 4)],
       },
       {
         name: 'Anti-Drug Awareness Programme',
         venue: 'Ethiraj College for Women, 2025',
-        layout: 'fan',
-        photos: [ph(3, 4), ph(16, 9), ph(3, 4)],
+        layout: 'strip',
+        photos: [ph(1, 1), ph(1, 1), ph(1, 1)],
       },
     ],
   },

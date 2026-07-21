@@ -177,7 +177,7 @@ function OrganicTimeline() {
   }, [nodes, step]);
 
   return (
-    <div style={{ background: '#FFFFFF' }}>
+    <div style={{ background: '#F7E7C4' }}>
       <div ref={pinRef} style={{ width: '100%', height: '100vh', position: 'relative', overflow: 'hidden', fontFamily: "'Outfit', sans-serif" }}>
         
         {/* Scrolling Canvas (220vh gives HUGE gaps between nodes) */}
@@ -186,12 +186,12 @@ function OrganicTimeline() {
           {/* Title Header matching WhatIsTCQ style - now scrolls away naturally */}
           <div style={{ position: 'absolute', top: '7vh', left: '5vw', zIndex: 3 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-              <div style={{ width: '2rem', height: '2px', background: '#8D424E' }} />
-              <div style={{ fontSize: '0.7rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#8D424E', fontWeight: 700 }}>
+              <div style={{ width: '2rem', height: '2px', background: '#D58F6B' }} />
+              <div style={{ fontSize: '0.7rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#D58F6B', fontWeight: 700 }}>
                 Journey
               </div>
             </div>
-            <div style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#1F090C', letterSpacing: '-0.04em', lineHeight: 1, textTransform: 'uppercase' }}>
+            <div style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#382525', letterSpacing: '-0.04em', lineHeight: 1, textTransform: 'uppercase' }}>
               A Timeline
             </div>
           </div>
@@ -200,17 +200,17 @@ function OrganicTimeline() {
           {/* Removed SVG filter: drop-shadow for massive performance boost and stutter elimination */}
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none' }}>
             {/* Subtle background track */}
-            <path d={pathData} fill="none" stroke="rgba(141,66,78,0.1)" strokeWidth="0.3" />
+            <path d={pathData} fill="none" stroke="rgba(56,37,37,0.08)" strokeWidth="0.3" />
             
             {/* Decorative dashed background track (Widened dashes dramatically to eliminate GPU rendering lag) */}
-            <path d={pathData} fill="none" stroke="rgba(141,66,78,0.1)" strokeWidth="0.2" strokeDasharray="16 24" transform="translate(1.5, 0)" />
+            <path d={pathData} fill="none" stroke="rgba(56,37,37,0.08)" strokeWidth="0.2" strokeDasharray="16 24" transform="translate(1.5, 0)" />
 
             {/* Active animated stroke (Hardware Accelerated) */}
             <path 
               ref={pathRef} 
               d={pathData} 
               fill="none" 
-              stroke="#8D424E" 
+              stroke="#382525" 
               strokeWidth="0.8" 
               strokeLinecap="round"
               style={{ willChange: 'stroke-dashoffset, stroke-dasharray' }}
@@ -235,9 +235,9 @@ function OrganicTimeline() {
           >
             <svg viewBox="0 0 32 32" width="100%" height="100%" style={{ overflow: 'visible' }}>
               {/* Spacecraft drop shadow */}
-              <ellipse cx="16" cy="18" rx="8" ry="12" fill="rgba(141,66,78,0.25)" />
+              <ellipse cx="16" cy="18" rx="8" ry="12" fill="rgba(56,37,37,0.2)" />
               {/* Glow */}
-              <ellipse cx="16" cy="16" rx="14" ry="14" fill="rgba(141,66,78,0.15)" />
+              <ellipse cx="16" cy="16" rx="14" ry="14" fill="rgba(213,143,107,0.12)" />
               
               {/* Animated Engine Flame */}
               <g className="rocket-flame" style={{ transformOrigin: "16px 26px" }}>
@@ -246,19 +246,19 @@ function OrganicTimeline() {
               </g>
 
               {/* Spacecraft Body */}
-              <path d="M 16 2 C 16 2 24 10 24 20 C 24 26 16 28 16 28 C 16 28 8 26 8 20 C 8 10 16 2 16 2 Z" fill="#1F090C" />
+              <path d="M 16 2 C 16 2 24 10 24 20 C 24 26 16 28 16 28 C 16 28 8 26 8 20 C 8 10 16 2 16 2 Z" fill="#382525" />
               
               {/* Left Fin */}
-              <path d="M 8 20 L 2 28 L 10 25 Z" fill="#8D424E" stroke="#1F090C" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M 8 20 L 2 28 L 10 25 Z" fill="#D58F6B" stroke="#382525" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
               {/* Right Fin */}
-              <path d="M 24 20 L 30 28 L 22 25 Z" fill="#8D424E" stroke="#1F090C" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M 24 20 L 30 28 L 22 25 Z" fill="#D58F6B" stroke="#382525" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
               
               {/* Window */}
               <circle cx="16" cy="14" r="3.5" fill="#FFFFFF" />
-              <circle cx="16" cy="14" r="2" fill="rgba(141,66,78,0.4)" />
+              <circle cx="16" cy="14" r="2" fill="rgba(56,37,37,0.3)" />
               
               {/* Nose cone tip */}
-              <path d="M 16 2 L 14 7 Q 16 8 18 7 Z" fill="#8D424E" />
+              <path d="M 16 2 L 14 7 Q 16 8 18 7 Z" fill="#D58F6B" />
             </svg>
           </div>
 
@@ -324,7 +324,7 @@ function OrganicTimeline() {
                   <div style={{
                     fontSize: 'clamp(3rem, 5vw, 4.5rem)',
                     fontWeight: 900,
-                    background: 'linear-gradient(135deg, #8D424E 30%, #d27786 100%)',
+                    background: 'linear-gradient(135deg, #382525 30%, #D58F6B 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -336,11 +336,11 @@ function OrganicTimeline() {
                     {node.data.year}
                   </div>
 
-                  <h3 style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', color: '#1F090C', marginBottom: '0.6rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+                  <h3 style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', color: '#382525', marginBottom: '0.6rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2 }}>
                     {node.data.role}
                   </h3>
-                  <div style={{ width: 40, height: 3, background: 'linear-gradient(90deg, #8D424E, #d27786)', marginBottom: '0.8rem', borderRadius: 2 }} />
-                  <p style={{ color: '#666', fontSize: 'clamp(0.85rem, 1.2vw, 1rem)', lineHeight: 1.7, margin: 0 }}>
+                  <div style={{ width: 40, height: 3, background: 'linear-gradient(90deg, #382525, #D58F6B)', marginBottom: '0.8rem', borderRadius: 2 }} />
+                  <p style={{ color: '#5a3e3e', fontSize: 'clamp(0.85rem, 1.2vw, 1rem)', lineHeight: 1.7, margin: 0 }}>
                     {node.data.sub}
                   </p>
                 </div>
@@ -413,7 +413,7 @@ export default function WhoIsBehind() {
   const sectionRef = useRef(null);
 
   return (
-    <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#F7EAEB', paddingBottom: 0, fontFamily: "'Inter', sans-serif", position: 'relative', overflow: 'clip' }}>
+    <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#F7E7C4', paddingBottom: 0, fontFamily: "'Outfit', sans-serif", position: 'relative', overflow: 'clip' }}>
 
       <style>{`
         .wib-container {
@@ -431,7 +431,14 @@ export default function WhoIsBehind() {
           align-items: center;
         }
         .wib-left-col {
-          flex: 1 1 400px;
+          flex: 1.5 1 500px;
+          display: flex;
+          align-items: center;
+          gap: 3rem;
+        }
+        .wib-left-text-wrap {
+          display: flex;
+          flex-direction: column;
         }
         .wib-right-col {
           flex: 1 1 450px;
@@ -448,6 +455,9 @@ export default function WhoIsBehind() {
           }
           .wib-left-col {
             flex: 1 1 100%;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2rem;
           }
           .wib-right-col {
             flex: 1 1 100%;
@@ -478,8 +488,8 @@ export default function WhoIsBehind() {
           100% { transform: translateY(0) rotate(0deg); }
         }
         @keyframes pillPulse {
-          0% { box-shadow: 0 0 0 0 rgba(141,66,78,0.3); }
-          100% { box-shadow: 0 0 0 8px rgba(141,66,78,0); }
+          0% { box-shadow: 0 0 0 0 rgba(56,37,37,0.3); }
+          100% { box-shadow: 0 0 0 8px rgba(56,37,37,0); }
         }
         .joy-bg-el {
           position: absolute;
@@ -488,10 +498,10 @@ export default function WhoIsBehind() {
         }
         .content-inner {
           padding: 2.5rem;
-          background: rgba(255, 255, 255, 0.98); /* Less transparency, removed backdrop-filter for scroll performance */
+          background: rgba(247, 231, 196, 0.98);
           border-radius: 24px;
-          border: 1px solid rgba(141,66,78,0.15);
-          box-shadow: 0 12px 30px rgba(141, 66, 78, 0.08);
+          border: 1px solid rgba(56,37,37,0.12);
+          box-shadow: 0 12px 30px rgba(56, 37, 37, 0.07);
           transform: translateY(-50%);
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           position: relative;
@@ -500,27 +510,26 @@ export default function WhoIsBehind() {
         }
         .content-inner:hover {
           transform: translateY(-52%) scale(1.03);
-          box-shadow: 0 20px 40px rgba(141, 66, 78, 0.15);
-          border-color: rgba(141, 66, 78, 0.4);
+          box-shadow: 0 20px 40px rgba(56, 37, 37, 0.12);
+          border-color: rgba(56, 37, 37, 0.3);
         }
 
         /* Milestone image placeholder (opposite side of the content) */
         .organic-image-frame {
-          width: clamp(150px, 18vw, 240px);
+          width: clamp(180px, 22vw, 300px);
           aspect-ratio: 4 / 3;
           transform: translateY(-50%) rotate(-2deg);
           border-radius: 18px;
           overflow: hidden;
-          background: #FFFFFF;
-          padding: 8px;
-          border: 1px solid rgba(141,66,78,0.15);
-          box-shadow: 0 12px 30px rgba(141, 66, 78, 0.1);
+          background: #F7E7C4;
+          border: 1px solid rgba(56,37,37,0.12);
+          box-shadow: 0 12px 30px rgba(56, 37, 37, 0.08);
           transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
           cursor: default;
         }
         .organic-image-frame:hover {
           transform: translateY(-50%) rotate(0deg) scale(1.04);
-          box-shadow: 0 20px 40px rgba(141, 66, 78, 0.18);
+          box-shadow: 0 20px 40px rgba(56, 37, 37, 0.15);
         }
         .organic-image-frame img {
           width: 100%;
@@ -538,18 +547,18 @@ export default function WhoIsBehind() {
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          color: rgba(141,66,78,0.55);
+          color: rgba(56,37,37,0.55);
           background:
-            repeating-linear-gradient(45deg, rgba(141,66,78,0.05) 0 10px, rgba(141,66,78,0.09) 10px 20px),
-            #F7EAEB;
-          border: 1.5px dashed rgba(141,66,78,0.3);
+            repeating-linear-gradient(45deg, rgba(56,37,37,0.04) 0 10px, rgba(56,37,37,0.08) 10px 20px),
+            #E8D0A0;
+          border: 1.5px dashed rgba(56,37,37,0.25);
         }
         .organic-image-ph-label {
           font-family: 'Outfit', sans-serif;
           font-weight: 700;
           font-size: 0.75rem;
           letter-spacing: 0.15em;
-          color: rgba(141,66,78,0.6);
+          color: rgba(56,37,37,0.5);
         }
 
         /* On mobile the path collapses — hide the side image to avoid overlap */
@@ -561,15 +570,15 @@ export default function WhoIsBehind() {
           align-items: center;
           gap: 6px;
           padding: 6px 16px;
-          background: #1F090C;
+          background: #382525;
           border-radius: 40px;
-          border: 1.5px solid rgba(141,66,78,0.5);
-          box-shadow: 0 4px 16px rgba(141,66,78,0.25);
+          border: 1.5px solid rgba(213,143,107,0.5);
+          box-shadow: 0 4px 16px rgba(56,37,37,0.2);
           animation: pillPulse 2s infinite;
           white-space: nowrap;
         }
         .year-pill-text {
-          color: #FFFFFF;
+          color: #F7E7C4;
           font-weight: 700;
           font-size: 0.95rem;
           letter-spacing: 0.15em;
@@ -581,7 +590,7 @@ export default function WhoIsBehind() {
           width: 5px;
           height: 5px;
           border-radius: 50%;
-          background: #8D424E;
+          background: #D58F6B;
           opacity: 0.7;
         }
 
@@ -600,7 +609,7 @@ export default function WhoIsBehind() {
           left: 50%;
           width: 8px; 
           height: 8px;
-          background: #8D424E;
+          background: #D58F6B;
           border-radius: 50%;
           transform: translate(-50%, -50%);
           opacity: 0;
@@ -617,55 +626,58 @@ export default function WhoIsBehind() {
           <div className="wib-left-col">
             <motion.img
               initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 0.88, scale: 1 }}
+              whileHover={{ scale: 1.03, opacity: 1 }}
               viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.5 }}
               src={drVishnuImg}
               alt="Dr. Vishnu Aravind"
               style={{
-                width: '100px',
-                height: '100px',
-                borderRadius: '50%',
+                width: '180px',
+                height: '245px',
+                borderRadius: '12px',
                 objectFit: 'cover',
-                marginBottom: '1.5rem',
-                border: '3px solid #8D424E',
-                boxShadow: '0 8px 24px rgba(141, 66, 78, 0.25)'
+                border: '1px solid rgba(56, 37, 37, 0.15)',
+                boxShadow: '0 12px 32px rgba(56, 37, 37, 0.12)',
+                cursor: 'pointer',
               }}
             />
-            <h2
-              style={{
-                fontFamily: "'League Spartan', sans-serif",
-                fontSize: 'clamp(2.8rem, 10vw, 7rem)',
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: '-0.03em',
-                color: '#1F090C',
-                marginBottom: '3rem',
-              }}
-            >
-              <div style={{ display: 'block', marginBottom: '0.06em' }}>
-                <Word word="WHO" index={0} style={{ marginRight: '0.2em' }} />
-                <Word word="IS" index={1} />
-              </div>
-              <div style={{ display: 'block', marginBottom: '0.06em' }}>
-                <Word word="BEHIND" index={2} />
-              </div>
-              <div style={{ display: 'block' }}>
-                <Word word="TCQ?" index={3} style={{ 
-                  color: '#8D424E', 
-                  fontFamily: "'Georgia', 'Playfair Display', serif", 
+            <div className="wib-left-text-wrap">
+              <h2
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'clamp(2.8rem, 10vw, 7rem)',
+                  fontWeight: 800,
+                  lineHeight: 1.05,
+                  letterSpacing: '-0.03em',
+                  color: '#382525',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                <div style={{ display: 'block', marginBottom: '0.06em' }}>
+                  <Word word="WHO" index={0} style={{ marginRight: '0.2em' }} />
+                  <Word word="IS" index={1} />
+                </div>
+                <div style={{ display: 'block', marginBottom: '0.06em' }}>
+                  <Word word="BEHIND" index={2} />
+                </div>
+                <div style={{ display: 'block' }}>
+                  <Word word="TCQ?" index={3} style={{ 
+                  color: '#D58F6B', 
+                  fontFamily: "'Newsreader', Georgia, serif", 
                   fontStyle: 'italic',
                   fontWeight: 400
                 }} />
-              </div>
-            </h2>
+                </div>
+              </h2>
 
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '1.3rem', letterSpacing: '0.02em', color: '#1F090C' }}>
-                Dr. VISHNU ARAVIND, MBBS, MD
-              </div>
-              <div style={{ fontSize: '0.85rem', color: '#8D424E', marginTop: '4px', fontStyle: 'italic', fontFamily: "'Georgia', 'Playfair Display', serif" }}>
-                Scientist outside. Artist inside.
+              <div>
+                <div style={{ fontWeight: 800, fontSize: '1.3rem', letterSpacing: '0.02em', color: '#382525' }}>
+                  Dr. VISHNU ARAVIND, MBBS, MD
+                </div>
+                <div style={{ fontSize: '0.85rem', color: '#D58F6B', marginTop: '4px', fontStyle: 'italic', fontFamily: "'Newsreader', Georgia, serif" }}>
+                  Scientist outside. Artist inside.
+                </div>
               </div>
             </div>
           </div>
@@ -681,20 +693,20 @@ export default function WhoIsBehind() {
               pauseOnHover={true}
               easing="linear"
             >
-              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#1F090C', color: '#F7EAEB' }}>
-                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7EAEB' }}>The Roots</h3>
+              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
+                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7E7C4' }}>The Roots</h3>
                 <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.95rem, 4vw, 1.1rem)' }}>
                   "Born in the cultural hub of Chennai at the dawn of the millennium and growing up as part of the first generation with technology in our laps, it has been a habit since childhood to seek questions and answers in the living world."
                 </p>
               </Card>
-              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#F7EAEB', color: '#1F090C' }}>
-                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#1F090C' }}>The Journey</h3>
+              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#F7E7C4', color: '#382525' }}>
+                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#382525' }}>The Journey</h3>
                 <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.95rem, 4vw, 1.1rem)' }}>
                   "The roles I've undertaken, apart from medicine, have been in exploration of this very idea, and I believe they have helped me gain valuable experience in branding and marketing my passions."
                 </p>
               </Card>
-              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#8D424E', color: '#F7EAEB' }}>
-                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7EAEB' }}>The Vision</h3>
+              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
+                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7E7C4' }}>The Vision</h3>
                 <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.95rem, 4vw, 1.1rem)' }}>
                   "The Curiosity Quotient is an extension of me and the way I work — connecting people, making them explore niches, and creating new ones."
                 </p>

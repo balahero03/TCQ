@@ -1,0 +1,149 @@
+/* ══════════════════════════════════════════════════════════════
+   BrandsSection — TCQ palette, OptionWheel left, logo right
+   ══════════════════════════════════════════════════════════════ */
+
+.bs-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: var(--cream-light);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════
+   Header
+   ══════════════════════════════ */
+.bs-header {
+  position: absolute;
+  top: clamp(2rem, 5vh, 3.5rem);
+  left: clamp(2rem, 5vw, 5rem);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bs-eyebrow-top {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.bs-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--brown);
+  margin: 0;
+}
+
+.bs-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 38% 44% at 74% 50%,
+    rgba(213, 143, 107, 0.1) 0%,
+    transparent 70%
+  );
+}
+
+/* ══════════════════════════════
+   Left column — OptionWheel
+   ══════════════════════════════ */
+.bs-wheel-col {
+  position: relative;
+  z-index: 1;
+  /* height:100vh gives items a concrete px reference for top:50% */
+  height: 100vh;
+  /* Soft fade at edges instead of hard overflow:hidden clip */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 16%,
+    black 84%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 16%,
+    black 84%,
+    transparent 100%
+  );
+}
+
+/* OptionWheel fills the column so items anchor to its vertical centre */
+.bs-wheel-col > .option-wheel {
+  width: 100%;
+  height: 100%;
+}
+
+/* ══════════════════════════════
+   Right column — logo + meta
+   ══════════════════════════════ */
+.bs-right-col {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(2rem, 5vw, 5rem);
+  overflow: hidden;
+}
+
+.bs-right-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.bs-logo-img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  display: block;
+  /* Tint black SVG to brand color: brightness(0) makes it black,
+     then invert+sepia+saturate+hue-rotate shifts to the brand hue.
+     Each brand overrides via JS style prop for precise colors. */
+  filter: brightness(0) saturate(100%) var(--logo-filter, invert(0));
+}
+
+/* ══════════════════════════════
+   Bottom-left eyebrow
+   ══════════════════════════════ */
+.bs-eyebrow {
+  position: absolute;
+  bottom: clamp(1.5rem, 3vh, 2.5rem);
+  left: clamp(2rem, 4vw, 4rem);
+  z-index: 2;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--orange);
+  pointer-events: none;
+}
+
+/* ══════════════════════════════
+   Mobile
+   ══════════════════════════════ */
+@media (max-width: 768px) {
+  .bs-section {
+    grid-template-columns: 1fr;
+  }
+  .bs-right-col {
+    display: none;
+  }
+}

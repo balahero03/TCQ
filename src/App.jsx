@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import WhatIsTCQ from './components/WhatIsTCQ';
 import WhoIsBehind from './components/WhoIsBehind';
 import WingReel from './components/WingReel';
+import BrandsSection from './components/BrandsSection';
 import Contact from './components/Contact';
 import BlobCursor from './components/BlobCursor';
 import './App.css';
@@ -25,7 +26,7 @@ function App() {
       {showContent && (
         <>
           <BlobCursor
-            fillColor="#B85E6A"
+            fillColor="#D58F6B"
             dotSize={18}
             lineWidth={4}
             trailLength={18}
@@ -35,6 +36,7 @@ function App() {
           <Hero logoLanded={logoLanded} />
           <WhatIsTCQ />
           <WhoIsBehind />
+          <BrandsSection />
           <WingReel />
           <Contact />
         </main>

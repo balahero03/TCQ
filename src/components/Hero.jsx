@@ -11,7 +11,7 @@ const CAT_PATH = "M 560.361 811.733 C 555.517 819.585, 549.407 828.208, 547.259 
 const SPARKLE_PATH =
   'M12 0 C13 7 17 11 24 12 C17 13 13 17 12 24 C11 17 7 13 0 12 C7 11 11 7 12 0 Z';
 
-const SPARKLE_COLORS = ['#8D424E', '#D6838B', '#E6BABE', '#B85E6A'];
+const SPARKLE_COLORS = ['#382525', '#D58F6B', '#E8D0A0', '#D58F6B'];
 
 const SPARKLES = [
   { top: '20%', left: '62%', size: 26, dur: 3.4, delay: 0.0, rot: 1, c: 0 },
@@ -33,7 +33,17 @@ export default function Hero({ logoLanded }) {
   // Smooth-scroll to a section by id, closing the mobile menu if open.
   const scrollToSection = (id) => {
     setIsMobileMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = document.getElementById(id);
+    if (target) {
+      if (target._scrollTrigger) {
+        window.scrollTo({
+          top: target._scrollTrigger.start,
+          behavior: 'smooth'
+        });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
   };
 
   // ── Cursor parallax: normalised mouse position (-0.5 … 0.5) ──
@@ -95,8 +105,8 @@ export default function Hero({ logoLanded }) {
           animate={{ y: [0, -12, 0] }}
           transition={{ duration: 7, ease: 'easeInOut', repeat: Infinity, delay: 5 }}
         >
-        <svg viewBox="25 798 1010 310" className="hero-cat-backdrop-svg"
-          fill="none" stroke="rgba(141,66,78,0.28)" strokeWidth="1.2"
+        <svg viewBox="25 798 995 372" className="hero-cat-backdrop-svg"
+          fill="none" stroke="rgba(56,37,37,0.2)" strokeWidth="1.2"
           strokeLinecap="round" strokeLinejoin="round"
           preserveAspectRatio="xMidYMid meet"
         >
@@ -213,7 +223,18 @@ export default function Hero({ logoLanded }) {
               </svg>
             </button>
             <a href="#who-s-behind-tcq" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); scrollToSection('who-s-behind-tcq'); }}>Who's behind TCQ</a>
-            <a href="#what-we-do" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); scrollToSection('what-we-do'); }}>What we do</a>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
+              <a href="#what-we-do" className="mobile-menu-link" style={{ marginBottom: '4px' }} onClick={(e) => { e.preventDefault(); scrollToSection('what-we-do'); }}>What we do</a>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
+                <a href="#wing-01" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-01'); }}>— For Brands</a>
+                <a href="#wing-02" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-02'); }}>— Quizzes</a>
+                <a href="#wing-03" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-03'); }}>— Circles</a>
+                <a href="#wing-04" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-04'); }}>— Writes</a>
+                <a href="#wing-05" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-05'); }}>— Teaches</a>
+              </div>
+            </div>
+
             <a href="#contact" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
           </motion.div>
         )}
@@ -230,11 +251,11 @@ export default function Hero({ logoLanded }) {
           >
             <h1 className="hero-heading">
               <BlurText text="Making" initialDelay={startDelay} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0, lineHeight: 1.0 }} />
+                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, lineHeight: 1, display: 'block' }} />
               <BlurText text="curiosity" className="hero-curiosity-shimmer" initialDelay={startDelay + 250} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(3.6rem, 10vw, 10rem)', fontWeight: 400, fontFamily: "'Georgia', 'Playfair Display', serif", fontStyle: 'italic', display: 'block', margin: 0, padding: 0, lineHeight: 1.05 }} />
+                style={{ fontSize: 'clamp(3.6rem, 10vw, 10rem)', fontWeight: 400, fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', lineHeight: 1, display: 'block', paddingBottom: '10px' }} />
               <BlurText text="social." initialDelay={startDelay + 500} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, display: 'block', margin: 0, padding: 0, lineHeight: 1.0 }} />
+                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, lineHeight: 1, display: 'block' }} />
             </h1>
 
             <div className="hero-text-wrapper">

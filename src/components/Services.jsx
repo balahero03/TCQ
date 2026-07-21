@@ -69,7 +69,7 @@ age, and continue for the rest of their lives.`,
 
 export default function Services() {
   return (
-    <section style={{ background: '#faf9f8', padding: '120px 0' }}>
+    <section style={{ background: '#F7E7C4', padding: '120px 0' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 6vw' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -78,12 +78,13 @@ export default function Services() {
           transition={{ duration: 0.7 }}
           style={{ marginBottom: '5rem' }}
         >
-          <span style={{ fontSize: '0.7rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#6B2737', fontWeight: 600 }}>
+          <span style={{ fontSize: '0.7rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#D58F6B', fontWeight: 600, fontFamily: "'Outfit', sans-serif" }}>
             What We Do
           </span>
           <h2 style={{
             fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', fontWeight: 800,
-            letterSpacing: '-0.03em', color: '#1a1a1a', marginTop: '0.75rem',
+            letterSpacing: '-0.03em', color: '#382525', marginTop: '0.75rem',
+            fontFamily: "'Outfit', sans-serif",
           }}>
             Our Formats
           </h2>
@@ -120,7 +121,7 @@ function ServiceCard({ service, index }) {
       {/* Number + label block */}
       <div style={{ order: isEven ? 0 : 1 }}>
         <div style={{
-          background: '#6B2737',
+          background: '#382525',
           borderRadius: '4px',
           padding: '3rem',
           display: 'flex',
@@ -138,8 +139,8 @@ function ServiceCard({ service, index }) {
             }}
           />
           <div style={{
-            fontSize: 'clamp(4rem, 8vw, 7rem)', fontWeight: 900, color: 'rgba(240,234,226,0.2)',
-            lineHeight: 1, fontFamily: 'Inter, sans-serif', letterSpacing: '-0.05em',
+            fontSize: 'clamp(4rem, 8vw, 7rem)', fontWeight: 900, color: 'rgba(247,231,196,0.18)',
+            lineHeight: 1, fontFamily: "'Outfit', sans-serif", letterSpacing: '-0.05em',
             position: 'relative',
           }}>
             {service.num}
@@ -147,13 +148,13 @@ function ServiceCard({ service, index }) {
           <div style={{ position: 'relative' }}>
             <div style={{
               fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900,
-              color: '#F0EAE2', lineHeight: 1, letterSpacing: '-0.03em',
+              color: '#F7E7C4', lineHeight: 1, letterSpacing: '-0.03em',
             }}>
               {service.title}
             </div>
             <div style={{
               fontSize: '0.75rem', letterSpacing: '0.25em', textTransform: 'uppercase',
-              color: 'rgba(240,234,226,0.6)', marginTop: '6px',
+              color: 'rgba(247,231,196,0.6)', marginTop: '6px',
             }}>
               {service.subtitle}
             </div>
@@ -166,8 +167,9 @@ function ServiceCard({ service, index }) {
         <p style={{
           fontSize: 'clamp(0.9rem, 1.3vw, 1.05rem)',
           lineHeight: 1.85,
-          color: '#444',
+          color: '#382525',
           whiteSpace: 'pre-line',
+          fontFamily: "'Outfit', sans-serif",
         }}>
           {service.body}
         </p>

@@ -8,13 +8,11 @@ export default function WhatIsTCQ() {
 
   return (
     <section ref={containerRef} style={{
-      background: '#FFFFFF',
-      fontFamily: "'Inter', sans-serif",
-      overflow: 'hidden',
+      background: '#F7E7C4',
+      fontFamily: "'Outfit', sans-serif",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
         .tcq-section-grid {
           width: 100%;
@@ -27,7 +25,7 @@ export default function WhatIsTCQ() {
           flex-direction: column;
           justify-content: center;
           padding: 8vh 6vw;
-          border-bottom: 1px solid rgba(31,9,12,0.08);
+          border-bottom: 1px solid rgba(56,37,37,0.08);
         }
 
         /* ════════ HEADING — clean editorial statement ════════ */
@@ -47,14 +45,14 @@ export default function WhatIsTCQ() {
         .tcq-eyebrow-rule {
           width: 2.5rem;
           height: 2px;
-          background: #8D424E;
+          background: #D58F6B;
         }
         .tcq-eyebrow {
-          font-family: 'League Spartan', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-size: 0.75rem;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #8D424E;
+          color: #D58F6B;
           font-weight: 700;
         }
 
@@ -62,27 +60,27 @@ export default function WhatIsTCQ() {
         .tcq-heading {
           margin: 0;
           padding: 0;
-          font-family: 'League Spartan', sans-serif;
+          font-family: 'Outfit', sans-serif;
           font-weight: 800;
           font-size: clamp(3rem, 8.5vw, 8.5rem);
-          line-height: 1.05;
-          letter-spacing: -0.03em;
-          color: #1F090C;
+          line-height: 1.15;
+          color: #382525;
         }
-        /* the accent phrase in cursive, on its own line below "What is the" */
+        /* the accent phrase in Newsreader italic — restrained serif highlight */
         .tcq-heading .accent {
-          font-family: 'Pacifico', cursive;
+          font-family: 'Newsreader', Georgia, serif;
           font-weight: 400;
+          font-style: italic;
           letter-spacing: -0.02em;
-          background: linear-gradient(120deg, #B85E6A 0%, #D6838B 55%, #8D424E 100%);
+          background: linear-gradient(120deg, #382525 0%, #D58F6B 60%, #382525 100%);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
-          font-size: 1em;          /* same scale as the caps so it fits on one line */
-          line-height: 1.1;
+          font-size: 1em;
+          line-height: normal;
           display: inline-block;
-          padding-bottom: 0.1em;   /* room for descenders (Q, y) */
-          white-space: nowrap;     /* keep "Curiosity Quotient?" on one line */
+          padding: 0.1em 0.1em 0.4em 0.1em;
+          white-space: nowrap;
         }
 
         /* ── BOTTOM BAND: content grid ── */
@@ -97,14 +95,14 @@ export default function WhatIsTCQ() {
           font-family: 'Outfit', sans-serif;
           font-size: clamp(0.95rem, 1.3vw, 1.1rem);
           line-height: 1.75;
-          color: #383B3D;
-          border-right: 1px solid rgba(31,9,12,0.08);
+          color: #5a3e3e;
+          border-right: 1px solid rgba(56,37,37,0.08);
         }
         .tcq-content-col:last-child { border-right: none; }
         .tcq-content-col p { margin: 0 0 1rem; }
         .tcq-content-col p.lead {
           font-weight: 600;
-          color: #1F090C;
+          color: #382525;
           font-size: clamp(1rem, 1.5vw, 1.2rem);
           margin-bottom: 1.25rem;
         }
@@ -112,14 +110,14 @@ export default function WhatIsTCQ() {
           display: flex;
           gap: 2.5rem;
           flex-wrap: wrap;
-          border-top: 1px solid rgba(31,9,12,0.1);
+          border-top: 1px solid rgba(56,37,37,0.1);
           padding-top: 1.5rem;
           margin-top: 1.5rem;
         }
         .tcq-stat-num {
           font-size: clamp(1.4rem, 2vw, 2rem);
           font-weight: 800;
-          color: #1F090C;
+          color: #382525;
           line-height: 1;
           margin-bottom: 0.2rem;
         }
@@ -127,12 +125,12 @@ export default function WhatIsTCQ() {
           font-size: 0.7rem;
           text-transform: uppercase;
           letter-spacing: 0.1em;
-          color: #8D424E;
+          color: #D58F6B;
           font-weight: 700;
         }
         
         .tcq-dopamine-text {
-          background: linear-gradient(90deg, #8D424E 0%, #D8838B 50%, #8D424E 100%);
+          background: linear-gradient(90deg, #382525 0%, #D58F6B 50%, #382525 100%);
           background-size: 200% auto;
           color: transparent;
           -webkit-background-clip: text;
@@ -154,8 +152,8 @@ export default function WhatIsTCQ() {
           transform: translateY(-5px);
         }
         .tcq-stats > div:hover .tcq-stat-num {
-          text-shadow: 0 0 15px rgba(141, 66, 78, 0.4);
-          color: #8D424E;
+          text-shadow: 0 0 15px rgba(213, 143, 107, 0.4);
+          color: #D58F6B;
           transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
@@ -175,7 +173,7 @@ export default function WhatIsTCQ() {
           }
           .tcq-content-col {
             border-right: none;
-            border-bottom: 1px solid rgba(31,9,12,0.08);
+            border-bottom: 1px solid rgba(56,37,37,0.08);
             padding: 6vw 5vw;
           }
           .tcq-content-col:last-child { border-bottom: none; }
@@ -208,7 +206,7 @@ export default function WhatIsTCQ() {
 
             <h2 className="tcq-heading">
               <motion.span
-                style={{ display: 'block' }}
+                style={{ display: 'inline-block', position: 'relative', zIndex: 2 }}
                 variants={{
                   hidden: { opacity: 0, y: 40 },
                   visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] } },
@@ -216,8 +214,9 @@ export default function WhatIsTCQ() {
               >
                 What is the
               </motion.span>
+              <br />
               <motion.span
-                style={{ display: 'block' }}
+                style={{ display: 'inline-block', position: 'relative', zIndex: 1, marginTop: '-0.3em' }}
                 variants={{
                   hidden: { opacity: 0, y: 40 },
                   visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] } },

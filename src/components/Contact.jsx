@@ -32,10 +32,10 @@ export default function Contact() {
       style={{
         position: 'relative',
         overflow: 'hidden',
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: "'Outfit', sans-serif",
         background:
-          'radial-gradient(120% 90% at 50% -10%, #7d2e3f 0%, #6B2737 45%, #571f2d 100%)',
-        color: '#F0EAE2',
+          'radial-gradient(120% 90% at 50% -10%, #4a3030 0%, #382525 45%, #2e1c1c 100%)',
+        color: '#F7E7C4',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -122,7 +122,7 @@ export default function Contact() {
           font-weight: 300;
           font-style: italic;
         }
-        .ctf-marquee-star { color: #E6BABE; padding: 0 0.4rem; }
+        .ctf-marquee-star { color: #D58F6B; padding: 0 0.4rem; }
 
         .ctf-row {
           display: grid;
@@ -194,8 +194,8 @@ export default function Contact() {
       `}</style>
 
       {/* ── Ambient floating glow orbs ── */}
-      <div className="ctf-orb" style={{ width: 360, height: 360, top: '-8%', left: '-6%', background: 'rgba(214,131,139,0.28)', animation: 'ctf-float-a 14s ease-in-out infinite' }} />
-      <div className="ctf-orb" style={{ width: 300, height: 300, bottom: '4%', right: '8%', background: 'rgba(125,46,63,0.5)', animation: 'ctf-float-b 18s ease-in-out infinite' }} />
+      <div className="ctf-orb" style={{ width: 360, height: 360, top: '-8%', left: '-6%', background: 'rgba(213,143,107,0.18)', animation: 'ctf-float-a 14s ease-in-out infinite' }} />
+      <div className="ctf-orb" style={{ width: 300, height: 300, bottom: '4%', right: '8%', background: 'rgba(74,48,48,0.6)', animation: 'ctf-float-b 18s ease-in-out infinite' }} />
 
       {/* ── Giant animated ghost wordmark ── */}
       <div
@@ -282,11 +282,11 @@ export default function Contact() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
           style={{
-            fontFamily: "'League Spartan', sans-serif",
+            fontFamily: "'Outfit', sans-serif",
             fontSize: 'clamp(3rem, 9vw, 8rem)',
             fontWeight: 900,
             letterSpacing: '-0.04em',
-            color: '#F0EAE2',
+            color: '#F7E7C4',
             margin: 0,
             lineHeight: 0.92,
           }}
@@ -306,8 +306,8 @@ export default function Contact() {
               display: 'inline-block',
               fontStyle: 'italic',
               fontWeight: 400,
-              fontFamily: "'Georgia', serif",
-              color: '#E6BABE',
+              fontFamily: "'Newsreader', Georgia, serif",
+              color: '#D58F6B',
             }}
           >
             with us
@@ -348,8 +348,8 @@ export default function Contact() {
             gap: '0.6rem',
             marginTop: '1.8rem',
             padding: '0.85rem 2rem',
-            background: '#F0EAE2',
-            color: '#6B2737',
+            background: '#F7E7C4',
+            color: '#382525',
             fontWeight: 700,
             fontSize: '1rem',
             borderRadius: '100px',

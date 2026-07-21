@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { WINGS } from './wingsData';
+import GalleryModal from './GalleryModal';
 import './WingReel.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -11,11 +13,11 @@ gsap.registerPlugin(ScrollTrigger);
    Each card also carries a "depth" — nearer cards (bigger depth) react
    more strongly to the cursor, giving a parallax/magnetic feel. */
 const CARD_LAYOUT = [
-  { x: 16, y: 14, r: -7, depth: 1.0 },
-  { x: 60, y: 8,  r: 6,  depth: 0.7 },
-  { x: 8,  y: 56, r: 5,  depth: 0.85 },
-  { x: 52, y: 52, r: -5, depth: 1.15 },
-  { x: 34, y: 80, r: 8,  depth: 0.6 },
+  { x: 16, y: 8,  r: -7, depth: 1.0 },
+  { x: 58, y: 5,  r: 6,  depth: 0.7 },
+  { x: 8,  y: 42, r: 5,  depth: 0.85 },
+  { x: 50, y: 38, r: -5, depth: 1.15 },
+  { x: 28, y: 64, r: 8,  depth: 0.6 },
 ];
 
 // Each wing section gets a stable id derived from its number so cards can
@@ -25,10 +27,10 @@ const wingSectionId = (wing) => `wing-${wing.no}`;
 // Smoothly scroll to an element over a fixed duration with an ease — native
 // `scrollIntoView({behavior:'smooth'})` whips across the long pinned reels too
 // fast, so we drive the scroll ourselves for a gentle, consistent glide.
-function smoothScrollTo(el, duration = 1400) {
-  if (!el) return;
+function smoothScrollTo(target, duration = 1400) {
+  if (!target) return;
   const startY = window.scrollY;
-  const targetY = startY + el.getBoundingClientRect().top;
+  const targetY = typeof target === 'number' ? target : startY + target.getBoundingClientRect().top;
   const distance = targetY - startY;
   if (Math.abs(distance) < 1) return;
 
@@ -53,8 +55,19 @@ function MagneticCard({ wing, layout, mx, my }) {
   const x = useSpring(tx, { stiffness: 120, damping: 16, mass: 0.5 });
   const y = useSpring(ty, { stiffness: 120, damping: 16, mass: 0.5 });
 
-  const goToWing = () => {
-    smoothScrollTo(document.getElementById(wingSectionId(wing)));
+  const goToWing = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const el = document.getElementById(wingSectionId(wing));
+    if (el) {
+      const targetY = el._scrollTrigger ? el._scrollTrigger.start : window.scrollY + el.getBoundingClientRect().top;
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
@@ -63,7 +76,7 @@ function MagneticCard({ wing, layout, mx, my }) {
       role="link"
       tabIndex={0}
       aria-label={`Go to ${wing.title}`}
-      onClick={goToWing}
+      onPointerDown={goToWing}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -122,7 +135,7 @@ function MagneticCards() {
 
 /* A single photo frame: placeholder until a real `src` is provided.
    Tilts in 3D toward the cursor and brightens under the spotlight. */
-function PhotoFrame({ photo, idx, label }) {
+function PhotoFrame({ photo, idx, label, onPhotoClick }) {
   const ref = useRef(null);
 
   const onMove = (e) => {
@@ -148,6 +161,7 @@ function PhotoFrame({ photo, idx, label }) {
       style={{ aspectRatio: photo.w / photo.h, '--i': idx }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
+      onClick={() => onPhotoClick(photo.src || 'placeholder')}
     >
       {photo.src ? (
         <img src={photo.src} alt={label} loading="lazy" />
@@ -162,12 +176,14 @@ function PhotoFrame({ photo, idx, label }) {
   );
 }
 
-function EventPanel({ event, index }) {
+function EventPanel({ event, index, onPhotoClick }) {
+  const [showGallery, setShowGallery] = useState(false);
+
   return (
     <div className="wr-panel wr-event" data-layout={event.layout}>
       <div className={`wr-photos wr-photos--${event.layout}`}>
         {event.photos.map((p, i) => (
-          <PhotoFrame key={i} photo={p} idx={i} label={event.name} />
+          <PhotoFrame key={i} photo={p} idx={i} label={event.name} onPhotoClick={onPhotoClick} />
         ))}
       </div>
 
@@ -176,8 +192,24 @@ function EventPanel({ event, index }) {
         <div>
           <h3 className="wr-caption-title">{event.name}</h3>
           <p className="wr-caption-venue">{event.venue}</p>
+          <motion.button
+            className="wr-explore-btn"
+            onClick={() => setShowGallery(true)}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            Explore images
+          </motion.button>
         </div>
       </figcaption>
+
+      {showGallery && (
+        <GalleryModal event={event} onClose={() => setShowGallery(false)} />
+      )}
     </div>
   );
 }
@@ -206,7 +238,7 @@ function WingTitlePanel({ wing, reverse }) {
      odd  index → travels ←  (panels reveal right-to-left)
    When a reel reaches its end the pin releases and the page
    scrolls DOWN to the next wing, which runs the opposite way. */
-function WingPin({ wing, index, isLast }) {
+function WingPin({ wing, index, isLast, onPhotoClick }) {
   const pinRef = useRef(null);
   const trackRef = useRef(null);
   const [spot, setSpot] = useState({ x: 50, y: 50, on: false });
@@ -231,7 +263,7 @@ function WingPin({ wing, index, isLast }) {
         ease: 'none',
       });
 
-      ScrollTrigger.create({
+      const st = ScrollTrigger.create({
         trigger: pinRef.current,
         start: 'top top',
         end: () => `+=${distance() + window.innerHeight * 0.5}`,
@@ -240,6 +272,8 @@ function WingPin({ wing, index, isLast }) {
         animation: tween,
         invalidateOnRefresh: true,
       });
+
+      pinRef.current._scrollTrigger = st;
 
       // ── Title panel cascade — plain ScrollTrigger on the section (fires
       //    reliably when the wing pins; no containerAnimation guesswork). ──
@@ -357,7 +391,7 @@ function WingPin({ wing, index, isLast }) {
       <div className="wr-track" ref={trackRef}>
         <WingTitlePanel wing={wing} reverse={reverse} />
         {wing.events.map((ev, i) => (
-          <EventPanel key={ev.name} event={ev} index={i} />
+          <EventPanel key={ev.name} event={ev} index={i} onPhotoClick={onPhotoClick} />
         ))}
         {/* final wing carries the closing line as its last panel */}
         {isLast && (
@@ -371,6 +405,8 @@ function WingPin({ wing, index, isLast }) {
 }
 
 export default function WingReel() {
+  const [lightboxSrc, setLightboxSrc] = useState(null);
+
   return (
     <>
       {/* ════════ Opening: its own vertical page (normal scroll) ════════ */}
@@ -403,8 +439,100 @@ export default function WingReel() {
           wing={wing}
           index={i}
           isLast={i === WINGS.length - 1}
+          onPhotoClick={setLightboxSrc}
         />
       ))}
+
+      {/* Lightbox Modal — rendered at document.body to escape GSAP will-change stacking context */}
+      {createPortal(
+        <AnimatePresence>
+          {lightboxSrc && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setLightboxSrc(null)}
+              style={{
+                position: 'fixed',
+                inset: 0,
+                zIndex: 100000,
+                background: 'rgba(56, 37, 37, 0.95)',
+                backdropFilter: 'blur(15px)',
+                WebkitBackdropFilter: 'blur(15px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'zoom-out',
+              }}
+            >
+              <motion.button
+                style={{
+                  position: 'absolute',
+                  top: '24px',
+                  right: '40px',
+                  background: 'none',
+                  border: 'none',
+                  color: '#F7E7C4',
+                  fontSize: '3rem',
+                  cursor: 'pointer',
+                  lineHeight: 1,
+                  zIndex: 10,
+                }}
+                onClick={() => setLightboxSrc(null)}
+              >
+                &times;
+              </motion.button>
+              <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 180 }}
+                style={{ position: 'relative', maxWidth: '90vw', maxHeight: '85vh' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {lightboxSrc !== 'placeholder' ? (
+                  <img
+                    src={lightboxSrc}
+                    alt="Enlarged view"
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: '85vh',
+                      borderRadius: '12px',
+                      objectFit: 'contain',
+                      boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: '600px',
+                      height: '400px',
+                      maxWidth: '85vw',
+                      maxHeight: '70vh',
+                      background: 'repeating-linear-gradient(45deg, rgba(213,143,107,0.05) 0 10px, rgba(213,143,107,0.09) 10px 20px), #E8D0A0',
+                      border: '2px dashed rgba(56,37,37,0.3)',
+                      borderRadius: '16px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#382525',
+                      fontFamily: "'Outfit', sans-serif",
+                      gap: '1rem',
+                    }}
+                  >
+                    <span style={{ fontSize: '3rem' }}>✦</span>
+                    <span style={{ fontSize: '1.1rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                      Photo Coming Soon
+                    </span>
+                  </div>
+                )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }
