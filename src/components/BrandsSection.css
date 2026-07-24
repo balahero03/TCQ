@@ -1,28 +1,39 @@
 /* ══════════════════════════════════════════════════════════════
-   BrandsSection — TCQ palette, OptionWheel left, logo right
+   BrandsSection — logo wall grid
    ══════════════════════════════════════════════════════════════ */
 
 .bs-section {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: var(--cream-light);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   overflow: hidden;
+  padding: clamp(5rem, 10vh, 7rem) clamp(2rem, 6vw, 5rem) clamp(4rem, 8vh, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vh, 4rem);
+}
+
+.bs-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 46% 40% at 12% 12%, rgba(213, 143, 107, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 46% at 90% 85%, rgba(213, 143, 107, 0.1) 0%, transparent 70%);
 }
 
 /* ══════════════════════════════
    Header
    ══════════════════════════════ */
 .bs-header {
-  position: absolute;
-  top: clamp(2rem, 5vh, 3.5rem);
-  left: clamp(2rem, 5vw, 5rem);
+  position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  max-width: 640px;
 }
 
 .bs-eyebrow-top {
@@ -36,7 +47,7 @@
 
 .bs-title {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: clamp(2rem, 4.4vw, 3.6rem);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.03em;
@@ -44,106 +55,131 @@
   margin: 0;
 }
 
-.bs-glow {
+.bs-count {
+  margin-top: 0.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(56, 37, 37, 0.55);
+}
+
+/* ══════════════════════════════
+   Logo grid
+   ══════════════════════════════ */
+.bs-grid {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(160px, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.4rem);
+}
+
+.bs-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(56, 37, 37, 0.08);
+  overflow: hidden;
+  cursor: default;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.bs-card:hover {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(213, 143, 107, 0.35);
+  transform: translateY(-4px);
+}
+
+.bs-card-glow {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(
-    ellipse 38% 44% at 74% 50%,
-    rgba(213, 143, 107, 0.1) 0%,
-    transparent 70%
-  );
+  opacity: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(213, 143, 107, 0.18) 0%, transparent 70%);
+  transition: opacity 0.3s ease;
 }
 
-/* ══════════════════════════════
-   Left column — OptionWheel
-   ══════════════════════════════ */
-.bs-wheel-col {
-  position: relative;
-  z-index: 1;
-  /* height:100vh gives items a concrete px reference for top:50% */
-  height: 100vh;
-  /* Soft fade at edges instead of hard overflow:hidden clip */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 16%,
-    black 84%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 16%,
-    black 84%,
-    transparent 100%
-  );
+.bs-card:hover .bs-card-glow {
+  opacity: 1;
 }
 
-/* OptionWheel fills the column so items anchor to its vertical centre */
-.bs-wheel-col > .option-wheel {
-  width: 100%;
-  height: 100%;
-}
-
-/* ══════════════════════════════
-   Right column — logo + meta
-   ══════════════════════════════ */
-.bs-right-col {
-  position: relative;
-  z-index: 1;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 clamp(2rem, 5vw, 5rem);
-  overflow: hidden;
-}
-
-.bs-right-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.bs-logo-img {
-  width: 220px;
-  height: 220px;
+.bs-card-logo {
+  width: clamp(48px, 6vw, 68px);
+  height: clamp(48px, 6vw, 68px);
   object-fit: contain;
-  display: block;
-  /* Tint black SVG to brand color: brightness(0) makes it black,
-     then invert+sepia+saturate+hue-rotate shifts to the brand hue.
-     Each brand overrides via JS style prop for precise colors. */
-  filter: brightness(0) saturate(100%) var(--logo-filter, invert(0));
+  opacity: 0.88;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* ══════════════════════════════
-   Bottom-left eyebrow
-   ══════════════════════════════ */
-.bs-eyebrow {
-  position: absolute;
-  bottom: clamp(1.5rem, 3vh, 2.5rem);
-  left: clamp(2rem, 4vw, 4rem);
-  z-index: 2;
+.bs-card:hover .bs-card-logo {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.bs-card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  text-align: center;
+}
+
+.bs-card-name {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--orange);
-  pointer-events: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--brown);
+}
+
+.bs-card-sector {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(56, 37, 37, 0.5);
+  max-width: 90%;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.bs-card:hover .bs-card-sector {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ══════════════════════════════
-   Mobile
+   Responsive
    ══════════════════════════════ */
+@media (max-width: 1024px) {
+  .bs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .bs-section {
-    grid-template-columns: 1fr;
+    min-height: auto;
   }
-  .bs-right-col {
-    display: none;
+  .bs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(130px, auto);
+  }
+  .bs-card-sector {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .bs-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

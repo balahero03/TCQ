@@ -266,24 +266,3 @@ function CatsSVG() {
     </svg>
   );
 }
-
-/* ─── TCQLogoSVG kept as named export (used elsewhere) ─────────── */
-export function TCQLogoSVG({ size = 80, color = '#F0EAE2' }) {
-  return (
-    <svg viewBox="0 0 120 120" width={size} height={size} fill="none">
-      <path
-        d="M 90,60 A 36,36 0 1,1 80,90"
-        stroke={color} strokeWidth="6" strokeLinecap="round" fill="none"
-      />
-      <g transform="translate(72, 82)" stroke={color} strokeWidth="1.5" strokeLinecap="round">
-        <line x1="0" y1="0" x2="-18" y2="-8" />
-        <line x1="0" y1="0" x2="-20" y2="-4" />
-        <line x1="0" y1="0" x2="-20" y2="1" />
-        <line x1="0" y1="0" x2="-18" y2="6" />
-        <line x1="0" y1="0" x2="-14" y2="11" />
-        <line x1="0" y1="0" x2="-9" y2="14" />
-        <line x1="0" y1="0" x2="-3" y2="16" />
-      </g>
-    </svg>
-  );
-}
