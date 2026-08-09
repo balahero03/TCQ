@@ -416,6 +416,9 @@ export default function WhoIsBehind() {
     <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#F7E7C4', paddingBottom: 0, fontFamily: "'Outfit', sans-serif", position: 'relative', overflow: 'clip' }}>
 
       <style>{`
+        /* ── Three-part intro layout ──
+           Heading on the left, the full uncropped (landscape) photo in the
+           middle, a smaller CardSwap deck on the right — one screen tall. */
         .wib-container {
           position: relative;
           z-index: 1;
@@ -427,62 +430,71 @@ export default function WhoIsBehind() {
         }
         .wib-grid {
           width: 100%;
-          max-width: 1500px;
+          max-width: 2000px;
           margin: 0 auto;
           display: flex;
           flex-wrap: wrap;
-          gap: 5vw;
+          gap: clamp(2.5rem, 3.5vw, 4.5rem);
           align-items: center;
         }
-        .wib-left-col {
-          flex: 1.5 1 560px;
+        .wib-text-col {
+          flex: 1 1 380px;
+        }
+        .wib-photo-col {
+          flex: 1.6 1 560px;
           display: flex;
           align-items: center;
-          gap: clamp(2rem, 4vw, 4rem);
+          justify-content: center;
         }
-        .wib-left-photo {
-          width: clamp(220px, 20vw, 320px);
-          height: clamp(300px, 28vw, 440px);
+        .wib-photo-frame {
+          width: 100%;
+          max-width: 780px;
+          aspect-ratio: 3 / 2;
           border-radius: 20px;
-          object-fit: cover;
-          object-position: top center;
+          overflow: hidden;
           border: 1px solid rgba(56, 37, 37, 0.15);
-          box-shadow: 0 20px 50px rgba(56, 37, 37, 0.16);
-          cursor: pointer;
-          flex: 0 0 auto;
+          box-shadow: 0 24px 60px rgba(56, 37, 37, 0.18);
+          background: #382525;
         }
-        .wib-left-text-wrap {
-          display: flex;
-          flex-direction: column;
+        .wib-photo-frame img {
+          width: 100%;
+          height: 100%;
+          /* contain keeps the whole (landscape) photo visible, uncropped */
+          object-fit: contain;
+          display: block;
+          cursor: pointer;
         }
         .wib-right-col {
-          flex: 1 1 500px;
-          height: clamp(500px, 46vw, 640px);
+          flex: 1 1 380px;
+          height: clamp(420px, 34vw, 520px);
           position: relative;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+          .wib-grid {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .wib-text-col,
+          .wib-photo-col,
+          .wib-right-col {
+            flex: 1 1 auto;
+          }
+          .wib-photo-frame {
+            max-width: 100%;
+          }
+          .wib-right-col {
+            height: 380px;
+          }
+        }
+
+        @media (max-width: 900px) {
           .wib-container {
             min-height: auto;
             padding: 100px 5vw 60px;
           }
           .wib-grid {
-            gap: 4rem;
-          }
-          .wib-left-col {
-            flex: 1 1 100%;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 2rem;
-          }
-          .wib-left-photo {
-            width: clamp(200px, 55vw, 280px);
-            height: clamp(270px, 74vw, 380px);
-          }
-          .wib-right-col {
-            flex: 1 1 100%;
-            height: 450px;
-            margin-top: 2rem;
+            gap: 2.5rem;
           }
         }
 
@@ -491,8 +503,7 @@ export default function WhoIsBehind() {
             padding: 80px 5vw 40px;
           }
           .wib-right-col {
-            height: 420px;
-            margin-top: 1rem;
+            height: 340px;
           }
         }
 
@@ -641,57 +652,58 @@ export default function WhoIsBehind() {
       {/* Static intro block with CardSwap */}
       <div className="wib-container">
         <div className="wib-grid">
-          
-          {/* Left: Heading & Profile Pic */}
-          <div className="wib-left-col">
-            <motion.img
-              className="wib-left-photo"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 0.92, scale: 1 }}
-              whileHover={{ scale: 1.03, opacity: 1 }}
-              viewport={{ once: false, amount: 0.1 }}
-              transition={{ duration: 0.5 }}
-              src={drVishnuImg}
-              alt="Dr. Vishnu Aravind"
-            />
-            <div className="wib-left-text-wrap">
-              <h2
-                style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: 'clamp(3.2rem, 8.5vw, 8rem)',
-                  fontWeight: 800,
-                  lineHeight: 1.05,
-                  letterSpacing: '-0.03em',
-                  color: '#382525',
-                  marginBottom: '1.5rem',
-                }}
-              >
-                <div style={{ display: 'block', marginBottom: '0.06em' }}>
-                  <Word word="WHO" index={0} style={{ marginRight: '0.2em' }} />
-                  <Word word="IS" index={1} />
-                </div>
-                <div style={{ display: 'block', marginBottom: '0.06em' }}>
-                  <Word word="BEHIND" index={2} />
-                </div>
-                <div style={{ display: 'block' }}>
-                  <Word word="TCQ?" index={3} style={{ 
-                  color: '#D58F6B', 
-                  fontFamily: "'Newsreader', Georgia, serif", 
+
+          {/* Left: Heading & byline */}
+          <div className="wib-text-col">
+            <h2
+              style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: 'clamp(3rem, 6.5vw, 6rem)',
+                fontWeight: 800,
+                lineHeight: 1.03,
+                letterSpacing: '-0.03em',
+                color: '#382525',
+                marginBottom: '2rem',
+              }}
+            >
+              <div style={{ display: 'block', marginBottom: '0.06em' }}>
+                <Word word="WHO" index={0} style={{ marginRight: '0.2em' }} />
+                <Word word="IS" index={1} />
+              </div>
+              <div style={{ display: 'block', marginBottom: '0.06em' }}>
+                <Word word="BEHIND" index={2} />
+              </div>
+              <div style={{ display: 'block' }}>
+                <Word word="TCQ?" index={3} style={{
+                  color: '#D58F6B',
+                  fontFamily: "'Newsreader', Georgia, serif",
                   fontStyle: 'italic',
                   fontWeight: 400
                 }} />
-                </div>
-              </h2>
+              </div>
+            </h2>
 
-              <div>
-                <div style={{ fontWeight: 800, fontSize: 'clamp(1.3rem, 1.6vw, 1.6rem)', letterSpacing: '0.02em', color: '#382525' }}>
-                  Dr. VISHNU ARAVIND, MBBS, MD
-                </div>
-                <div style={{ fontSize: 'clamp(0.85rem, 1vw, 1rem)', color: '#D58F6B', marginTop: '4px', fontStyle: 'italic', fontFamily: "'Newsreader', Georgia, serif" }}>
-                  Scientist outside. Artist inside.
-                </div>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: 'clamp(1.3rem, 1.7vw, 1.7rem)', letterSpacing: '0.02em', color: '#382525' }}>
+                Dr. VISHNU ARAVIND, MBBS, MD
+              </div>
+              <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', color: '#D58F6B', marginTop: '6px', fontStyle: 'italic', fontFamily: "'Newsreader', Georgia, serif" }}>
+                Scientist outside. Artist inside.
               </div>
             </div>
+          </div>
+
+          {/* Middle: full, uncropped photo */}
+          <div className="wib-photo-col">
+            <motion.div
+              className="wib-photo-frame"
+              initial={{ opacity: 0, scale: 0.92 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <img src={drVishnuImg} alt="Dr. Vishnu Aravind speaking at a TCQ event" />
+            </motion.div>
           </div>
 
           {/* Right: CardSwap */}
@@ -699,27 +711,27 @@ export default function WhoIsBehind() {
             <CardSwap
               width="100%"
               height="100%"
-              cardDistance={60}
-              verticalDistance={70}
+              cardDistance={55}
+              verticalDistance={65}
               delay={2500}
               pauseOnHover={true}
               easing="linear"
             >
-              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
-                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7E7C4' }}>The Roots</h3>
-                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.95rem, 4vw, 1.1rem)' }}>
+              <Card style={{ padding: 'clamp(1.75rem, 5vw, 2.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
+                <h3 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.9rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7E7C4' }}>The Roots</h3>
+                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.1rem)' }}>
                   "Born in the cultural hub of Chennai at the dawn of the millennium and growing up as part of the first generation with technology in our laps, it has been a habit since childhood to seek questions and answers in the living world."
                 </p>
               </Card>
-              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#F7E7C4', color: '#382525' }}>
-                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#382525' }}>The Journey</h3>
-                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.95rem, 4vw, 1.1rem)' }}>
+              <Card style={{ padding: 'clamp(1.75rem, 5vw, 2.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#F7E7C4', color: '#382525' }}>
+                <h3 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.9rem)', marginBottom: '1rem', fontWeight: 800, color: '#382525' }}>The Journey</h3>
+                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.1rem)' }}>
                   "The roles I've undertaken, apart from medicine, have been in exploration of this very idea, and I believe they have helped me gain valuable experience in branding and marketing my passions."
                 </p>
               </Card>
-              <Card style={{ padding: 'clamp(1.5rem, 6vw, 2.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
-                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 1.8rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7E7C4' }}>The Vision</h3>
-                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.95rem, 4vw, 1.1rem)' }}>
+              <Card style={{ padding: 'clamp(1.75rem, 5vw, 2.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
+                <h3 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.9rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7E7C4' }}>The Vision</h3>
+                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.1rem)' }}>
                   "The Curiosity Quotient is an extension of me and the way I work — connecting people, making them explore niches, and creating new ones."
                 </p>
               </Card>

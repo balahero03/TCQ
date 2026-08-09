@@ -62,11 +62,13 @@ export default function WhatIsTCQ() {
           padding: 0;
           font-family: 'Outfit', sans-serif;
           font-weight: 800;
-          font-size: clamp(3rem, 8.5vw, 8.5rem);
-          line-height: 1.15;
+          font-size: clamp(3rem, 7vw, 7rem);
+          line-height: 1.12;
           color: #382525;
         }
-        /* the accent phrase in Newsreader italic — restrained serif highlight */
+        /* the accent phrase in Newsreader italic — restrained serif highlight.
+           "the Curiosity Quotient?" is long enough that it must be free to
+           wrap at any viewport width — never force it onto one line. */
         .tcq-heading .accent {
           font-family: 'Newsreader', Georgia, serif;
           font-weight: 400;
@@ -80,7 +82,7 @@ export default function WhatIsTCQ() {
           line-height: normal;
           display: inline-block;
           padding: 0.1em 0.1em 0.4em 0.1em;
-          white-space: nowrap;
+          white-space: normal;
         }
 
         /* ── BOTTOM BAND: content grid ── */
@@ -212,7 +214,7 @@ export default function WhatIsTCQ() {
                   visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] } },
                 }}
               >
-                What is the
+                What is
               </motion.span>
               <br />
               <motion.span
@@ -222,7 +224,7 @@ export default function WhatIsTCQ() {
                   visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] } },
                 }}
               >
-                <span className="accent">Curiosity Quotient?</span>
+                <span className="accent">The Curiosity Quotient?</span>
               </motion.span>
             </h2>
           </motion.div>
