@@ -419,11 +419,15 @@ export default function WhoIsBehind() {
         .wib-container {
           position: relative;
           z-index: 1;
-          padding: 120px 6vw 80px;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          padding: clamp(100px, 12vh, 160px) 6vw;
           overflow: hidden;
         }
         .wib-grid {
-          max-width: 1200px;
+          width: 100%;
+          max-width: 1500px;
           margin: 0 auto;
           display: flex;
           flex-wrap: wrap;
@@ -431,24 +435,36 @@ export default function WhoIsBehind() {
           align-items: center;
         }
         .wib-left-col {
-          flex: 1.5 1 500px;
+          flex: 1.5 1 560px;
           display: flex;
           align-items: center;
-          gap: 3rem;
+          gap: clamp(2rem, 4vw, 4rem);
+        }
+        .wib-left-photo {
+          width: clamp(220px, 20vw, 320px);
+          height: clamp(300px, 28vw, 440px);
+          border-radius: 20px;
+          object-fit: cover;
+          object-position: top center;
+          border: 1px solid rgba(56, 37, 37, 0.15);
+          box-shadow: 0 20px 50px rgba(56, 37, 37, 0.16);
+          cursor: pointer;
+          flex: 0 0 auto;
         }
         .wib-left-text-wrap {
           display: flex;
           flex-direction: column;
         }
         .wib-right-col {
-          flex: 1 1 450px;
-          height: 500px;
+          flex: 1 1 500px;
+          height: clamp(500px, 46vw, 640px);
           position: relative;
         }
-        
+
         @media (max-width: 768px) {
           .wib-container {
-            padding: 80px 5vw 40px;
+            min-height: auto;
+            padding: 100px 5vw 60px;
           }
           .wib-grid {
             gap: 4rem;
@@ -459,19 +475,23 @@ export default function WhoIsBehind() {
             align-items: flex-start;
             gap: 2rem;
           }
+          .wib-left-photo {
+            width: clamp(200px, 55vw, 280px);
+            height: clamp(270px, 74vw, 380px);
+          }
           .wib-right-col {
             flex: 1 1 100%;
-            height: 450px; 
+            height: 450px;
             margin-top: 2rem;
           }
         }
 
         @media (max-width: 480px) {
           .wib-container {
-            padding: 60px 5vw 30px;
+            padding: 80px 5vw 40px;
           }
           .wib-right-col {
-            height: 420px; 
+            height: 420px;
             margin-top: 1rem;
           }
         }
@@ -625,28 +645,20 @@ export default function WhoIsBehind() {
           {/* Left: Heading & Profile Pic */}
           <div className="wib-left-col">
             <motion.img
+              className="wib-left-photo"
               initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 0.88, scale: 1 }}
+              whileInView={{ opacity: 0.92, scale: 1 }}
               whileHover={{ scale: 1.03, opacity: 1 }}
               viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.5 }}
               src={drVishnuImg}
               alt="Dr. Vishnu Aravind"
-              style={{
-                width: '180px',
-                height: '245px',
-                borderRadius: '12px',
-                objectFit: 'cover',
-                border: '1px solid rgba(56, 37, 37, 0.15)',
-                boxShadow: '0 12px 32px rgba(56, 37, 37, 0.12)',
-                cursor: 'pointer',
-              }}
             />
             <div className="wib-left-text-wrap">
               <h2
                 style={{
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: 'clamp(2.8rem, 10vw, 7rem)',
+                  fontSize: 'clamp(3.2rem, 8.5vw, 8rem)',
                   fontWeight: 800,
                   lineHeight: 1.05,
                   letterSpacing: '-0.03em',
@@ -672,10 +684,10 @@ export default function WhoIsBehind() {
               </h2>
 
               <div>
-                <div style={{ fontWeight: 800, fontSize: '1.3rem', letterSpacing: '0.02em', color: '#382525' }}>
+                <div style={{ fontWeight: 800, fontSize: 'clamp(1.3rem, 1.6vw, 1.6rem)', letterSpacing: '0.02em', color: '#382525' }}>
                   Dr. VISHNU ARAVIND, MBBS, MD
                 </div>
-                <div style={{ fontSize: '0.85rem', color: '#D58F6B', marginTop: '4px', fontStyle: 'italic', fontFamily: "'Newsreader', Georgia, serif" }}>
+                <div style={{ fontSize: 'clamp(0.85rem, 1vw, 1rem)', color: '#D58F6B', marginTop: '4px', fontStyle: 'italic', fontFamily: "'Newsreader', Georgia, serif" }}>
                   Scientist outside. Artist inside.
                 </div>
               </div>
