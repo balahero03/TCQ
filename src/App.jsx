@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import WhatIsTCQ from './components/WhatIsTCQ';
 import WhoIsBehind from './components/WhoIsBehind';
 import WingReel from './components/WingReel';
+import WingsBrandsSection from './components/WingsBrandsSection';
 import Contact from './components/Contact';
 import BlobCursor from './components/BlobCursor';
 import './App.css';
@@ -36,6 +37,7 @@ function App() {
           <WhatIsTCQ />
           <WhoIsBehind />
           <WingReel />
+          <WingsBrandsSection />
           <Contact />
         </main>
         </>

@@ -1,0 +1,215 @@
+/* ══════════════════════════════════════════════════════════════
+   WingsBrandsSection — "Brands we've worked with"
+   Sits after the last wing's endcap, before the footer, in normal
+   document flow (no pin/scrub — a calm landing beat before Contact).
+   ══════════════════════════════════════════════════════════════ */
+
+.wbs-section {
+  position: relative;
+  width: 100%;
+  background: var(--cream-light);
+  overflow: hidden;
+  padding: clamp(5rem, 12vh, 8rem) clamp(2rem, 6vw, 5rem) clamp(4rem, 9vh, 6.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vh, 4rem);
+}
+
+.wbs-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 46% 40% at 10% 10%, rgba(213, 143, 107, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 46% at 92% 90%, rgba(213, 143, 107, 0.1) 0%, transparent 70%);
+}
+
+/* ══════════════════════════════
+   Header
+   ══════════════════════════════ */
+.wbs-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-width: 640px;
+}
+
+.wbs-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.wbs-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--brown);
+  margin: 0;
+}
+
+.wbs-title-accent {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--orange);
+}
+
+.wbs-sub {
+  margin: 0.2rem 0 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(56, 37, 37, 0.6);
+  max-width: 480px;
+}
+
+/* ══════════════════════════════
+   Featured grid
+   ══════════════════════════════ */
+.wbs-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(0.8rem, 1.4vw, 1.2rem);
+}
+
+.wbs-tile {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 18px;
+  background:
+    repeating-linear-gradient(45deg, rgba(56, 37, 37, 0.03) 0 10px, rgba(56, 37, 37, 0.06) 10px 20px),
+    rgba(255, 255, 255, 0.35);
+  border: 1.5px dashed rgba(56, 37, 37, 0.18);
+  cursor: default;
+  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+}
+
+.wbs-tile:hover {
+  border-color: rgba(213, 143, 107, 0.5);
+  transform: translateY(-4px);
+}
+
+.wbs-tile-icon {
+  font-size: 1.1rem;
+  color: rgba(213, 143, 107, 0.7);
+}
+
+.wbs-tile-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(56, 37, 37, 0.4);
+}
+
+.wbs-tile-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--brown);
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+/* ══════════════════════════════
+   Endless marquee strip
+   ══════════════════════════════ */
+.wbs-marquee-wrap {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: 0.5rem 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.wbs-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.6rem);
+  white-space: nowrap;
+  animation: wbs-marquee 32s linear infinite;
+  will-change: transform;
+}
+
+.wbs-marquee-wrap:hover .wbs-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes wbs-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.wbs-marquee-tile {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: 100px;
+  border: 1.5px dashed rgba(56, 37, 37, 0.16);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.wbs-marquee-icon {
+  font-size: 0.9rem;
+  color: rgba(213, 143, 107, 0.7);
+}
+
+.wbs-marquee-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(56, 37, 37, 0.45);
+}
+
+/* ══════════════════════════════
+   Responsive
+   ══════════════════════════════ */
+@media (max-width: 1024px) {
+  .wbs-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wbs-section {
+    gap: 2.5rem;
+  }
+  .wbs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .wbs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wbs-marquee-track {
+    animation: none;
+  }
+}
