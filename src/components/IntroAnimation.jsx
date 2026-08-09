@@ -30,26 +30,35 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
     onStartFly();
   }, [onStartFly]);
 
+  // Cat drawing takes CAT_DRAW_MS to finish (no fill/enclose animation —
+  // it's a pure line-draw). The percentage counter only runs during the cats
+  // phase and hits 100% right as the draw completes, which triggers the logo
+  // phase. Once it completes, the cats disappear immediately and the logo
+  // pops up (no percentage shown), holding for LOGO_HOLD_MS before it flies
+  // to the corner.
+  const CAT_DRAW_MS = 1500;
+  const LOGO_HOLD_MS = 3000; // how long the logo sits before flying
+
   useEffect(() => {
     const startTime = Date.now();
-    const duration = 5400; // slightly before the fly starts at 5800ms
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const current = Math.min(Math.round((elapsed / duration) * 100), 100);
+      const current = Math.min(Math.round((elapsed / CAT_DRAW_MS) * 100), 100);
       setProgress(current);
-      if (current >= 100) clearInterval(interval);
+      if (current >= 100) {
+        clearInterval(interval);
+        setPhase('logo');
+      }
     }, 30);
 
-    const t1 = setTimeout(() => setPhase('line'), 2400);
-    const t2 = setTimeout(() => setPhase('logo'), 3700);
-    const t3 = setTimeout(triggerFly, 5800);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
-  }, [triggerFly]);
+    return () => clearInterval(interval);
+  }, [CAT_DRAW_MS]);
+
+  useEffect(() => {
+    if (phase !== 'logo') return;
+    const t = setTimeout(triggerFly, LOGO_HOLD_MS);
+    return () => clearTimeout(t);
+  }, [phase, triggerFly, LOGO_HOLD_MS]);
 
   // Called by framer-motion when the fly animation finishes
   const handleLanded = useCallback(() => {
@@ -145,7 +154,7 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                 initial={{ opacity: 0, scale: 0.3, y: 40, filter: 'blur(24px)' }}
                 animate={{
                   opacity: 1, scale: 1, y: 0, filter: 'blur(0px)',
-                  transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+                  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                 }}
                 style={{ display: 'flex', alignItems: 'center', gap: '2.5rem', zIndex: 2 }}
               >
@@ -156,13 +165,13 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   alt="The Curiosity Quotient Logo"
                   initial={{ scale: 0.4, rotate: -10, opacity: 0 }}
                   animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
                   style={{ height: '200px', width: 'auto', display: 'block' }}
                 />
                 <motion.div
                   initial={{ opacity: 0, x: 30, scale: 0.85 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
-                  transition={{ delay: 0.45, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: 0.25, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     color: '#F7E7C4',
                     fontFamily: "'Fredoka', sans-serif",
@@ -177,25 +186,32 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                 </motion.div>
               </motion.div>
             )}
-            {/* ── Percentage counter ── */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              style={{
-                position: 'absolute',
-                bottom: '17%',
-                right: '8vw',
-                color: '#F7E7C4',
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 300,
-                fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-                fontVariantNumeric: 'tabular-nums',
-                letterSpacing: '0.05em',
-                zIndex: 2,
-              }}
-            >
-              {String(progress).padStart(2, '0')}%
-            </motion.div>
+
+            {/* ── Percentage counter — cats phase only, hidden once the logo pops up ── */}
+            <AnimatePresence>
+              {phase === 'cats' && (
+                <motion.div
+                  key="progress"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.6 }}
+                  exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                  style={{
+                    position: 'absolute',
+                    bottom: '17%',
+                    right: '8vw',
+                    color: '#F7E7C4',
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 300,
+                    fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                    fontVariantNumeric: 'tabular-nums',
+                    letterSpacing: '0.05em',
+                    zIndex: 2,
+                  }}
+                >
+                  {String(progress).padStart(2, '0')}%
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>
@@ -226,7 +242,7 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
             width: Math.round(TARGET.height * (safe.width / safe.height)),
             filter: 'brightness(0)',
           }}
-          transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           onAnimationComplete={handleLanded}
           style={{
             position: 'fixed',
@@ -256,11 +272,10 @@ function CatsSVG() {
         pathLength="1"
         strokeDasharray="1"
         strokeDashoffset="1"
-        initial={{ strokeDashoffset: 1, fill: "rgba(247,231,196,0)" }}
-        animate={{ strokeDashoffset: 0, fill: "rgba(247,231,196,1)" }}
+        initial={{ strokeDashoffset: 1 }}
+        animate={{ strokeDashoffset: 0 }}
         transition={{
-          strokeDashoffset: { duration: 2.2, ease: "easeInOut" },
-          fill: { duration: 0.5, delay: 1.8 }
+          strokeDashoffset: { duration: 1.1, ease: "easeInOut" }
         }}
       />
     </svg>

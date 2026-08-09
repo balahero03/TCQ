@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+
+const getCols = () => (window.innerWidth < 640 ? 2 : window.innerWidth < 1024 ? 3 : 4);
 
 /* ── Generates a set of varied placeholder tiles for the gallery.
    Each tile gets a random aspect ratio drawn from a curated set so
@@ -101,20 +103,24 @@ function GalleryTile({ tile, index, onOpen }) {
 }
 
 export default function GalleryModal({ event, onClose }) {
-  /* Close on Escape */
+  const [cols, setCols] = useState(getCols);
+
+  /* Close on Escape; keep column count in sync with viewport while open */
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onResize = () => setCols(getCols());
     document.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
     document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
       document.body.style.overflow = '';
     };
   }, [onClose]);
 
   const tiles = makeTiles(event.photos, 14);
-  const COLS = window.innerWidth < 640 ? 2 : window.innerWidth < 1024 ? 3 : 4;
-  const columns = buildColumns(tiles, COLS);
+  const columns = buildColumns(tiles, cols);
 
   return createPortal(
     <AnimatePresence>
@@ -219,7 +225,7 @@ export default function GalleryModal({ event, onClose }) {
           {/* Pinterest Masonry Grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: `repeat(${COLS}, 1fr)`,
+            gridTemplateColumns: `repeat(${cols}, 1fr)`,
             gap: '14px',
             alignItems: 'start',
           }}>

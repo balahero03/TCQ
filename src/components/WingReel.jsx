@@ -24,30 +24,6 @@ const CARD_LAYOUT = [
 // scroll straight to it.
 const wingSectionId = (wing) => `wing-${wing.no}`;
 
-// Smoothly scroll to an element over a fixed duration with an ease — native
-// `scrollIntoView({behavior:'smooth'})` whips across the long pinned reels too
-// fast, so we drive the scroll ourselves for a gentle, consistent glide.
-function smoothScrollTo(target, duration = 1400) {
-  if (!target) return;
-  const startY = window.scrollY;
-  const targetY = typeof target === 'number' ? target : startY + target.getBoundingClientRect().top;
-  const distance = targetY - startY;
-  if (Math.abs(distance) < 1) return;
-
-  // easeInOutCubic — slow start, slow finish, smooth middle.
-  const ease = (t) =>
-    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-  let startTime = null;
-  const step = (now) => {
-    if (startTime === null) startTime = now;
-    const t = Math.min((now - startTime) / duration, 1);
-    window.scrollTo(0, startY + distance * ease(t));
-    if (t < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-}
-
 function MagneticCard({ wing, layout, mx, my }) {
   // pull toward the cursor, scaled by the card's depth
   const tx = useTransform(mx, (v) => v * 40 * layout.depth);

@@ -4,7 +4,6 @@ import Hero from './components/Hero';
 import WhatIsTCQ from './components/WhatIsTCQ';
 import WhoIsBehind from './components/WhoIsBehind';
 import WingReel from './components/WingReel';
-import BrandsSection from './components/BrandsSection';
 import Contact from './components/Contact';
 import BlobCursor from './components/BlobCursor';
 import './App.css';
@@ -36,7 +35,6 @@ function App() {
           <Hero logoLanded={logoLanded} />
           <WhatIsTCQ />
           <WhoIsBehind />
-          <BrandsSection />
           <WingReel />
           <Contact />
         </main>

@@ -20,7 +20,9 @@ The `*.cjs` scripts at the repo root (`trace.cjs`, `invert.cjs`, `bbox_logo.cjs`
 ### Page composition
 [src/App.jsx](src/App.jsx) is the whole app. It gates everything behind a two-phase reveal:
 1. `IntroAnimation` plays a full-screen overlay sequence and fires `onStartFly` / `onLanded` callbacks.
-2. Only after `onStartFly` does `App` mount the actual page (`BlobCursor` + `<main>` with the five sections in fixed order: `Hero` → `WhatIsTCQ` → `WhoIsBehind` → `WingReel` → `Contact`).
+2. Only after `onStartFly` does `App` mount the actual page (`BlobCursor` + `<main>` with the four sections in fixed order: `Hero` → `WhatIsTCQ` → `WhoIsBehind` → `WingReel` → `Contact`).
+
+`BrandsSection.jsx`/`.css` exist in the repo (a "Brands We've Worked With" logo grid) but are **not currently mounted** — the placeholder brand list (Google, Amazon, Tesla, etc.) was fabricated and pulled logos from a third-party CDN, so it was pulled from `App.jsx` pending real partner data. Don't re-mount it without replacing that data first.
 
 The intro→hero handoff is deliberately seamless: the overlay and Hero share the same `#6B2737` background, and the flying logo lands at the exact coordinates (`top:24, left:24`) where Hero renders its own logo — `onLanded` flips `logoLanded` so Hero reveals its logo precisely as the flying clone disappears. **When touching the intro or Hero header positioning, keep these coordinates in sync** ([IntroAnimation.jsx](src/components/IntroAnimation.jsx) `TARGET`, [Hero.css](src/components/Hero.css) `.hero-logo`).
 
@@ -36,13 +38,13 @@ Each of the 5 wings is its own pinned, horizontally-scrubbing reel. Direction al
 
 ### Content lives in module-level data arrays
 Editable site content is **not** in a CMS or JSON files — it's `const` arrays at the top of components:
-- [src/components/wingsData.js](src/components/wingsData.js) — the five wings (`WINGS`), their events, and photo placeholders. Photos are `ph(w, h)` placeholders with `src: null`; real images go in `src/assets/wings/<wing>/` and replace the `src`. Layout per event is `'fan'` | `'hero'` | `'grid'`.
-- `timeline` in [WhoIsBehind.jsx](src/components/WhoIsBehind.jsx), `services` in [Services.jsx](src/components/Services.jsx), `SPARKLES`/`CAT_PATH` in [Hero.jsx](src/components/Hero.jsx).
+- [src/components/wingsData.js](src/components/wingsData.js) — the five wings (`WINGS`), their events, and photo placeholders. Photos are `ph(w, h)` placeholders with `src: null`; real images go in `src/assets/wings/<wing>/` and replace the `src`. Layout per event is `'fan'` | `'hero'` | `'grid'` | `'split'` | `'collage'` | `'strip'` (each has matching `.wr-photos--*` CSS in [WingReel.css](src/components/WingReel.css)).
+- `timeline` in [WhoIsBehind.jsx](src/components/WhoIsBehind.jsx), `SPARKLES`/`CAT_PATH` in [Hero.jsx](src/components/Hero.jsx).
 
-`Services.jsx` is defined but **not currently mounted** in `App.jsx` (its content overlaps `WingReel`).
+`GalleryModal.jsx` renders the per-event photo lightbox opened from `WingReel`'s "Explore images" buttons; `OptionWheel.jsx` is a standalone scroll/drag picker widget (not currently used by any mounted section).
 
 ### Reusable "design" components
-Several components under `src/components/` are generic, self-contained animation primitives reused across sections, each with a paired `.css`: `BlobCursor`, `TrueFocus`, `BlurText`, `ScrollReveal`/`ScrollFloat`/`TextScrollReveal`, `CountUp`, `CardSwap`, `ProfileCard`. Treat these as a local mini-library — prefer composing them over re-implementing similar effects.
+Several components under `src/components/` are generic, self-contained animation primitives reused across sections, each with a paired `.css`: `BlobCursor`, `TrueFocus`, `BlurText`, `ScrollReveal`, `CountUp`, `CardSwap`. Treat these as a local mini-library — prefer composing them over re-implementing similar effects.
 
 ## Conventions
 
