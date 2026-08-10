@@ -197,6 +197,9 @@ function WingTitlePanel({ wing, reverse }) {
       <div className="wr-intro-inner">
         <span className="wr-tag">{wing.tag}</span>
         <h2 className="wr-title">{wing.title}</h2>
+        {wing.byline && (
+          <p className="wr-byline">"{wing.byline}"</p>
+        )}
         <p className="wr-blurb">{wing.blurb}</p>
         <span className="wr-scroll-hint">
           {reverse && <span aria-hidden="true">←</span>}

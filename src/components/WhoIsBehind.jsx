@@ -12,12 +12,48 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 // ../assets/timeline/<file> and replace null) and it appears automatically
 // in the open space beside each milestone as it unlocks.
 const timeline = [
-  { year: '2019', role: 'Red Bull', sub: 'Marketing Ambassador', img: null },
-  { year: '2020', role: 'Fully Filmy', sub: 'Content Creator', img: null },
-  { year: '2021', role: 'Greater Chennai Corporation', sub: 'Medical Officer during Pandemic', img: null },
-  { year: '2023', role: 'Jio Cinemas', sub: 'Fan Commentator for IPL', img: null },
-  { year: '2024', role: "R Ashwin's Youtube", sub: 'Content Team', img: null },
-  { year: '2025', role: 'Sri Ramachandra Hospital', sub: 'M.D. Preventive Medicine', img: null },
+  {
+    year: '2019',
+    role: 'Red Bull',
+    sub: 'Student Brand Manager',
+    desc: 'Worked on bringing the Red Bull brand to life on campus through events, identifying emerging trends and incubating them within the Red Bull ecosystem.',
+    img: null,
+  },
+  {
+    year: '2020',
+    role: 'Fully Filmy',
+    sub: 'Content Creator & Writer',
+    desc: 'Created and hosted content for Fully Filmy\'s YouTube channel, writing across film analysis, social and cultural commentary, and brand merchandising.',
+    img: null,
+  },
+  {
+    year: '2021',
+    role: 'Greater Chennai Corporation',
+    sub: 'Medical Officer',
+    desc: 'Worked as a Medical Officer during the COVID-19 pandemic, overseeing vaccination camps and telemedicine services, while triaging newly diagnosed COVID-19 patients in Wards 133 and 135, GCC Zone 10.',
+    img: null,
+  },
+  {
+    year: '2023',
+    role: 'JioCinema',
+    sub: 'Fan Commentator, IPL 2023',
+    desc: 'Covered all Chennai Super Kings matches and the playoffs as a fan commentator in both Tamil and English.',
+    img: null,
+  },
+  {
+    year: '2024',
+    role: 'Ravichandran Ashwin',
+    sub: 'Subtitle Translator',
+    desc: 'Translated subtitles for cricketer Ravichandran Ashwin\'s YouTube channel.',
+    img: null,
+  },
+  {
+    year: '2025',
+    role: 'Sri Ramachandra Hospital',
+    sub: 'MD Preventive & Social Medicine',
+    desc: 'Pursuing an MD in Preventive and Social Medicine, with a focus on lifestyle medicine, health economics and medical research, while exploring ways to make health and healthcare systems more accessible to the masses.',
+    img: null,
+  },
 ];
 
 function OrganicTimeline() {
@@ -336,12 +372,15 @@ function OrganicTimeline() {
                     {node.data.year}
                   </div>
 
-                  <h3 style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', color: '#382525', marginBottom: '0.6rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+                  <h3 style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', color: '#382525', marginBottom: '0.3rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2 }}>
                     {node.data.role}
                   </h3>
-                  <div style={{ width: 40, height: 3, background: 'linear-gradient(90deg, #382525, #D58F6B)', marginBottom: '0.8rem', borderRadius: 2 }} />
-                  <p style={{ color: '#5a3e3e', fontSize: 'clamp(0.85rem, 1.2vw, 1rem)', lineHeight: 1.7, margin: 0 }}>
+                  <div style={{ fontSize: 'clamp(0.78rem, 1vw, 0.9rem)', color: '#D58F6B', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.7rem' }}>
                     {node.data.sub}
+                  </div>
+                  <div style={{ width: 40, height: 3, background: 'linear-gradient(90deg, #382525, #D58F6B)', marginBottom: '0.8rem', borderRadius: 2 }} />
+                  <p style={{ color: '#5a3e3e', fontSize: 'clamp(0.82rem, 1.1vw, 0.95rem)', lineHeight: 1.7, margin: 0 }}>
+                    {node.data.desc || node.data.sub}
                   </p>
                 </div>
               </div>
@@ -425,7 +464,7 @@ export default function WhoIsBehind() {
           min-height: 100vh;
           display: flex;
           align-items: center;
-          padding: clamp(100px, 12vh, 160px) 6vw;
+          padding: clamp(80px, 10vh, 120px) 6vw;
           overflow: hidden;
         }
         .wib-grid {
@@ -685,10 +724,10 @@ export default function WhoIsBehind() {
 
             <div>
               <div style={{ fontWeight: 800, fontSize: 'clamp(1.3rem, 1.7vw, 1.7rem)', letterSpacing: '0.02em', color: '#382525' }}>
-                Dr. VISHNU ARAVIND, MBBS, MD
+                Dr. Vishnu Aravind, MBBS, MD
               </div>
               <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', color: '#D58F6B', marginTop: '6px', fontStyle: 'italic', fontFamily: "'Newsreader', Georgia, serif" }}>
-                Scientist outside. Artist inside.
+                Scientist by the day. Artist also by the day. Sleep is for the night.
               </div>
             </div>
           </div>
@@ -719,20 +758,26 @@ export default function WhoIsBehind() {
             >
               <Card style={{ padding: 'clamp(1.75rem, 5vw, 2.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
                 <h3 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.9rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7E7C4' }}>The Roots</h3>
-                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.1rem)' }}>
-                  "Born in the cultural hub of Chennai at the dawn of the millennium and growing up as part of the first generation with technology in our laps, it has been a habit since childhood to seek questions and answers in the living world."
+                <p style={{ lineHeight: 1.7, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.05rem)' }}>
+                  I was born in Chennai, grew up with the internet, and somehow ended up studying medicine. Along the way, I developed a habit that has proved considerably harder to cure by my own standards: asking questions.
+                </p>
+                <p style={{ lineHeight: 1.7, opacity: 0.85, fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)', marginTop: '0.75rem' }}>
+                  One answer usually leads to another question. One niche leads to another. One interesting idea leads to the urge to share it with someone else. And then, one random morning, it became TCQ.
                 </p>
               </Card>
               <Card style={{ padding: 'clamp(1.75rem, 5vw, 2.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#F7E7C4', color: '#382525' }}>
                 <h3 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.9rem)', marginBottom: '1rem', fontWeight: 800, color: '#382525' }}>The Journey</h3>
-                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.1rem)' }}>
-                  "The roles I've undertaken, apart from medicine, have been in exploration of this very idea, and I believe they have helped me gain valuable experience in branding and marketing my passions."
+                <p style={{ lineHeight: 1.7, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.05rem)' }}>
+                  Medicine gave me a way of understanding people. Marketing, business and media gave me ways of understanding attention, stories and ideas. Together, they gave me a way of thinking: break things down to a science, understand what people need, find what makes an idea interesting, and make it accessible to the society to end up building cultures.
                 </p>
               </Card>
               <Card style={{ padding: 'clamp(1.75rem, 5vw, 2.75rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
                 <h3 style={{ fontSize: 'clamp(1.4rem, 4vw, 1.9rem)', marginBottom: '1rem', fontWeight: 800, color: '#F7E7C4' }}>The Vision</h3>
-                <p style={{ lineHeight: 1.6, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.1rem)' }}>
-                  "The Curiosity Quotient is an extension of me and the way I work — connecting people, making them explore niches, and creating new ones."
+                <p style={{ lineHeight: 1.7, opacity: 0.9, fontSize: 'clamp(0.9rem, 3vw, 1.05rem)' }}>
+                  TCQ is an extension of my way of thinking. We connect people to ideas they might not have discovered otherwise. We help schools and colleges open up new worlds for their students. We work with startups, brands and organisations to find interesting ways to connect with their audiences.
+                </p>
+                <p style={{ lineHeight: 1.7, opacity: 0.85, fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)', marginTop: '0.75rem' }}>
+                  Sometimes that means a quiz. Sometimes a workshop. Sometimes a campaign, a community, or something that doesn’t have a name yet. And the more nameless things we create, the better.
                 </p>
               </Card>
             </CardSwap>
@@ -742,6 +787,28 @@ export default function WhoIsBehind() {
       </div>
 
       {/* GSAP Organic Timeline */}
+      <div style={{ padding: 'clamp(40px, 6vh, 70px) 6vw 0', position: 'relative', zIndex: 2 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: 'clamp(1rem, 2vh, 2rem)' }}>
+          <div style={{ width: '2.5rem', height: '2px', background: '#D58F6B' }} />
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#D58F6B' }}>
+            Page by Page
+          </span>
+        </div>
+        <h2 style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: 'clamp(2.4rem, 5.5vw, 5rem)',
+          fontWeight: 800,
+          lineHeight: 1.05,
+          letterSpacing: '-0.03em',
+          color: '#382525',
+          marginBottom: 0,
+        }}>
+          The Journey{' '}
+          <span style={{ fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', fontWeight: 400, color: '#D58F6B' }}>
+            So Far
+          </span>
+        </h2>
+      </div>
       <OrganicTimeline />
     </section>
   );

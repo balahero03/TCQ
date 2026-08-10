@@ -9,7 +9,7 @@
   width: 100%;
   background: var(--cream-light);
   overflow: hidden;
-  padding: clamp(5rem, 12vh, 8rem) clamp(2rem, 6vw, 5rem) clamp(4rem, 9vh, 6.5rem);
+  padding: clamp(80px, 10vh, 120px) 6vw;
   display: flex;
   flex-direction: column;
   gap: clamp(2.5rem, 6vh, 4rem);

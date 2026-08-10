@@ -19,8 +19,9 @@ export const WINGS = [
     no: '01',
     tag: 'TCQ FOR BRANDS',
     title: 'For Brands',
+    byline: 'You know the Business. We know the Chemistry.',
     blurb:
-      'We help brands build meaningful communities through highly engaging, interactive, learning-led experiences — curating partnerships and designing live and digital formats centred on knowledge.',
+      'We help brands build communities through curiosity. By turning knowledge into interactive live and digital experiences, we connect brands organically with the culture, interests and people around them.',
     events: [
       {
         name: 'Typical Chennai Quiz',
@@ -47,8 +48,9 @@ export const WINGS = [
     no: '02',
     tag: 'TCQ QUIZZES',
     title: 'Quizzes',
+    byline: 'Is this a puzzle or a story? It\'s both.',
     blurb:
-      'Every question blends a puzzle with a story, so participants leave not just with results but with stories they remember for life. With nearly 15 years of experience, we specialise in marketing and seamlessly integrating brands into our quizzes.',
+      'Nearly 15 years of quizzing taught us something simple: learning is at its best when there\'s no red pen involved. Quizzing forms part of TCQ\'s foundation, but our formats don\'t stop at questions and answers. We take our way of finding, shaping and telling stories into brand identities and collaborations, and we will continue to push ourselves into unknown territories. After all, the unknown isn\'t a destination, it is an invitation.',
     events: [
       {
         name: '6 to 60 Quizzes',
@@ -75,12 +77,13 @@ export const WINGS = [
     no: '03',
     tag: 'TCQ CIRCLES',
     title: 'Circles',
+    byline: 'One shape. Multiple sizes. No sides.',
     blurb:
-      'Our flagship monthly live event series — lectures, panel discussions, interviews, workshops and curated performances, experimental to the mainstream. Designed for a limited audience where diverse fields intersect and engage with new niches.',
+      'Our flagship monthly live series is where lectures meet conversations, workshops meet performances, and the experimental meets the mainstream.\n\nWith a limited audience and a deliberately eclectic mix of subjects, each edition brings people and ideas from different fields together to explore new niches and unexpected connections.',
     events: [
       {
         name: 'Circles, Season One',
-        venue: 'Indie Music · Stargazing · Madras History · an Umpire’s POV of cricket',
+        venue: 'Indie Music · Stargazing · Madras History · an Umpire\u2019s POV of cricket',
         layout: 'split',
         photos: [ph(3, 4), ph(16, 9)],
       },
@@ -97,8 +100,9 @@ export const WINGS = [
     no: '04',
     tag: 'TCQ WRITES',
     title: 'Writes',
+    byline: 'Liberté, égalité, most importantly fraternité.',
     blurb:
-      'Our newsletter, run by a dedicated team, celebrating Chennai as a melting pot of cultures and new experiences. We spotlight events and stories overlooked by mainstream media — collaborating with small brands and artists, seeking voices that represent the city in its truest form.',
+      'A newsletter for the Chennai you might not know yet. We go looking for the stories, events, artists, ideas and experiences that slip past the mainstream, working with independent brands, small businesses and creators along the way. A little bit of the city you know. A lot of the city you haven\'t discovered yet.',
     events: [
       {
         name: 'From our Substack',
@@ -116,8 +120,9 @@ export const WINGS = [
     no: '05',
     tag: 'TCQ TEACHES',
     title: 'Teaches',
+    byline: 'The world is our classroom, a classroom to the world.',
     blurb:
-      'We work with schools and colleges to cultivate healthier learning practices — quizzing, public speaking and the performing arts — partnering with prestigious institutions across Chennai to nurture curiosity and critical thinking from a young age.',
+      'We work with schools and colleges to take learning beyond the classroom through quizzing, public speaking and the performing arts. Our programmes give students room to question, think, perform and explore, helping make curiosity a part of how they learn, not just what they learn.',
     events: [
       {
         name: 'Intellect Club',

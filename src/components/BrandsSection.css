@@ -8,7 +8,7 @@
   min-height: 100vh;
   background: var(--cream-light);
   overflow: hidden;
-  padding: clamp(5rem, 10vh, 7rem) clamp(2rem, 6vw, 5rem) clamp(4rem, 8vh, 6rem);
+  padding: clamp(80px, 10vh, 120px) 6vw;
   display: flex;
   flex-direction: column;
   gap: clamp(2.5rem, 6vh, 4rem);

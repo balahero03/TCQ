@@ -24,7 +24,7 @@ export default function WhatIsTCQ() {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: 8vh 6vw;
+          padding: clamp(80px, 10vh, 120px) 6vw;
           border-bottom: 1px solid rgba(56,37,37,0.08);
         }
 
@@ -235,29 +235,37 @@ export default function WhatIsTCQ() {
 
           <ScrollReveal delay={0.2} className="tcq-content-col">
             <p className="lead tcq-dopamine-text">
-              The Curiosity Quotient (TCQ), founded in 2023, is driven by an idea to make curiosity social.
+              TCQ began in 2023 with a slightly unreasonable yet very practical ask:
             </p>
+            <ul style={{ margin: '0 0 1.5rem 1.5rem', color: '#5a3e3e', fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', lineHeight: 1.6 }}>
+              <li style={{ paddingBottom: '0.4rem' }}>That learning shouldn’t have to end with a degree.</li>
+              <li style={{ paddingBottom: '0.4rem' }}>That curiosity shouldn’t have to be a solitary pursuit.</li>
+              <li style={{ paddingBottom: '0.4rem' }}>And that curious people deserve a place to come home to.</li>
+            </ul>
             <p>
-              At a time when entertainment dominates attention and learning feels increasingly solitary, we bring the two together — creating experiences where knowledge, culture, and people collide.
+              There wasn’t anything around, so we started building one.
             </p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.4} className="tcq-content-col">
             <p>
-              Through lectures and quizzes to workshops and experimental formats, we have become a community thriving on knowledge. As TCQ expands across spaces and platforms, we continue our mission to make learning fun.
+              Through quizzes, lectures, workshops, conversations and experiments, TCQ has grown into a community of more than 2,000 people brought together by a shared love for curiosity and one simple instinct: the desire to know more. Today, we take that instinct into physical spaces and digital platforms, develop new ways to experience ideas, and collaborate with brands, creators and organisations to turn those ideas into experiences.
+            </p>
+            <p>
+              We celebrate new communities and go beyond simply creating experiential marketing campaigns. We create stories that people will never forget.
             </p>
             <div className="tcq-stats">
               <div>
-                <div className="tcq-stat-num"><CountUp to={2000} suffix="+" /></div>
-                <div className="tcq-stat-label">Community</div>
-              </div>
-              <div>
                 <div className="tcq-stat-num"><CountUp to={5} suffix="+" /></div>
-                <div className="tcq-stat-label">Formats</div>
+                <div className="tcq-stat-label">Wings</div>
               </div>
               <div>
                 <div className="tcq-stat-num"><CountUp to={2023} /></div>
-                <div className="tcq-stat-label">Founded</div>
+                <div className="tcq-stat-label">Found In</div>
+              </div>
+              <div>
+                <div className="tcq-stat-num"><CountUp to={2000} suffix="+" /></div>
+                <div className="tcq-stat-label">Curious Cats</div>
               </div>
             </div>
           </ScrollReveal>

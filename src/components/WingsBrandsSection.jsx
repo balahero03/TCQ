@@ -1,14 +1,18 @@
 import { motion } from 'framer-motion';
 import './WingsBrandsSection.css';
 
-/* No real partner logos yet — these are placeholder slots (same convention
-   as wingsData.js `ph()` and WhoIsBehind's `img: null`). Replace `name` with
-   the real brand and drop a logo file in src/assets/brands/<file> when ready;
-   swap the placeholder tile for an <img> once real assets exist. */
-const BRAND_SLOTS = Array.from({ length: 10 }, (_, i) => ({
-  id: i + 1,
-  name: null, // e.g. 'Acme Co.' once confirmed
-}));
+const BRAND_SLOTS = [
+  { id: 1, name: 'Google', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/google.svg' },
+  { id: 2, name: 'Amazon', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazon.svg' },
+  { id: 3, name: 'Tesla', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/tesla.svg' },
+  { id: 4, name: 'Nike', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/nike.svg' },
+  { id: 5, name: 'Apple', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/apple.svg' },
+  { id: 6, name: 'Spotify', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/spotify.svg' },
+  { id: 7, name: 'Netflix', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg' },
+  { id: 8, name: 'Adobe', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobe.svg' },
+  { id: 9, name: 'Airbnb', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/airbnb.svg' },
+  { id: 10, name: 'Notion', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/notion.svg' },
+];
 
 const gridVariants = {
   hidden: {},
@@ -28,7 +32,9 @@ const tileVariants = {
 function BrandTile({ slot }) {
   return (
     <motion.div className="wbs-tile" variants={tileVariants}>
-      {slot.name ? (
+      {slot.logo ? (
+        <img src={slot.logo} alt={`${slot.name} logo`} style={{ maxWidth: '80px', maxHeight: '40px', filter: 'brightness(0) opacity(0.7)' }} />
+      ) : slot.name ? (
         <span className="wbs-tile-name">{slot.name}</span>
       ) : (
         <>
@@ -41,7 +47,6 @@ function BrandTile({ slot }) {
 }
 
 export default function WingsBrandsSection() {
-  // Duplicate the slots so the marquee track can loop seamlessly at -50%.
   const marqueeSlots = [...BRAND_SLOTS, ...BRAND_SLOTS];
 
   return (
@@ -54,12 +59,10 @@ export default function WingsBrandsSection() {
           Brands we've<br /><span className="wbs-title-accent">worked with</span>
         </h2>
         <p className="wbs-sub">
-          Logos land here as partnerships are confirmed — for now, here's a seat
-          held open for each one.
+          Here are some of the amazing partners we have collaborated with to build impactful experiences.
         </p>
       </div>
 
-      {/* Featured grid — staggers in on scroll */}
       <motion.div
         className="wbs-grid"
         variants={gridVariants}
@@ -72,13 +75,21 @@ export default function WingsBrandsSection() {
         ))}
       </motion.div>
 
-      {/* Endless marquee strip — a second, livelier read of the same slots */}
       <div className="wbs-marquee-wrap">
         <div className="wbs-marquee-track">
           {marqueeSlots.map((slot, i) => (
-            <div className="wbs-marquee-tile" key={`${slot.id}-${i}`} aria-hidden={i >= BRAND_SLOTS.length}>
-              <span className="wbs-marquee-icon" aria-hidden="true">✦</span>
-              <span className="wbs-marquee-label">Logo soon</span>
+            <div className="wbs-marquee-tile" key={`${slot.id}-${i}`} aria-hidden={i >= BRAND_SLOTS.length} style={{ gap: '1rem' }}>
+              {slot.logo ? (
+                <>
+                  <img src={slot.logo} alt="" style={{ height: '24px', filter: 'brightness(0) opacity(0.5)' }} />
+                  <span className="wbs-marquee-label">{slot.name}</span>
+                </>
+              ) : (
+                <>
+                  <span className="wbs-marquee-icon" aria-hidden="true">✦</span>
+                  <span className="wbs-marquee-label">{slot.name || 'Logo soon'}</span>
+                </>
+              )}
             </div>
           ))}
         </div>
