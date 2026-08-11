@@ -217,7 +217,7 @@ function OrganicTimeline() {
       <div ref={pinRef} style={{ width: '100%', height: '100vh', position: 'relative', overflow: 'hidden', fontFamily: "'Outfit', sans-serif" }}>
         
         {/* Scrolling Canvas (220vh gives HUGE gaps between nodes) */}
-        <div ref={scrollContentRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '220vh', willChange: 'transform' }}>
+        <div ref={scrollContentRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '220vh', willChange: 'transform', overflow: 'hidden' }}>
           
           {/* Title Header matching WhatIsTCQ style - now scrolls away naturally */}
           <div style={{ position: 'absolute', top: '7vh', left: '5vw', zIndex: 3 }}>
@@ -227,8 +227,8 @@ function OrganicTimeline() {
                 Journey
               </div>
             </div>
-            <div style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#382525', letterSpacing: '-0.04em', lineHeight: 1, textTransform: 'uppercase' }}>
-              A Timeline
+            <div style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#382525', letterSpacing: '-0.04em', lineHeight: 1 }}>
+              The Journey <span style={{ fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', fontWeight: 400, color: '#D58F6B' }}>So Far</span>
             </div>
           </div>
 
@@ -786,29 +786,6 @@ export default function WhoIsBehind() {
         </div>
       </div>
 
-      {/* GSAP Organic Timeline */}
-      <div style={{ padding: 'clamp(40px, 6vh, 70px) 6vw 0', position: 'relative', zIndex: 2 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: 'clamp(1rem, 2vh, 2rem)' }}>
-          <div style={{ width: '2.5rem', height: '2px', background: '#D58F6B' }} />
-          <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', color: '#D58F6B' }}>
-            Page by Page
-          </span>
-        </div>
-        <h2 style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: 'clamp(2.4rem, 5.5vw, 5rem)',
-          fontWeight: 800,
-          lineHeight: 1.05,
-          letterSpacing: '-0.03em',
-          color: '#382525',
-          marginBottom: 0,
-        }}>
-          The Journey{' '}
-          <span style={{ fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', fontWeight: 400, color: '#D58F6B' }}>
-            So Far
-          </span>
-        </h2>
-      </div>
       <OrganicTimeline />
     </section>
   );
