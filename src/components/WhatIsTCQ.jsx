@@ -20,11 +20,11 @@ export default function WhatIsTCQ() {
 
         /* ── TOP BAND ── fills the upper viewport ── */
         .tcq-top-band {
-          min-height: 68vh;
+          min-height: 50vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: clamp(80px, 10vh, 120px) 6vw;
+          padding: clamp(60px, 8vh, 100px) 6vw;
           border-bottom: 1px solid rgba(56,37,37,0.08);
         }
 
@@ -90,10 +90,10 @@ export default function WhatIsTCQ() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 0;
-          min-height: 38vh;
+          min-height: auto;
         }
         .tcq-content-col {
-          padding: 5vh 5vw;
+          padding: 4vh 5vw;
           font-family: 'Outfit', sans-serif;
           font-size: clamp(0.95rem, 1.3vw, 1.1rem);
           line-height: 1.75;
