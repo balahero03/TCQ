@@ -1,83 +1,59 @@
-﻿import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 const AUDIENCES = [
   {
     id: 'schools',
-    emoji: 'ðŸŽ“',
+    emoji: '🎓',
     label: 'Schools, Colleges & Learning Spaces',
     hook: 'Got students who ask too many questions? Good.',
-    intro: 'If you run a school, college or alternative learning space',
-    cta: "Let's make learning more curious.",
     bullets: [
       'Host quizzes and knowledge experiences',
-      'Curate learning spaces and experiences within your existing thematics',
+      'Curate learning spaces and experiences',
       'Moderate conversations with students',
-      'Teach real-life skills through projects and experiences beyond the exam',
-      'Design alternative learning programmes and syllabi',
+      'Teach real-life skills through projects',
+      'Design alternative learning programmes',
     ],
-    expanded:
-      "Bring us in to host quizzes, curate learning experiences, moderate conversations, introduce real-life skills through projects, or build an alternative programme around something worth knowing. We work with educational spaces to create experiences that give students more reasons to ask, explore and think.",
     accentColor: '#D58F6B',
   },
   {
     id: 'brands',
-    emoji: 'âœ¦',
+    emoji: '✦',
     label: 'Brands & Companies',
     hook: "Want to meet your audience somewhere more interesting than an ad?",
-    intro: "If you're a brand or company looking to find your audience",
-    cta: "Let's build something people want to be part of.",
     bullets: [
       'Create integrated physical and digital campaigns',
-      'Collaborate with existing events around your brand or USP',
+      'Collaborate with existing events around your brand',
       'Set up focus groups and community conversations',
       'Curate learning festivals of interest',
       'Tap into our organically built community',
     ],
-    expanded:
-      "Let's build experiences around what your brand stands for. We can create physical or digital campaigns, collaborate around events, conduct focus groups, curate learning festivals and bring our community into the mix. Finding your audience is just the beginning. Making yourself immortal in their shared lives on the other hand.....",
     accentColor: '#E8C4A0',
   },
   {
     id: 'events',
-    emoji: 'â—Ž',
+    emoji: '◎',
     label: 'Event Organisers & Cultural Curators',
     hook: 'Making something worth knowing about?',
-    intro: "If you're creating a knowledge-led event or experience in Chennai",
-    cta: "Let's help more people discover it.",
     bullets: [
       'Collaborate with you as a publicity partner',
-      'Market your event or festival through our audiences',
-      'Create long-form pre- and post-event stories and reviews through TCQ Writes',
+      'Market your event through our audiences',
+      'Create long-form pre- and post-event stories',
     ],
-    expanded:
-      "From publicity partnerships and audience outreach to long-form stories and reviews through TCQ Writes, we can help your experience travel further.",
     accentColor: '#C4956A',
   },
   {
     id: 'curious',
     emoji: '?',
     label: 'Curious People of Chennai',
-    hook: "You're already one of us.",
-    intro: "If you're a curious citizen of Chennai",
-    cta: "Come be part of the community.",
+    hook: "You're already one of us. Join the community.",
     bullets: [
-      'Follow us on social media for events, stories and collaborations.',
-      'Join our WhatsApp groups and meet fellow curious people.',
-      "Be around for one of our events, you won't regret it. Or bring us something interesting.",
+      'Follow us on social media for events and collaborations',
+      'Join our WhatsApp groups and meet fellow curious people',
+      'Attend our events and bring something interesting',
     ],
-    expanded:
-      "Follow TCQ on social media, join our WhatsApp groups, come to our events and find people who are just as curious about the world as you are.",
     accentColor: '#D58F6B',
   },
-];
-
-const POETIC_LINES = [
-  'A question.',
-  'A half-formed idea.',
-  'A brand looking for its people.',
-  'A school looking to do things differently.',
-  'An event that deserves a bigger audience.',
 ];
 
 export default function CallOutSection() {
@@ -93,6 +69,11 @@ export default function CallOutSection() {
         color: '#F7E7C4',
         position: 'relative',
         overflow: 'hidden',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: 'clamp(60px, 10vh, 100px) 6vw',
       }}
     >
       {/* Ambient glow orbs */}
@@ -109,313 +90,292 @@ export default function CallOutSection() {
         pointerEvents: 'none',
       }} />
 
-      {/* â”€â”€ HERO HEADER â”€â”€ */}
-      <div style={{
-        padding: 'clamp(80px, 10vh, 120px) 6vw clamp(50px, 6vh, 80px)',
-        maxWidth: '1400px',
-        margin: '0 auto',
-        position: 'relative',
-        zIndex: 2,
-      }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7 }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.5rem' }}>
-            <div style={{ width: '2.5rem', height: '2px', background: '#D58F6B' }} />
-            <span style={{
-              fontSize: '0.72rem', fontWeight: 700,
-              letterSpacing: '0.3em', textTransform: 'uppercase', color: '#D58F6B',
-            }}>
-              Collaborate With TCQ
-            </span>
-          </div>
-
-          <h2 style={{
-            fontSize: 'clamp(3rem, 7vw, 6rem)',
-            fontWeight: 800,
-            lineHeight: 1.05,
-            letterSpacing: '-0.03em',
-            color: '#F7E7C4',
-            margin: '0 0 1.5rem',
+      {/* HEADER */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.7 }}
+        style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', position: 'relative', zIndex: 2 }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '2rem' }}>
+          <div style={{ width: '2.5rem', height: '2px', background: '#D58F6B' }} />
+          <span style={{
+            fontSize: '0.72rem', fontWeight: 700,
+            letterSpacing: '0.3em', textTransform: 'uppercase', color: '#D58F6B',
           }}>
-            What Could We{' '}
-            <span style={{
-              fontStyle: 'italic',
-              fontWeight: 400,
-              color: '#D58F6B',
-            }}>
-              Make Together?
-            </span>
-          </h2>
+            Collaborate With TCQ
+          </span>
+        </div>
 
-          <p style={{
-            fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
-            color: 'rgba(247,231,196,0.65)',
-            fontStyle: 'italic',
-            margin: 0,
-          }}>
-            You came here. You like us. Join the party.
-          </p>
-        </motion.div>
-      </div>
+        <h2 style={{
+          fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+          fontWeight: 800,
+          lineHeight: 1.1,
+          letterSpacing: '-0.03em',
+          color: '#F7E7C4',
+          margin: '0 0 1rem',
+        }}>
+          What Could We{' '}
+          <span style={{ fontStyle: 'italic', fontWeight: 400, color: '#D58F6B' }}>Make Together?</span>
+        </h2>
 
-      {/* â”€â”€ AUDIENCE TABS + PANEL â”€â”€ */}
-      <div style={{
-        maxWidth: '1400px',
-        margin: '0 auto',
-        padding: '0 6vw',
-        position: 'relative',
-        zIndex: 2,
-      }}>
+        <p style={{
+          fontSize: 'clamp(1rem, 1.3vw, 1.15rem)',
+          lineHeight: 1.6,
+          color: '#D3B8A8',
+          marginBottom: '3rem',
+          maxWidth: '600px',
+        }}>
+          You came here. You like us. Join the party.
+        </p>
+      </motion.div>
 
-        {/* Tab row */}
+      {/* TABS + CONTENT GRID */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', position: 'relative', zIndex: 2 }}>
+
+        {/* TABS */}
         <div style={{
           display: 'flex',
-          gap: '0.5rem',
+          gap: 'clamp(1rem, 2vw, 2rem)',
+          marginBottom: '3rem',
+          borderBottom: '1px solid rgba(247, 231, 196, 0.15)',
+          paddingBottom: '1rem',
           flexWrap: 'wrap',
-          marginBottom: '2rem',
-          borderBottom: '1px solid rgba(247,231,196,0.1)',
-          paddingBottom: '0',
         }}>
-          {AUDIENCES.map((a, i) => (
+          {AUDIENCES.map((audience, idx) => (
             <button
-              key={a.id}
-              onClick={() => setActive(i)}
+              key={audience.id}
+              onClick={() => setActive(idx)}
               style={{
                 background: 'none',
                 border: 'none',
+                color: active === idx ? '#D58F6B' : 'rgba(247, 231, 196, 0.6)',
+                fontSize: 'clamp(0.85rem, 1vw, 1rem)',
+                fontWeight: active === idx ? 600 : 400,
                 cursor: 'pointer',
-                padding: '0.85rem 1.4rem',
-                fontSize: 'clamp(0.8rem, 1.1vw, 0.95rem)',
-                fontWeight: active === i ? 700 : 400,
-                color: active === i ? '#D58F6B' : 'rgba(247,231,196,0.45)',
-                borderBottom: active === i ? '2px solid #D58F6B' : '2px solid transparent',
-                marginBottom: '-1px',
-                transition: 'all 0.25s',
-                letterSpacing: '0.01em',
+                padding: '0 0 0.5rem 0',
+                borderBottom: active === idx ? `2px solid #D58F6B` : 'none',
+                transition: 'all 0.3s ease',
+                fontFamily: "'Outfit', sans-serif",
+                textTransform: 'capitalize',
                 whiteSpace: 'nowrap',
               }}
-              onMouseEnter={e => { if (active !== i) e.currentTarget.style.color = 'rgba(247,231,196,0.75)'; }}
-              onMouseLeave={e => { if (active !== i) e.currentTarget.style.color = 'rgba(247,231,196,0.45)'; }}
             >
-              {a.label}
+              {audience.label.split(' &')[0]}
             </button>
           ))}
         </div>
 
-        {/* Active Panel */}
-        <AnimatePresence mode="wait">
+        {/* CONTENT */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 'clamp(2rem, 4vw, 3rem)',
+          alignItems: 'start',
+        }}>
+          {/* LEFT: Hook + CTA */}
           <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 16 }}
+            key={`content-${active}`}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.4 }}
             style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 'clamp(2rem, 5vw, 5rem)',
-              alignItems: 'start',
-              padding: 'clamp(2rem, 4vh, 3.5rem) 0 clamp(3rem, 6vh, 5rem)',
+              paddingRight: 'clamp(1rem, 3vw, 2rem)',
             }}
           >
-            {/* Left: intro + bullets */}
-            <div>
-              <p style={{
-                fontSize: 'clamp(0.78rem, 1vw, 0.85rem)',
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: AUDIENCES[active].accentColor,
-                fontWeight: 700,
-                marginBottom: '1rem',
-              }}>
-                {AUDIENCES[active].intro}
-              </p>
-              <h3 style={{
-                fontStyle: 'italic',
-                fontWeight: 400,
-                fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-                color: '#F7E7C4',
-                lineHeight: 1.2,
-                marginBottom: '2rem',
-                letterSpacing: '-0.01em',
-              }}>
-                {AUDIENCES[active].cta}
-              </h3>
+            <h3 style={{
+              fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+              fontWeight: 600,
+              lineHeight: 1.3,
+              color: '#F7E7C4',
+              marginBottom: '1.5rem',
+              fontStyle: 'italic',
+              fontFamily: "'Newsreader', Georgia, serif",
+            }}>
+              {AUDIENCES[active].hook}
+            </h3>
 
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                {AUDIENCES[active].bullets.map((b, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: i * 0.07 }}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: '0.85rem',
-                      fontSize: 'clamp(0.95rem, 1.2vw, 1.05rem)',
-                      color: 'rgba(247,231,196,0.85)',
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    <span style={{
-                      width: '6px', height: '6px',
-                      borderRadius: '50%',
-                      background: AUDIENCES[active].accentColor,
-                      flexShrink: 0,
-                      marginTop: '0.5em',
-                    }} />
-                    {b}
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
+            <button style={{
+              background: '#D58F6B',
+              color: '#2e1c1c',
+              border: 'none',
+              padding: '12px 28px',
+              borderRadius: '4px',
+              fontSize: '1rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              fontFamily: "'Outfit', sans-serif",
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = '#E8A47E';
+              e.target.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = '#D58F6B';
+              e.target.style.transform = 'translateY(0)';
+            }}
+            >
+              Get in touch →
+            </button>
+          </motion.div>
 
-            {/* Right: hook + expanded desc */}
-            <div style={{
-              background: 'rgba(247,231,196,0.04)',
-              border: '1px solid rgba(247,231,196,0.08)',
-              borderRadius: '20px',
-              padding: 'clamp(1.8rem, 3vw, 2.8rem)',
+          {/* RIGHT: Bullet points */}
+          <motion.div
+            key={`bullets-${active}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            style={{
+              paddingLeft: 'clamp(1rem, 3vw, 2rem)',
+              borderLeft: `2px solid ${AUDIENCES[active].accentColor}`,
+            }}
+          >
+            <ul style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: 0,
               display: 'flex',
               flexDirection: 'column',
-              gap: '1.25rem',
+              gap: '1rem',
             }}>
-              <span style={{
-                fontSize: 'clamp(2rem, 3vw, 2.8rem)',
-                lineHeight: 1,
-                display: 'block',
-                marginBottom: '0.25rem',
-                opacity: 0.6,
-              }}>
-                {AUDIENCES[active].emoji}
-              </span>
-              <h4 style={{
-                fontStyle: 'italic',
-                fontWeight: 400,
-                fontSize: 'clamp(1.3rem, 2vw, 1.7rem)',
-                color: '#F7E7C4',
-                lineHeight: 1.3,
-                margin: 0,
-              }}>
-                {AUDIENCES[active].hook}
-              </h4>
-              <div style={{ width: '2.5rem', height: '2px', background: AUDIENCES[active].accentColor }} />
-              <p style={{
-                fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
-                color: 'rgba(247,231,196,0.7)',
-                lineHeight: 1.75,
-                margin: 0,
-              }}>
-                {AUDIENCES[active].expanded}
-              </p>
-            </div>
+              {AUDIENCES[active].bullets.map((bullet, idx) => (
+                <motion.li
+                  key={idx}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: idx * 0.05 }}
+                  style={{
+                    fontSize: 'clamp(0.9rem, 1.1vw, 1rem)',
+                    lineHeight: 1.6,
+                    color: '#D3B8A8',
+                    display: 'flex',
+                    gap: '0.75rem',
+                    alignItems: 'flex-start',
+                  }}
+                >
+                  <span style={{
+                    color: AUDIENCES[active].accentColor,
+                    marginTop: '0.25rem',
+                    fontWeight: 'bold',
+                  }}>
+                    •
+                  </span>
+                  <span>{bullet}</span>
+                </motion.li>
+              ))}
+            </ul>
           </motion.div>
-        </AnimatePresence>
-      </div>
+        </div>
 
-      {/* â”€â”€ POETIC INTERLUDE â”€â”€ */}
-      <div style={{
-        borderTop: '1px solid rgba(247,231,196,0.08)',
-        borderBottom: '1px solid rgba(247,231,196,0.08)',
-        padding: 'clamp(4rem, 8vh, 6rem) 6vw',
-        position: 'relative',
-        zIndex: 2,
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 'clamp(2rem, 5vw, 6rem)',
-          alignItems: 'center',
-        }}>
-          {/* Left: lines */}
-          <div>
-            {POETIC_LINES.map((line, i) => (
-              <motion.p
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                style={{
-                  fontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
-                  fontStyle: 'italic',
-                  fontWeight: 400,
-                  color: i === 0 ? 'rgba(247,231,196,0.9)' : `rgba(247,231,196,${0.9 - i * 0.1})`,
-                  lineHeight: 1.3,
-                  margin: '0 0 0.5rem',
-                  letterSpacing: '-0.01em',
-                }}
-              >
-                {line}
-              </motion.p>
-            ))}
+        {/* POETIC LINES - BOTTOM - HORIZONTAL TIMELINE */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          style={{
+            marginTop: 'clamp(3rem, 6vh, 4rem)',
+            paddingTop: '2.5rem',
+            borderTop: '1px solid rgba(247, 231, 196, 0.15)',
+          }}
+        >
+          {/* Horizontal timeline */}
+          <div style={{
+            position: 'relative',
+            display: 'flex',
+            gap: 'clamp(0.5rem, 2vw, 1rem)',
+            alignItems: 'flex-start',
+            overflow: 'hidden',
+          }}>
+            {/* Items */}
+            <div style={{
+              display: 'flex',
+              gap: 'clamp(0.5rem, 2vw, 1rem)',
+              width: '100%',
+            }}>
+              {[
+                { text: 'A question.', emoji: '?' },
+                { text: 'A half-formed idea.', emoji: '💭' },
+                { text: 'A brand looking for its people.', emoji: '✦' },
+                { text: 'A school looking to do things differently.', emoji: '🎓' },
+                { text: 'An event that deserves a bigger audience.', emoji: '◎' },
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: -20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  style={{
+                    flex: '1 1 auto',
+                    minWidth: 'clamp(100px, 18vw, 180px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    position: 'relative',
+                  }}
+                >
+                  {/* Dot indicator */}
+                  <div style={{
+                    width: 'clamp(2.8rem, 5vw, 3.5rem)',
+                    height: 'clamp(2.8rem, 5vw, 3.5rem)',
+                    borderRadius: '50%',
+                    background: 'rgba(213, 143, 107, 0.15)',
+                    border: '2px solid #D58F6B',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 'clamp(1rem, 2vw, 1.4rem)',
+                    marginBottom: '0.8rem',
+                  }}>
+                    {item.emoji}
+                  </div>
+
+                  {/* Text */}
+                  <p style={{
+                    fontSize: 'clamp(0.75rem, 0.95vw, 0.95rem)',
+                    lineHeight: 1.4,
+                    color: '#F7E7C4',
+                    fontStyle: 'italic',
+                    margin: 0,
+                    fontWeight: 500,
+                    textAlign: 'center',
+                  }}>
+                    {item.text}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
-          {/* Right: sign off */}
+          {/* CLOSING STATEMENT - Centered */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            style={{
+              marginTop: 'clamp(1.5rem, 3vh, 2.5rem)',
+              paddingTop: '1.5rem',
+              borderTop: '1px solid rgba(213, 143, 107, 0.3)',
+              textAlign: 'center',
+            }}
           >
             <p style={{
-              fontSize: 'clamp(1.1rem, 1.8vw, 1.5rem)',
+              fontSize: 'clamp(1.1rem, 1.5vw, 1.3rem)',
+              lineHeight: 1.6,
               color: '#D58F6B',
               fontStyle: 'italic',
-              lineHeight: 1.6,
-              margin: '0 0 2rem',
+              fontWeight: 600,
+              margin: 0,
             }}>
               We like starting there.
             </p>
-            <a
-              href="#contact"
-              onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.6rem',
-                background: '#D58F6B',
-                color: '#2e1c1c',
-                padding: '14px 28px',
-                borderRadius: '4px',
-                fontSize: '1rem',
-                fontWeight: 700,
-                textDecoration: 'none',
-                letterSpacing: '0.02em',
-                transition: 'background 0.25s, gap 0.25s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#c07a55'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = '#D58F6B'; }}
-            >
-              Get in touch â†’
-            </a>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
-
-      {/* Mobile responsive */}
-      <style>{`
-        @media (max-width: 820px) {
-          #collaborate [style*="grid-template-columns: 1fr 1fr"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        @media (max-width: 600px) {
-          #collaborate button {
-            font-size: 0.78rem !important;
-            padding: 0.6rem 0.9rem !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
-
-
