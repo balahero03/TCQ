@@ -198,7 +198,7 @@
   line-height: 0.85;
   color: #D58F6B;
 }
-.wr-mcard:nth-child(even) .wr-mcard-no { color: #F7E7C4; }
+.wr-mcard:nth-child(even) .wr-mcard-no { color: #D58F6B; }
 
 .wr-mcard-name {
   font-size: clamp(1.1rem, 1.5vw, 1.4rem);

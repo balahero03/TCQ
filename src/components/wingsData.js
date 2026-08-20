@@ -17,11 +17,11 @@ export const WINGS = [
   {
     id: 1,
     no: '01',
-    tag: 'TCQ FOR BRANDS',
+    tag: 'EXPERIENCES FOR CULTURE',
     title: 'For Brands',
-    byline: 'You know the Business. We know the Chemistry.',
+    byline: 'Transform your brand into a story people want to be part of.',
     blurb:
-      'We help brands build communities through curiosity. By turning knowledge into interactive live and digital experiences, we connect brands organically with the culture, interests and people around them.',
+      'We craft immersive experiences that connect brands with audiences through authentic engagement. By blending curiosity-driven content with live and digital platforms, we create moments that resonate, inspire action, and build lasting communities around what your brand stands for.',
     events: [
       {
         name: 'Typical Chennai Quiz',
@@ -46,11 +46,11 @@ export const WINGS = [
   {
     id: 2,
     no: '02',
-    tag: 'TCQ QUIZZES',
+    tag: 'LEARNING AS PLAY',
     title: 'Quizzes',
-    byline: 'Is this a puzzle or a story? It\'s both.',
+    byline: 'Knowledge wrapped in curiosity. Competition wrapped in community.',
     blurb:
-      'Nearly 15 years of quizzing taught us something simple: learning is at its best when there\'s no red pen involved. Quizzing forms part of TCQ\'s foundation, but our formats don\'t stop at questions and answers. We take our way of finding, shaping and telling stories into brand identities and collaborations, and we will continue to push ourselves into unknown territories. After all, the unknown isn\'t a destination, it is an invitation.',
+      'Quizzes are where learning becomes fun, where strangers become friends, and where the desire to know more becomes contagious. From school competitions to brand collaborations, we design quiz experiences that challenge minds, spark conversations, and leave people wanting more.',
     events: [
       {
         name: '6 to 60 Quizzes',
@@ -75,15 +75,15 @@ export const WINGS = [
   {
     id: 3,
     no: '03',
-    tag: 'TCQ CIRCLES',
+    tag: 'CONVERSATIONS & CULTURE',
     title: 'Circles',
-    byline: 'One shape. Multiple sizes. No sides.',
+    byline: 'Where ideas collide and communities form.',
     blurb:
-      'Our flagship monthly live series is where lectures meet conversations, workshops meet performances, and the experimental meets the mainstream.\n\nWith a limited audience and a deliberately eclectic mix of subjects, each edition brings people and ideas from different fields together to explore new niches and unexpected connections.',
+      'An intimate platform where diverse minds gather to explore unexpected intersections. Our monthly Circles blend lectures, performances, and workshops with unfiltered conversations—creating spaces where niche knowledge becomes shared culture and strangers leave as part of something larger.',
     events: [
       {
         name: 'Circles, Season One',
-        venue: 'Indie Music · Stargazing · Madras History · an Umpire\u2019s POV of cricket',
+        venue: 'Indie Music · Stargazing · Madras History · an Umpire\'s POV of cricket',
         layout: 'split',
         photos: [ph(3, 4), ph(16, 9)],
       },
@@ -98,11 +98,11 @@ export const WINGS = [
   {
     id: 4,
     no: '04',
-    tag: 'TCQ WRITES',
+    tag: 'STORIES WORTH SHARING',
     title: 'Writes',
-    byline: 'Liberté, égalité, most importantly fraternité.',
+    byline: 'The city\'s stories, told by people who get it.',
     blurb:
-      'A newsletter for the Chennai you might not know yet. We go looking for the stories, events, artists, ideas and experiences that slip past the mainstream, working with independent brands, small businesses and creators along the way. A little bit of the city you know. A lot of the city you haven\'t discovered yet.',
+      'A newsletter that digs deeper into Chennai\'s cultural landscape—uncovering hidden artists, emerging ideas, and untold stories. We celebrate the independent spirit and creativity that define our city, connecting readers with the people and experiences that make life interesting.',
     events: [
       {
         name: 'From our Substack',
@@ -118,11 +118,11 @@ export const WINGS = [
   {
     id: 5,
     no: '05',
-    tag: 'TCQ TEACHES',
+    tag: 'LEARNING REIMAGINED',
     title: 'Teaches',
-    byline: 'The world is our classroom, a classroom to the world.',
+    byline: 'Curiosity as a superpower. Knowledge as adventure.',
     blurb:
-      'We work with schools and colleges to take learning beyond the classroom through quizzing, public speaking and the performing arts. Our programmes give students room to question, think, perform and explore, helping make curiosity a part of how they learn, not just what they learn.',
+      'We partner with educational institutions to transform how students learn and think. Through quizzes, workshops, and creative experiences, we help young minds explore beyond textbooks, develop critical thinking, and discover that learning can be as thrilling as it is rewarding.',
     events: [
       {
         name: 'Intellect Club',
