@@ -254,9 +254,9 @@ export default function Hero({ logoLanded }) {
               <BlurText text="Making" initialDelay={startDelay} delay={0} initialBlur="blur(30px)"
                 style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, lineHeight: 1, display: 'block' }} />
               <BlurText text="Curiosity" className="hero-curiosity-shimmer" initialDelay={startDelay + 250} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(3.6rem, 10vw, 10rem)', fontWeight: 400, fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', lineHeight: 1, display: 'block', paddingBottom: '10px', marginLeft: '-0.05em' }} />
+                style={{ fontSize: 'clamp(3.6rem, 10vw, 10rem)', fontWeight: 400, fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', lineHeight: 1, display: 'block', paddingBottom: '0px', marginLeft: '-0.05em' }} />
               <BlurText text="Social" initialDelay={startDelay + 500} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, lineHeight: 1, display: 'block', marginTop: '-15px' }} />
+                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, lineHeight: 1, display: 'block', marginTop: '-30px' }} />
             </h1>
 
             <div className="hero-text-wrapper">

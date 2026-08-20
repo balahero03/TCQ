@@ -185,10 +185,10 @@
   will-change: transform;
   overflow: hidden;
 }
-/* tint every other card light orange for rhythm */
+/* tint every other card light with same gradient as odd cards */
 .wr-mcard:nth-child(even) {
-  background: linear-gradient(160deg, rgba(213, 143, 107, 0.95), rgba(200, 130, 95, 0.95));
-  border-color: rgba(213, 143, 107, 0.4);
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(56, 37, 37, 0.12);
 }
 
 .wr-mcard-no {
