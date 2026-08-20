@@ -34,7 +34,7 @@ export default function Contact() {
         overflow: 'hidden',
         fontFamily: "'Outfit', sans-serif",
         background:
-          'radial-gradient(120% 90% at 50% -10%, #4a3030 0%, #382525 45%, #2e1c1c 100%)',
+          'radial-gradient(120% 90% at 50% -10%, #3d2929 0%, #2e1c1c 45%, #1a0f0f 100%)',
         color: '#F7E7C4',
         minHeight: '100vh',
         display: 'flex',
@@ -412,9 +412,23 @@ export default function Contact() {
             <a href="tel:+918754400743" className="ctf-link" style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', color: 'rgba(240,234,226,0.75)' }}>
               +91 87544 00743
             </a>
-            <a href="https://linktr.ee/tcq_india" target="_blank" rel="noopener noreferrer" className="ctf-pill" style={{ marginTop: '0.4rem' }}>
-              linktr.ee/tcq_india <span aria-hidden="true">↗</span>
-            </a>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+              <a href="https://instagram.com/tcq_india" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
+                Instagram
+              </a>
+              <a href="https://api.whatsapp.com/send?phone=918754400743" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
+                WhatsApp
+              </a>
+              <a href="https://www.linkedin.com/company/the-curiosity-quotient" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
+                LinkedIn
+              </a>
+              <a href="https://thecuriosityquotient.substack.com/" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
+                Substack
+              </a>
+              <a href="https://youtube.com/@thecuriosityquotientindia?si=PZKQmduBIacDRWfr" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
+                YouTube
+              </a>
+            </div>
           </div>
         </div>
 
