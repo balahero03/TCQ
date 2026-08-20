@@ -196,9 +196,19 @@
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.85;
-  color: #D58F6B;
+  background: linear-gradient(120deg, #382525 0%, #D58F6B 60%, #382525 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
-.wr-mcard:nth-child(even) .wr-mcard-no { color: #D58F6B; }
+.wr-mcard:nth-child(even) .wr-mcard-no {
+  background: linear-gradient(120deg, #382525 0%, #D58F6B 60%, #382525 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
 
 .wr-mcard-name {
   font-size: clamp(1.1rem, 1.5vw, 1.4rem);
