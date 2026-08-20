@@ -703,6 +703,7 @@ export default function WhoIsBehind() {
                 letterSpacing: '-0.03em',
                 color: '#382525',
                 marginBottom: '2rem',
+                overflow: 'visible',
               }}
             >
               <div style={{ display: 'block', marginBottom: '0.06em' }}>
@@ -712,14 +713,14 @@ export default function WhoIsBehind() {
               <div style={{ display: 'block', marginBottom: '0.06em' }}>
                 <Word word="BEHIND" index={2} />
               </div>
-              <div style={{ display: 'block' }}>
-                <Word word="TCQ?" index={3} style={{
-                  color: '#D58F6B',
-                  fontFamily: "'Newsreader', Georgia, serif",
-                  fontStyle: 'italic',
-                  fontWeight: 400
-                }} />
-              </div>
+              <span style={{
+                color: '#D58F6B',
+                fontFamily: "'Newsreader', Georgia, serif",
+                fontStyle: 'italic',
+                fontWeight: 400
+              }}>
+                TCQ?
+              </span>
             </h2>
 
             <div>
