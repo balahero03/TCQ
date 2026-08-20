@@ -412,21 +412,107 @@ export default function Contact() {
             <a href="tel:+918754400743" className="ctf-link" style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', color: 'rgba(240,234,226,0.75)' }}>
               +91 87544 00743
             </a>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
-              <a href="https://instagram.com/tcq_india" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
-                Instagram
+            <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
+              {/* Instagram */}
+              <a href="https://instagram.com/tcq_india" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.3s ease',
+                opacity: 0.7,
+              }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.7'; }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <circle cx="17.5" cy="6.5" r="1.5"></circle>
+                </svg>
               </a>
-              <a href="https://api.whatsapp.com/send?phone=918754400743" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
-                WhatsApp
+
+              {/* WhatsApp */}
+              <a href="https://api.whatsapp.com/send?phone=918754400743" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.3s ease',
+                opacity: 0.7,
+              }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.7'; }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
+                  <path d="M3 21l1.65-5.27A9 9 0 1 1 20 10.07a9 9 0 0 1-6.68 8.66L3 21"></path>
+                </svg>
               </a>
-              <a href="https://www.linkedin.com/company/the-curiosity-quotient" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
-                LinkedIn
+
+              {/* LinkedIn */}
+              <a href="https://www.linkedin.com/company/the-curiosity-quotient" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.3s ease',
+                opacity: 0.7,
+              }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.7'; }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
               </a>
-              <a href="https://thecuriosityquotient.substack.com/" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
-                Substack
+
+              {/* Email */}
+              <a href="mailto:thecuriosityquotient@gmail.com" aria-label="Email" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.3s ease',
+                opacity: 0.7,
+              }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.7'; }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
               </a>
-              <a href="https://youtube.com/@thecuriosityquotientindia?si=PZKQmduBIacDRWfr" target="_blank" rel="noopener noreferrer" className="ctf-link" style={{ fontSize: '0.9rem' }}>
-                YouTube
+
+              {/* Substack */}
+              <a href="https://thecuriosityquotient.substack.com/" target="_blank" rel="noopener noreferrer" aria-label="Substack" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.3s ease',
+                opacity: 0.7,
+              }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.7'; }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
+                  <path d="M4 4h16v2H4V4zm0 6h16v2H4v-2zm0 6h16v2H4v-2z"></path>
+                </svg>
+              </a>
+
+              {/* YouTube */}
+              <a href="https://youtube.com/@thecuriosityquotientindia?si=PZKQmduBIacDRWfr" target="_blank" rel="noopener noreferrer" aria-label="YouTube" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.3s ease',
+                opacity: 0.7,
+              }}
+              onMouseEnter={(e) => { e.target.style.opacity = '1'; }}
+              onMouseLeave={(e) => { e.target.style.opacity = '0.7'; }}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
+                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                </svg>
               </a>
             </div>
           </div>
