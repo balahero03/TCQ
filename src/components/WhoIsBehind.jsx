@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useRef, useEffect, useMemo, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -448,6 +448,123 @@ const Word = ({ word, index, style }) => (
   </motion.span>
 );
 
+// ─── Flip Card Component ────────────────────────────────────────────────────
+function ProfileFlipCard() {
+  const [flipped, setFlipped] = useState(false);
+  const lastTap = useRef(0);
+
+  // Desktop: hover flip
+  const handleMouseEnter = () => setFlipped(true);
+  const handleMouseLeave = () => setFlipped(false);
+
+  // Mobile: double-tap to flip
+  const handleTouchEnd = useCallback((e) => {
+    const now = Date.now();
+    if (now - lastTap.current < 350) {
+      e.preventDefault();
+      setFlipped(f => !f);
+    }
+    lastTap.current = now;
+  }, []);
+
+  return (
+    <div
+      className="pfc-scene"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div className={`pfc-card${flipped ? ' pfc-flipped' : ''}`}>
+        {/* ── FRONT ── */}
+        <div className="pfc-face pfc-front">
+          {/* 120° simulated directional light overlay */}
+          <div className="pfc-light" />
+          {/* Subtle inner shimmer border */}
+          <div className="pfc-shimmer" />
+
+          <div className="pfc-front-content">
+            {/* Section tag */}
+            <div className="pfc-tag">
+              <span className="pfc-tag-dot" />
+              Who Is Behind
+            </div>
+
+            {/* Big stacked heading */}
+            <h2 className="pfc-heading">
+              <span className="pfc-heading-line">WHO IS</span>
+              <span className="pfc-heading-line">BEHIND</span>
+              <span className="pfc-heading-accent">TCQ?</span>
+            </h2>
+
+            {/* Divider */}
+            <div className="pfc-divider" />
+
+            {/* Name & tagline */}
+            <p className="pfc-name">Dr. Vishnu Aravind, MBBS, MD</p>
+            <p className="pfc-tagline">
+              Scientist by the day. Artist also by the day.<br />Sleep is for the night.
+            </p>
+          </div>
+        </div>
+
+        {/* ── BACK ── */}
+        <div className="pfc-face pfc-back">
+          {/* Inner wrapper fills the face and provides a positioning context */}
+          <div className="pfc-back-inner">
+            <img
+              src={drVishnuImg}
+              alt="Dr. Vishnu Aravind"
+              className="pfc-back-img"
+            />
+            {/* 120° light sheen over photo */}
+            <div className="pfc-light pfc-light-back" />
+            {/* Bottom gradient name plate */}
+            <div className="pfc-back-overlay">
+              <p className="pfc-back-name">Dr. Vishnu Aravind</p>
+              <p className="pfc-back-sub">Founder, TCQ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Dashed-line annotation ── */}
+      {/* The label sits bottom-right; the arrow curves UP-LEFT to point at the card */}
+      <div className="pfc-annotation" aria-hidden="true">
+        <svg
+          className="pfc-annotation-svg"
+          viewBox="0 0 90 70"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Curved dashed path: starts at label (right, bottom) → curves up-left to card edge */}
+          <path
+            className="pfc-annotation-path"
+            d="M 80 60 C 70 60, 30 55, 18 30 C 10 14, 14 6, 20 4"
+            stroke="#D58F6B"
+            strokeWidth="1.4"
+            strokeDasharray="5 4"
+            strokeLinecap="round"
+            fill="none"
+          />
+          {/* Arrowhead pointing UP at the card */}
+          <path
+            d="M 14 10 L 20 4 L 26 10"
+            stroke="#D58F6B"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+        </svg>
+        {/* Desktop hint */}
+        <span className="pfc-annotation-text pfc-desktop-hint">hover to flip</span>
+        {/* Mobile hint */}
+        <span className="pfc-annotation-text pfc-mobile-hint">double‑tap to flip</span>
+      </div>
+    </div>
+  );
+}
+
 export default function WhoIsBehind() {
   const sectionRef = useRef(null);
 
@@ -455,9 +572,11 @@ export default function WhoIsBehind() {
     <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#F7E7C4', paddingBottom: 0, fontFamily: "'Outfit', sans-serif", position: 'relative', overflow: 'clip' }}>
 
       <style>{`
-        /* ── Three-part intro layout ──
-           Heading on the left, the full uncropped (landscape) photo in the
-           middle, a smaller CardSwap deck on the right — one screen tall. */
+        /* ════════════════════════════════════════════════
+           WIB – Two-column layout
+           Left : ProfileFlipCard
+           Right: CardSwap deck
+        ════════════════════════════════════════════════ */
         .wib-container {
           position: relative;
           z-index: 1;
@@ -469,109 +588,342 @@ export default function WhoIsBehind() {
         }
         .wib-grid {
           width: 100%;
-          max-width: 2000px;
+          max-width: 1600px;
           margin: 0 auto;
-          display: flex;
-          flex-wrap: wrap;
-          gap: clamp(2.5rem, 3.5vw, 4.5rem);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(3rem, 5vw, 6rem);
           align-items: center;
         }
-        .wib-text-col {
-          flex: 1 1 380px;
-        }
-        .wib-photo-col {
-          flex: 1.6 1 560px;
+        .wib-left-col {
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
         }
-        .wib-photo-frame {
-          width: 100%;
-          max-width: 780px;
-          aspect-ratio: 3 / 2;
-          border-radius: 20px;
-          overflow: hidden;
-          border: 1px solid rgba(56, 37, 37, 0.15);
-          box-shadow: 0 24px 60px rgba(56, 37, 37, 0.18);
-          background: #382525;
-        }
-        .wib-photo-frame img {
-          width: 100%;
-          height: 100%;
-          /* contain keeps the whole (landscape) photo visible, uncropped */
-          object-fit: contain;
-          display: block;
-          cursor: pointer;
-        }
         .wib-right-col {
-          flex: 1 1 380px;
-          height: clamp(420px, 34vw, 520px);
+          height: clamp(420px, 38vw, 560px);
           position: relative;
         }
 
+        /* ─── Flip Card Scene ─── */
+        .pfc-scene {
+          perspective: 1200px;
+          width: clamp(300px, 36vw, 480px);
+          height: clamp(380px, 46vw, 580px);
+          position: relative;
+          cursor: pointer;
+          /* Shadow lives here — NOT on pfc-card.
+             CSS filter on a preserve-3d element collapses the 3D context. */
+          filter: drop-shadow(0 28px 50px rgba(56,37,37,0.28));
+        }
+        .pfc-card {
+          width: 100%;
+          height: 100%;
+          position: relative;
+          transform-style: preserve-3d;
+          -webkit-transform-style: preserve-3d;
+          transition: transform 0.75s cubic-bezier(0.4, 0.2, 0.2, 1);
+          border-radius: 28px;
+          /* NO filter here — it would break preserve-3d */
+        }
+        .pfc-card.pfc-flipped {
+          transform: rotateY(180deg);
+        }
+        .pfc-face {
+          position: absolute;
+          inset: 0;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          border-radius: 28px;
+          overflow: hidden;
+        }
+
+        /* ─── FRONT face ─── */
+        .pfc-front {
+          background: linear-gradient(
+            148deg,
+            #4a2e2e 0%,
+            #382525 35%,
+            #2a1a1a 65%,
+            #512e1a 100%
+          );
+          border: 1px solid rgba(213,143,107,0.25);
+          display: flex;
+          flex-direction: column;
+          position: relative;
+        }
+
+        /* 120-degree directional light: light source upper-left at ~120° */
+        .pfc-light {
+          position: absolute;
+          inset: 0;
+          border-radius: 28px;
+          pointer-events: none;
+          /* Radial gradient emanating from upper-left (120° means light comes from upper-left) */
+          background: radial-gradient(
+            ellipse 90% 70% at 18% 14%,
+            rgba(247, 231, 196, 0.13) 0%,
+            rgba(213, 143, 107, 0.07) 30%,
+            transparent 70%
+          );
+          z-index: 1;
+        }
+        .pfc-light-back {
+          background: radial-gradient(
+            ellipse 90% 70% at 18% 14%,
+            rgba(247, 231, 196, 0.18) 0%,
+            rgba(213, 143, 107, 0.08) 30%,
+            transparent 65%
+          );
+        }
+
+        /* Subtle shimmer border */
+        .pfc-shimmer {
+          position: absolute;
+          inset: 0;
+          border-radius: 28px;
+          pointer-events: none;
+          background: linear-gradient(
+            120deg,
+            rgba(247,231,196,0.18) 0%,
+            transparent 40%,
+            transparent 70%,
+            rgba(213,143,107,0.10) 100%
+          );
+          z-index: 2;
+        }
+
+        .pfc-front-content {
+          position: relative;
+          z-index: 3;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          padding: clamp(2rem, 5vw, 3rem);
+          justify-content: center;
+        }
+
+        /* Section tag */
+        .pfc-tag {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.68rem;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: #D58F6B;
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          font-family: 'Outfit', sans-serif;
+        }
+        .pfc-tag-dot {
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #D58F6B;
+          flex-shrink: 0;
+        }
+
+        /* Heading */
+        .pfc-heading {
+          display: flex;
+          flex-direction: column;
+          font-family: 'Outfit', sans-serif;
+          font-weight: 800;
+          line-height: 0.95;
+          letter-spacing: -0.03em;
+          margin-bottom: 1.6rem;
+        }
+        .pfc-heading-line {
+          font-size: clamp(2.8rem, 6.5vw, 5rem);
+          color: #F7E7C4;
+          display: block;
+        }
+        .pfc-heading-accent {
+          font-size: clamp(2.8rem, 6.5vw, 5rem);
+          font-family: 'Newsreader', Georgia, serif;
+          font-style: italic;
+          font-weight: 400;
+          color: #D58F6B;
+          display: block;
+        }
+
+        /* Divider */
+        .pfc-divider {
+          width: 48px;
+          height: 3px;
+          background: linear-gradient(90deg, #D58F6B, rgba(213,143,107,0.2));
+          border-radius: 2px;
+          margin-bottom: 1.4rem;
+        }
+
+        /* Name & tagline */
+        .pfc-name {
+          font-size: clamp(1rem, 2vw, 1.25rem);
+          font-weight: 700;
+          color: #F7E7C4;
+          letter-spacing: 0.01em;
+          margin-bottom: 0.5rem;
+          font-family: 'Outfit', sans-serif;
+        }
+        .pfc-tagline {
+          font-size: clamp(0.85rem, 1.5vw, 1rem);
+          color: rgba(247,231,196,0.65);
+          font-family: 'Newsreader', Georgia, serif;
+          font-style: italic;
+          line-height: 1.6;
+        }
+
+        /* ─── BACK face ─── */
+        /* .pfc-face gives: position:absolute; inset:0  — do NOT override position here */
+        .pfc-back {
+          transform: rotateY(180deg);
+          border: 1px solid rgba(213,143,107,0.2);
+          border-radius: 28px;
+          background: #1a0f0f;
+        }
+        /* Inner wrapper provides the sizing + positioning context */
+        .pfc-back-inner {
+          position: absolute;
+          inset: 0;
+          border-radius: 26px;
+          overflow: hidden;
+        }
+        .pfc-back-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+          display: block;
+        }
+        /* light sheen — stacks on top of image */
+        .pfc-back .pfc-light {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+        }
+        .pfc-back-overlay {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 2rem clamp(1.5rem, 4vw, 2.5rem);
+          background: linear-gradient(to top, rgba(42,26,26,0.92) 0%, rgba(42,26,26,0.6) 50%, transparent 100%);
+          z-index: 2;
+          border-radius: 0 0 28px 28px;
+        }
+        .pfc-back-name {
+          font-family: 'Outfit', sans-serif;
+          font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+          font-weight: 800;
+          color: #F7E7C4;
+          margin-bottom: 0.25rem;
+        }
+        .pfc-back-sub {
+          font-family: 'Newsreader', Georgia, serif;
+          font-style: italic;
+          font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+          color: #D58F6B;
+        }
+
+        /* ─── Dashed-line annotation ─── */
+        /* Label + arrow sit below-right of the card; arrow curves up-left to point at it */
+        @keyframes pfc-annotate-bob {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-5px); }
+        }
+        @keyframes pfc-dash-march {
+          to { stroke-dashoffset: -18; }
+        }
+        .pfc-annotation {
+          position: absolute;
+          /* Just below the card's bottom-right corner */
+          bottom: -62px;
+          right: -4px;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-end;
+          gap: 4px;
+          pointer-events: none;
+          z-index: 10;
+          animation: pfc-annotate-bob 2.8s ease-in-out infinite;
+        }
+        .pfc-annotation-svg {
+          width: 90px;
+          height: 70px;
+          overflow: visible;
+          flex-shrink: 0;
+        }
+        /* Marching dashes animation */
+        .pfc-annotation-path {
+          animation: pfc-dash-march 0.9s linear infinite;
+        }
+        .pfc-annotation-text {
+          font-family: 'Newsreader', Georgia, serif;
+          font-style: italic;
+          font-size: 0.8rem;
+          color: rgba(213,143,107,0.8);
+          letter-spacing: 0.02em;
+          white-space: nowrap;
+          /* Sit at the same baseline as the SVG bottom */
+          align-self: flex-end;
+          padding-bottom: 2px;
+        }
+
+        /* show/hide hints by device */
+        .pfc-mobile-hint { display: none; }
+        @media (hover: none) and (pointer: coarse) {
+          .pfc-desktop-hint { display: none; }
+          .pfc-mobile-hint  { display: inline; }
+        }
+
+        /* ─── Responsive ─── */
         @media (max-width: 1024px) {
           .wib-grid {
-            flex-direction: column;
-            align-items: stretch;
-          }
-          .wib-text-col,
-          .wib-photo-col,
-          .wib-right-col {
-            flex: 1 1 auto;
-          }
-          .wib-photo-frame {
-            max-width: 100%;
+            grid-template-columns: 1fr;
+            justify-items: center;
           }
           .wib-right-col {
-            height: 380px;
+            width: 100%;
+            max-width: 520px;
+            height: 420px;
+          }
+          .pfc-scene {
+            width: clamp(280px, 80vw, 420px);
+            height: clamp(340px, 55vw, 480px);
           }
         }
-
-        @media (max-width: 900px) {
+        @media (max-width: 600px) {
           .wib-container {
+            padding: 90px 5vw 50px;
             min-height: auto;
-            padding: 100px 5vw 60px;
-          }
-          .wib-grid {
-            gap: 2.5rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .wib-container {
-            padding: 80px 5vw 40px;
           }
           .wib-right-col {
-            height: 340px;
+            height: 360px;
+          }
+          .pfc-scene {
+            width: 88vw;
+            height: 60vw;
+            min-height: 320px;
+          }
+          .pfc-annotation {
+            bottom: -40px;
           }
         }
 
-        /* New Joyful Timeline Styles */
-        @keyframes floatSlow {
-          0% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(10deg); }
-          100% { transform: translateY(0) rotate(0deg); }
-        }
-        @keyframes floatFast {
-          0% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-25px) rotate(-15deg); }
-          100% { transform: translateY(0) rotate(0deg); }
-        }
+        /* ─── Organic Timeline Styles (unchanged) ─── */
         @keyframes pillPulse {
-          0% { box-shadow: 0 0 0 0 rgba(56,37,37,0.3); }
-          100% { box-shadow: 0 0 0 8px rgba(56,37,37,0); }
-        }
-        .joy-bg-el {
-          position: absolute;
-          pointer-events: none;
-          z-index: 1;
+          0%   { box-shadow: 0 0 0 0   rgba(56,37,37,0.3); }
+          100% { box-shadow: 0 0 0 8px rgba(56,37,37,0);   }
         }
         .content-inner {
           padding: 2.5rem;
-          background: rgba(247, 231, 196, 0.98);
+          background: rgba(247,231,196,0.98);
           border-radius: 24px;
           border: 1px solid rgba(56,37,37,0.12);
-          box-shadow: 0 12px 30px rgba(56, 37, 37, 0.07);
+          box-shadow: 0 12px 30px rgba(56,37,37,0.07);
           transform: translateY(-50%);
           transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           position: relative;
@@ -580,11 +932,9 @@ export default function WhoIsBehind() {
         }
         .content-inner:hover {
           transform: translateY(-52%) scale(1.03);
-          box-shadow: 0 20px 40px rgba(56, 37, 37, 0.12);
-          border-color: rgba(56, 37, 37, 0.3);
+          box-shadow: 0 20px 40px rgba(56,37,37,0.12);
+          border-color: rgba(56,37,37,0.3);
         }
-
-        /* Milestone image placeholder (opposite side of the content) */
         .organic-image-frame {
           width: clamp(180px, 22vw, 300px);
           aspect-ratio: 4 / 3;
@@ -593,156 +943,73 @@ export default function WhoIsBehind() {
           overflow: hidden;
           background: #F7E7C4;
           border: 1px solid rgba(56,37,37,0.12);
-          box-shadow: 0 12px 30px rgba(56, 37, 37, 0.08);
-          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+          box-shadow: 0 12px 30px rgba(56,37,37,0.08);
+          transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.4s ease;
           cursor: default;
         }
         .organic-image-frame:hover {
           transform: translateY(-50%) rotate(0deg) scale(1.04);
-          box-shadow: 0 20px 40px rgba(56, 37, 37, 0.15);
+          box-shadow: 0 20px 40px rgba(56,37,37,0.15);
         }
         .organic-image-frame img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 12px;
-          display: block;
+          width: 100%; height: 100%; object-fit: cover; border-radius: 12px; display: block;
         }
         .organic-image-ph {
-          width: 100%;
-          height: 100%;
-          border-radius: 12px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 0.5rem;
-          color: rgba(56,37,37,0.55);
+          width: 100%; height: 100%; border-radius: 12px;
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          gap: 0.5rem; color: rgba(56,37,37,0.55);
           background:
             repeating-linear-gradient(45deg, rgba(56,37,37,0.04) 0 10px, rgba(56,37,37,0.08) 10px 20px),
             #E8D0A0;
           border: 1.5px dashed rgba(56,37,37,0.25);
         }
         .organic-image-ph-label {
-          font-family: 'Outfit', sans-serif;
-          font-weight: 700;
-          font-size: 0.75rem;
-          letter-spacing: 0.15em;
-          color: rgba(56,37,37,0.5);
+          font-family: 'Outfit', sans-serif; font-weight: 700;
+          font-size: 0.75rem; letter-spacing: 0.15em; color: rgba(56,37,37,0.5);
         }
-
-        /* On mobile the path collapses — hide the side image to avoid overlap */
-        @media (max-width: 768px) {
-          .organic-image { display: none; }
-        }
+        @media (max-width: 768px) { .organic-image { display: none; } }
         .year-pill {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 6px 16px;
-          background: #382525;
-          border-radius: 40px;
+          display: flex; align-items: center; gap: 6px;
+          padding: 6px 16px; background: #382525; border-radius: 40px;
           border: 1.5px solid rgba(213,143,107,0.5);
           box-shadow: 0 4px 16px rgba(56,37,37,0.2);
-          animation: pillPulse 2s infinite;
-          white-space: nowrap;
+          animation: pillPulse 2s infinite; white-space: nowrap;
         }
         .year-pill-text {
-          color: #F7E7C4;
-          font-weight: 700;
-          font-size: 0.95rem;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          font-family: 'Outfit', sans-serif;
+          color: #F7E7C4; font-weight: 700; font-size: 0.95rem;
+          letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Outfit', sans-serif;
         }
         .year-pill-dot {
-          display: inline-block;
-          width: 5px;
-          height: 5px;
-          border-radius: 50%;
-          background: #D58F6B;
-          opacity: 0.7;
+          display: inline-block; width: 5px; height: 5px;
+          border-radius: 50%; background: #D58F6B; opacity: 0.7;
         }
-
-        /* Spacecraft & Particles */
         @keyframes flameFlicker {
-          0% { transform: scaleY(1); opacity: 1; }
-          50% { transform: scaleY(1.3); opacity: 0.8; }
-          100% { transform: scaleY(0.9); opacity: 1; }
+          0%   { transform: scaleY(1);   opacity: 1;   }
+          50%  { transform: scaleY(1.3); opacity: 0.8; }
+          100% { transform: scaleY(0.9); opacity: 1;   }
         }
-        .rocket-flame {
-          animation: flameFlicker 0.1s infinite alternate;
-        }
+        .rocket-flame { animation: flameFlicker 0.1s infinite alternate; }
         .burst-particle {
-          position: absolute;
-          top: 50%; 
-          left: 50%;
-          width: 8px; 
-          height: 8px;
-          background: #D58F6B;
-          border-radius: 50%;
-          transform: translate(-50%, -50%);
-          opacity: 0;
-          pointer-events: none;
-          z-index: -1;
+          position: absolute; top: 50%; left: 50%;
+          width: 8px; height: 8px; background: #D58F6B; border-radius: 50%;
+          transform: translate(-50%, -50%); opacity: 0; pointer-events: none; z-index: -1;
         }
       `}</style>
 
-      {/* Static intro block with CardSwap */}
+      {/* ── Two-column intro ── */}
       <div className="wib-container">
         <div className="wib-grid">
 
-          {/* Left: Heading & byline */}
-          <div className="wib-text-col">
-            <h2
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: 'clamp(3rem, 6.5vw, 6rem)',
-                fontWeight: 800,
-                lineHeight: 1.03,
-                letterSpacing: '-0.03em',
-                color: '#382525',
-                marginBottom: '2rem',
-                overflow: 'visible',
-              }}
-            >
-              <div style={{ display: 'block', marginBottom: '0.06em' }}>
-                <Word word="WHO" index={0} style={{ marginRight: '0.2em' }} />
-                <Word word="IS" index={1} />
-              </div>
-              <div style={{ display: 'block', marginBottom: '0.06em' }}>
-                <Word word="BEHIND" index={2} />
-              </div>
-              <span style={{
-                color: '#D58F6B',
-                fontFamily: "'Newsreader', Georgia, serif",
-                fontStyle: 'italic',
-                fontWeight: 400
-              }}>
-                TCQ?
-              </span>
-            </h2>
-
-            <div>
-              <div style={{ fontWeight: 800, fontSize: 'clamp(1.3rem, 1.7vw, 1.7rem)', letterSpacing: '0.02em', color: '#382525' }}>
-                Dr. Vishnu Aravind, MBBS, MD
-              </div>
-              <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', color: '#D58F6B', marginTop: '6px', fontStyle: 'italic', fontFamily: "'Newsreader', Georgia, serif" }}>
-                Scientist by the day. Artist also by the day. Sleep is for the night.
-              </div>
-            </div>
-          </div>
-
-          {/* Middle: full, uncropped photo */}
-          <div className="wib-photo-col">
+          {/* Left: Flip Card */}
+          <div className="wib-left-col">
             <motion.div
-              className="wib-photo-frame"
-              initial={{ opacity: 0, scale: 0.92 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: false, amount: 0.1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              style={{ position: 'relative' }}
             >
-              <img src={drVishnuImg} alt="Dr. Vishnu Aravind speaking at a TCQ event" />
+              <ProfileFlipCard />
             </motion.div>
           </div>
 
@@ -778,7 +1045,7 @@ export default function WhoIsBehind() {
                   TCQ is an extension of my way of thinking. We connect people to ideas they might not have discovered otherwise. We help schools and colleges open up new worlds for their students. We work with startups, brands and organisations to find interesting ways to connect with their audiences.
                 </p>
                 <p style={{ lineHeight: 1.7, opacity: 0.85, fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)', marginTop: '0.75rem' }}>
-                  Sometimes that means a quiz. Sometimes a workshop. Sometimes a campaign, a community, or something that doesn’t have a name yet. And the more nameless things we create, the better.
+                  Sometimes that means a quiz. Sometimes a workshop. Sometimes a campaign, a community, or something that doesn't have a name yet. And the more nameless things we create, the better.
                 </p>
               </Card>
             </CardSwap>
