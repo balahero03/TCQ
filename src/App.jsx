@@ -38,8 +38,8 @@ function App() {
           <WhatIsTCQ />
           <WhoIsBehind />
           <WingReel />
-          <WingsBrandsSection />
           <CallOutSection />
+          <WingsBrandsSection />
           <Contact />
         </main>
         </>
