@@ -217,6 +217,10 @@
   text-align: left;
 }
 
+.hero-mobile-eyebrow {
+  display: none;
+}
+
 .hero-heading {
   margin: 0;
   color: #382525;
@@ -255,6 +259,10 @@
 }
 
 
+
+.hero-mobile-content-card {
+  display: contents;
+}
 
 .hero-text-wrapper {
   margin-top: 1.5rem;
@@ -399,44 +407,139 @@
     display: block;
   }
 
+  /* Remove cat backdrop animation on mobile completely */
   .hero-cat-backdrop {
-    width: 95%;
-    opacity: 0.22;
-    top: auto;
-    bottom: 0;
-    transform: none;
+    display: none !important;
+  }
+
+  /* Expand Hero section layout on mobile */
+  .hero-section {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .hero-main {
+    padding: 20px 6vw 48px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hero-left-column {
+    flex: 1;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Mobile Eyebrow Badge */
+  .hero-mobile-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.85rem;
+    padding: 5px 13px;
+    border-radius: 100px;
+    background: rgba(213, 143, 107, 0.12);
+    border: 1px solid rgba(213, 143, 107, 0.28);
+  }
+
+  .hero-eyebrow-spark {
+    font-size: 0.72rem;
+    color: #D58F6B;
+  }
+
+  .hero-eyebrow-text {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #D58F6B;
+  }
+
+  .hero-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: 0.15rem;
+    column-gap: 0.35em;
+    margin: 0 0 1.2rem;
   }
 
   .hero-heading-making {
-    font-size: clamp(3.2rem, 12.5vw, 4.8rem);
-    font-weight: 600;
-    line-height: 0.98;
-    margin-top: 0;
+    font-size: clamp(2.5rem, 9.8vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.05;
+    display: inline-block;
   }
 
   .hero-heading-curiosity {
-    font-size: clamp(2.9rem, 11vw, 4.4rem);
+    font-size: clamp(2.4rem, 9.2vw, 3.6rem);
     font-weight: 400;
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
     line-height: 1.05;
-    margin-left: -0.02em;
-    margin-top: 0.05em;
-    margin-bottom: 0.05em;
+    display: inline-block;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .hero-heading-social {
-    font-size: clamp(3.2rem, 12.5vw, 4.8rem);
-    font-weight: 600;
-    line-height: 0.98;
+    font-size: clamp(2.5rem, 9.8vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.05;
+    display: inline-block;
     margin-top: 0 !important;
+    width: 100%;
+  }
+
+  /* Mobile Content Card Frame wrapping text & CTA button */
+  .hero-mobile-content-card {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    width: 100%;
+    padding: 1.5rem 1.35rem;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1.5px solid rgba(213, 143, 107, 0.3);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow:
+      0 14px 35px rgba(56, 37, 37, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    position: relative;
+    overflow: hidden;
+    animation: hero-card-glow 6s ease-in-out infinite alternate;
+  }
+
+  .hero-mobile-content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #D58F6B 25%, #F7E7C4 50%, #D58F6B 75%, transparent);
+    background-size: 200% 100%;
+    animation: hero-sheen-slide 4s linear infinite;
   }
 
   .hero-text-wrapper {
-    margin-top: 1.5rem;
+    margin-top: 0;
     max-width: 100%;
   }
 
   .hero-paragraph {
-    font-size: clamp(0.85rem, 3.4vw, 0.94rem);
+    font-size: clamp(0.88rem, 3.4vw, 0.96rem);
     line-height: 1.65;
     text-align: left;
     color: #5a3e3e;
@@ -444,18 +547,41 @@
 
   .hero-button-container {
     width: 100%;
-    margin-top: 1.6rem;
+    margin-top: 1.5rem;
     padding: 0;
     justify-content: flex-start;
   }
 
   .explore-button {
     width: 100%;
-    max-width: 260px;
+    max-width: 100%;
     justify-content: center;
-    padding: 13px 26px;
-    font-size: 0.92rem;
-    border-radius: 6px;
+    padding: 14px 28px;
+    font-size: 0.95rem;
+    border-radius: 100px;
+    background-color: #382525;
+    color: #F7E7C4;
+    box-shadow: 0 6px 18px rgba(56, 37, 37, 0.18);
+  }
+}
+
+@keyframes hero-sheen-slide {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes hero-card-glow {
+  0% {
+    box-shadow:
+      0 14px 35px rgba(56, 37, 37, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 0 0 0px rgba(213, 143, 107, 0.2);
+  }
+  100% {
+    box-shadow:
+      0 18px 42px rgba(56, 37, 37, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 0 22px 3px rgba(213, 143, 107, 0.22);
   }
 }
 

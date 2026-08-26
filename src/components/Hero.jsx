@@ -250,41 +250,60 @@ export default function Hero({ logoLanded }) {
             transition={{ duration: 0.8, delay: startDelay / 1000 }}
             className="hero-typography-container"
           >
+            <motion.div
+              className="hero-mobile-eyebrow"
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.6, delay: (startDelay - 100) / 1000 }}
+            >
+              <span className="hero-eyebrow-spark">✦</span>
+              <span className="hero-eyebrow-text">The Curiosity Quotient</span>
+            </motion.div>
+
             <h1 className="hero-heading">
               <BlurText text="Making" className="hero-heading-making" initialDelay={startDelay} delay={0} initialBlur="blur(30px)" />
               <BlurText text="Curiosity" className="hero-heading-curiosity hero-curiosity-shimmer" initialDelay={startDelay + 250} delay={0} initialBlur="blur(30px)" />
               <BlurText text="Social" className="hero-heading-social" initialDelay={startDelay + 500} delay={0} initialBlur="blur(30px)" />
             </h1>
 
-            <div className="hero-text-wrapper">
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.1 }}
-                transition={{ duration: 0.6, delay: (startDelay + 300) / 1000 }}
-                className="hero-paragraph"
-              >
-                <span className="hero-question-highlight">
-                  What if every question on your mind was an invitation to discover a new world?
-                </span>
-                <br /><br />
-                The Curiosity Quotient is a gateway to those worlds — bringing together knowledge, culture and people to create experiences that make learning feel less like learning and more like discovery. From conversations to events and content, to giving new cultures and brands a voice, we give your ideas a Petri dish to grow in, evolve, and become experiences worth having with the community.
-              </motion.p>
-            </div>
+            <motion.div
+              className="hero-mobile-content-card"
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.8, delay: (startDelay + 250) / 1000, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="hero-text-wrapper">
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.1 }}
+                  transition={{ duration: 0.6, delay: (startDelay + 300) / 1000 }}
+                  className="hero-paragraph"
+                >
+                  <span className="hero-question-highlight">
+                    What if every question on your mind was an invitation to discover a new world?
+                  </span>
+                  <br /><br />
+                  The Curiosity Quotient is a gateway to those worlds — bringing together knowledge, culture and people to create experiences that make learning feel less like learning and more like discovery. From conversations to events and content, to giving new cultures and brands a voice, we give your ideas a Petri dish to grow in, evolve, and become experiences worth having with the community.
+                </motion.p>
+              </div>
 
-            <div className="hero-button-container">
-              <motion.button
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: false, amount: 0.1 }}
-                transition={{ delay: (startDelay + 400) / 1000, duration: 0.5 }}
-                className="explore-button"
-                onClick={() => scrollToSection('what-we-do')}
-              >
-                Explore TCQ
-                <span className="btn-arrow" style={{ color: '#E6BABE', fontSize: '1rem', lineHeight: 1 }}>→</span>
-              </motion.button>
-            </div>
+              <div className="hero-button-container">
+                <motion.button
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: false, amount: 0.1 }}
+                  transition={{ delay: (startDelay + 400) / 1000, duration: 0.5 }}
+                  className="explore-button"
+                  onClick={() => scrollToSection('what-we-do')}
+                >
+                  Explore TCQ
+                  <span className="btn-arrow" style={{ color: '#E6BABE', fontSize: '1rem', lineHeight: 1 }}>→</span>
+                </motion.button>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
