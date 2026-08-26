@@ -228,6 +228,32 @@
   z-index: 10;
 }
 
+.hero-heading-making {
+  font-size: clamp(4rem, 11vw, 11rem);
+  font-weight: 600;
+  line-height: 1;
+  display: block;
+}
+
+.hero-heading-curiosity {
+  font-size: clamp(3.6rem, 10vw, 10rem);
+  font-weight: 400;
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  line-height: 1;
+  display: block;
+  padding-bottom: 0px;
+  margin-left: -0.05em;
+}
+
+.hero-heading-social {
+  font-size: clamp(4rem, 11vw, 11rem);
+  font-weight: 600;
+  line-height: 1;
+  display: block;
+  margin-top: -30px;
+}
+
 
 
 .hero-text-wrapper {
@@ -339,6 +365,10 @@
 }
 
 @media (max-width: 768px) {
+  .hero-gradient-wash {
+    opacity: 0.35;
+  }
+
   .hero-header {
     padding: 0 20px;
     height: 80px;
@@ -370,19 +400,62 @@
   }
 
   .hero-cat-backdrop {
-    width: 90%;
-    opacity: 0.3;
+    width: 95%;
+    opacity: 0.22;
     top: auto;
     bottom: 0;
     transform: none;
   }
 
+  .hero-heading-making {
+    font-size: clamp(3.2rem, 12.5vw, 4.8rem);
+    font-weight: 600;
+    line-height: 0.98;
+    margin-top: 0;
+  }
+
+  .hero-heading-curiosity {
+    font-size: clamp(2.9rem, 11vw, 4.4rem);
+    font-weight: 400;
+    line-height: 1.05;
+    margin-left: -0.02em;
+    margin-top: 0.05em;
+    margin-bottom: 0.05em;
+  }
+
+  .hero-heading-social {
+    font-size: clamp(3.2rem, 12.5vw, 4.8rem);
+    font-weight: 600;
+    line-height: 0.98;
+    margin-top: 0 !important;
+  }
+
   .hero-text-wrapper {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+    max-width: 100%;
   }
 
   .hero-paragraph {
-    font-size: 1.05rem;
+    font-size: clamp(0.85rem, 3.4vw, 0.94rem);
+    line-height: 1.65;
+    text-align: left;
+    color: #5a3e3e;
+  }
+
+  .hero-button-container {
+    width: 100%;
+    margin-top: 1.6rem;
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .explore-button {
+    width: 100%;
+    max-width: 260px;
+    justify-content: center;
+    padding: 13px 26px;
+    font-size: 0.92rem;
+    border-radius: 6px;
   }
 }
 
@@ -393,11 +466,31 @@
 
   .explore-button {
     width: 100%;
+    max-width: 100%;
     justify-content: center;
   }
 
   .hero-button-container {
     width: 100%;
-    padding: 0 20px;
+    padding: 0;
   }
 }
+
+/* ── Highlight animation for the main question ── */
+.hero-question-highlight {
+  display: inline-block;
+  font-weight: 500;
+  color: #8D424E; /* Maroon/Red accent color */
+  animation: subtle-pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes subtle-pulse {
+  0% {
+    text-shadow: 0 0 8px rgba(141, 66, 78, 0.1);
+    transform: translateY(0px);
+  }
+  100% {
+    text-shadow: 0 0 16px rgba(141, 66, 78, 0.35);
+    transform: translateY(-1px);
+  }
+}

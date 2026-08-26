@@ -75,7 +75,8 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
   };
 
   // Target position that matches exactly where Hero places its logo
-  const TARGET = { top: 24, left: 24, height: 60 };
+  const isMobileHeader = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const TARGET = isMobileHeader ? { top: 16, left: 16, height: 48 } : { top: 24, left: 24, height: 60 };
 
   return (
     <>

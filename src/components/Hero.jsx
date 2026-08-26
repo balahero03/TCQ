@@ -251,12 +251,9 @@ export default function Hero({ logoLanded }) {
             className="hero-typography-container"
           >
             <h1 className="hero-heading">
-              <BlurText text="Making" initialDelay={startDelay} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, lineHeight: 1, display: 'block' }} />
-              <BlurText text="Curiosity" className="hero-curiosity-shimmer" initialDelay={startDelay + 250} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(3.6rem, 10vw, 10rem)', fontWeight: 400, fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', lineHeight: 1, display: 'block', paddingBottom: '0px', marginLeft: '-0.05em' }} />
-              <BlurText text="Social" initialDelay={startDelay + 500} delay={0} initialBlur="blur(30px)"
-                style={{ fontSize: 'clamp(4rem, 11vw, 11rem)', fontWeight: 600, lineHeight: 1, display: 'block', marginTop: '-30px' }} />
+              <BlurText text="Making" className="hero-heading-making" initialDelay={startDelay} delay={0} initialBlur="blur(30px)" />
+              <BlurText text="Curiosity" className="hero-heading-curiosity hero-curiosity-shimmer" initialDelay={startDelay + 250} delay={0} initialBlur="blur(30px)" />
+              <BlurText text="Social" className="hero-heading-social" initialDelay={startDelay + 500} delay={0} initialBlur="blur(30px)" />
             </h1>
 
             <div className="hero-text-wrapper">
@@ -267,7 +264,11 @@ export default function Hero({ logoLanded }) {
                 transition={{ duration: 0.6, delay: (startDelay + 300) / 1000 }}
                 className="hero-paragraph"
               >
-                What if every question you have on your mind was an invitation to a new world? The Curiosity Quotient is your gateway into all of those worlds, bringing knowledge, culture and people together to create experiences that make learning fun and accessible to everyone. From conversations to events, creative strategies and stories, for cultures, movements and brands, we turn ideas worth knowing into experiences worth having, in a third space that makes everybody feel inclusive,
+                <span className="hero-question-highlight">
+                  What if every question on your mind was an invitation to discover a new world?
+                </span>
+                <br /><br />
+                The Curiosity Quotient is a gateway to those worlds — bringing together knowledge, culture and people to create experiences that make learning feel less like learning and more like discovery. From conversations to events and content, to giving new cultures and brands a voice, we give your ideas a Petri dish to grow in, evolve, and become experiences worth having with the community.
               </motion.p>
             </div>
 

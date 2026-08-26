@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo, useState, useCallback } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -68,15 +68,19 @@ function OrganicTimeline() {
   
   // Dynamically generate the smooth wavy SVG path and node coordinates
   const { pathData, nodes } = useMemo(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const leftX = isMobile ? 35 : 25;
+    const rightX = isMobile ? 65 : 75;
+
     const d = [`M 50 0`];
     const n = [];
 
     timeline.forEach((item, i) => {
       const isNodeLeft = i % 2 === 0;
-      const x = isNodeLeft ? 25 : 75; // Increased width (wider path)
+      const x = isNodeLeft ? leftX : rightX;
       const y = (i + 1) * step;
       
-      const prevX = i === 0 ? 50 : (isNodeLeft ? 75 : 25);
+      const prevX = i === 0 ? 50 : (isNodeLeft ? rightX : leftX);
       const prevY = i === 0 ? 0 : i * step;
       
       // Smooth cubic bezier curve to next point
@@ -110,19 +114,23 @@ function OrganicTimeline() {
         if (img) gsap.set(img, { opacity: 0, y: 30, scale: 0.85 });
       });
 
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+      const endScroll = isMobile ? timeline.length * 360 : timeline.length * 800;
+      const cameraY = isMobile ? '-65vh' : '-120vh';
+
       // Master Timeline for ScrollTrigger
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: pinRef.current,
           start: "top top",
-          end: `+=${timeline.length * 800}`, // Long scroll distance for scrubbing
+          end: `+=${endScroll}`, // Tighter scroll distance for mobile
           scrub: 0.5, // 0.5 gives a tight, extremely responsive but smoothed scroll feel
           pin: true, // Lock the screen while animating
         }
       });
 
-      // 1. Camera Pan: move the 220vh tall content up by 120vh so we reach the bottom perfectly
-      tl.to(scrollContentRef.current, { y: "-120vh", ease: "none", duration: 1 }, 0);
+      // 1. Camera Pan: move content up so we reach the bottom perfectly
+      tl.to(scrollContentRef.current, { y: cameraY, ease: "none", duration: 1 }, 0);
 
       // 2. Draw the line down over the entire scroll duration
       tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, 0);
@@ -216,8 +224,8 @@ function OrganicTimeline() {
     <div style={{ background: '#F7E7C4' }}>
       <div ref={pinRef} style={{ width: '100%', height: '100vh', position: 'relative', overflow: 'hidden', fontFamily: "'Outfit', sans-serif" }}>
         
-        {/* Scrolling Canvas (220vh gives HUGE gaps between nodes) */}
-        <div ref={scrollContentRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '220vh', willChange: 'transform', overflow: 'hidden' }}>
+        {/* Scrolling Canvas */}
+        <div ref={scrollContentRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: typeof window !== 'undefined' && window.innerWidth <= 768 ? '165vh' : '220vh', willChange: 'transform', overflow: 'hidden' }}>
           
           {/* Title Header matching WhatIsTCQ style - now scrolls away naturally */}
           <div style={{ position: 'absolute', top: '7vh', left: '5vw', zIndex: 3 }}>
@@ -372,6 +380,24 @@ function OrganicTimeline() {
                     {node.data.year}
                   </div>
 
+                  {/* Milestone image inside card on mobile */}
+                  <div className="organic-image-mobile">
+                    <div className="organic-image-frame-mobile">
+                      {node.data.img ? (
+                        <img src={node.data.img} alt={node.data.role} loading="lazy" />
+                      ) : (
+                        <div className="organic-image-ph">
+                          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <path d="M21 15l-5-5L5 21" />
+                          </svg>
+                          <span className="organic-image-ph-label">{node.data.year}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                   <h3 style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', color: '#382525', marginBottom: '0.3rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2 }}>
                     {node.data.role}
                   </h3>
@@ -421,46 +447,10 @@ function OrganicTimeline() {
   );
 }
 
-const wordVariants = {
-  hidden: { opacity: 0, y: 50, filter: 'blur(5px)' },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 1.1,
-      delay: i * 0.12,
-      ease: [0.2, 0.65, 0.3, 0.9],
-    },
-  }),
-};
 
-const Word = ({ word, index, style }) => (
-  <motion.span
-    custom={index}
-    variants={wordVariants}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: false, amount: 0.1, margin: '0px' }}
-    style={{ display: 'inline-block', ...style }}
-  >
-    {word}
-  </motion.span>
-);
 
 export default function WhoIsBehind() {
   const sectionRef = useRef(null);
-  const [flipped, setFlipped] = useState(false);
-  const lastTap = useRef(0);
-
-  const handleTouchEnd = (e) => {
-    const now = Date.now();
-    if (now - lastTap.current < 300) {
-      e.preventDefault();
-      setFlipped(f => !f);
-    }
-    lastTap.current = now;
-  };
 
   return (
     <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#F7E7C4', paddingBottom: 0, fontFamily: "'Outfit', sans-serif", position: 'relative', overflow: 'clip' }}>
@@ -596,15 +586,16 @@ export default function WhoIsBehind() {
         /* Responsive */
         @media (max-width: 1100px) {
           .wib-grid { grid-template-columns: 1fr; gap: 4rem; }
-          .wib-right-col { max-width: 600px; width: 100%; margin: 0 auto; height: 400px; }
+          .wib-right-col { max-width: 600px; width: 100%; margin: 0 auto; height: 440px; }
         }
         @media (max-width: 768px) {
           .wib-container { padding: 80px 6vw 60px; min-height: auto; }
           .pfc-card { max-width: 480px; margin: 0 auto; height: 420px; }
+          .wib-right-col { max-width: 100%; width: 100%; margin: 3rem auto 1.5rem; height: 450px; display: flex; justify-content: center; align-items: center; }
         }
         @media (max-width: 480px) {
           .pfc-card { height: 360px; }
-          .wib-right-col { height: 340px; }
+          .wib-right-col { height: 420px; margin: 3.5rem auto 2rem; }
         }
 
         .wib-profile-card {
@@ -892,9 +883,52 @@ export default function WhoIsBehind() {
           color: rgba(56,37,37,0.5);
         }
 
-        /* On mobile the path collapses — hide the side image to avoid overlap */
+        .organic-image-mobile { display: none; }
+
+        /* On mobile the path collapses — hide the side image, scale down cards & nodes, enforce left/right side spacing */
         @media (max-width: 768px) {
           .organic-image { display: none; }
+          .organic-image-mobile {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.65rem;
+          }
+          .organic-image-frame-mobile {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-height: 125px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #F7E7C4;
+            border: 1px solid rgba(56,37,37,0.12);
+            box-shadow: 0 4px 14px rgba(56, 37, 37, 0.08);
+          }
+          .organic-image-frame-mobile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+          .organic-content {
+            width: clamp(185px, 52vw, 260px) !important;
+            max-width: calc(100vw - 75px) !important;
+          }
+          .content-inner {
+            padding: 0.95rem 1.15rem;
+            border-radius: 15px;
+          }
+          .year-pill {
+            padding: 4px 10px;
+            gap: 4px;
+          }
+          .year-pill-text {
+            font-size: 0.76rem;
+            letter-spacing: 0.1em;
+          }
+          .year-pill-dot {
+            width: 4px;
+            height: 4px;
+          }
         }
         .year-pill {
           display: flex;
@@ -1029,10 +1063,10 @@ export default function WhoIsBehind() {
           {/* Right Column: CardSwap (existing) */}
           <div className="wib-right-col">
             <CardSwap
-              width="100%"
-              height="100%"
-              cardDistance={55}
-              verticalDistance={65}
+              width="min(86vw, 420px)"
+              height="380px"
+              cardDistance={44}
+              verticalDistance={54}
               delay={2500}
               pauseOnHover={true}
               easing="linear"

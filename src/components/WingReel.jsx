@@ -225,8 +225,7 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
 
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isMobile = window.matchMedia('(max-width: 820px)').matches;
-    if (reduce || isMobile) return; // touch: native swipe (CSS)
+    if (reduce) return;
 
     const ctx = gsap.context(() => {
       const track = trackRef.current;
