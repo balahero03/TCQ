@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useRef, useEffect, useMemo, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -450,14 +450,23 @@ const Word = ({ word, index, style }) => (
 
 export default function WhoIsBehind() {
   const sectionRef = useRef(null);
+  const [flipped, setFlipped] = useState(false);
+  const lastTap = useRef(0);
+
+  const handleTouchEnd = (e) => {
+    const now = Date.now();
+    if (now - lastTap.current < 300) {
+      e.preventDefault();
+      setFlipped(f => !f);
+    }
+    lastTap.current = now;
+  };
 
   return (
     <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#F7E7C4', paddingBottom: 0, fontFamily: "'Outfit', sans-serif", position: 'relative', overflow: 'clip' }}>
 
       <style>{`
-        /* ── Three-part intro layout ──
-           Heading on the left, the full uncropped (landscape) photo in the
-           middle, a smaller CardSwap deck on the right — one screen tall. */
+        /* Restructured layout */
         .wib-container {
           position: relative;
           z-index: 1;
@@ -471,75 +480,327 @@ export default function WhoIsBehind() {
           width: 100%;
           max-width: 2000px;
           margin: 0 auto;
-          display: flex;
-          flex-wrap: wrap;
-          gap: clamp(2.5rem, 3.5vw, 4.5rem);
+          display: grid;
+          grid-template-columns: 1.8fr 1fr;
+          gap: clamp(2rem, 3.5vw, 4.5rem);
           align-items: center;
         }
-        .wib-text-col {
-          flex: 1 1 380px;
-        }
-        .wib-photo-col {
-          flex: 1.6 1 560px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .wib-photo-frame {
-          width: 100%;
-          max-width: 780px;
-          aspect-ratio: 3 / 2;
-          border-radius: 20px;
-          overflow: hidden;
-          border: 1px solid rgba(56, 37, 37, 0.15);
-          box-shadow: 0 24px 60px rgba(56, 37, 37, 0.18);
-          background: #382525;
-        }
-        .wib-photo-frame img {
-          width: 100%;
-          height: 100%;
-          /* contain keeps the whole (landscape) photo visible, uncropped */
-          object-fit: contain;
+        .wib-left-col {
           display: block;
-          cursor: pointer;
         }
         .wib-right-col {
-          flex: 1 1 380px;
           height: clamp(420px, 34vw, 520px);
           position: relative;
         }
 
-        @media (max-width: 1024px) {
+        /* ── Static Photo Card ── */
+        .pfc-card {
+          width: 100%;
+          height: clamp(420px, 34vw, 520px);
+          border-radius: 24px;
+          overflow: hidden;
+          position: relative;
+          cursor: default;
+          box-shadow:
+            0 8px 16px rgba(56,37,37,0.14),
+            0 24px 48px rgba(56,37,37,0.2),
+            0 40px 80px rgba(56,37,37,0.16);
+          transition: transform 0.55s cubic-bezier(0.16,1,0.3,1),
+                      box-shadow 0.55s cubic-bezier(0.16,1,0.3,1);
+        }
+        /* Full-bleed background image */
+        .pfc-bg-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        /* Layered gradient overlay */
+        .pfc-overlay {
+          position: absolute;
+          inset: 0;
+          background:
+            /* Bottom dark scrim for text legibility */
+            linear-gradient(
+              to top,
+              rgba(38,20,20,0.92) 0%,
+              rgba(38,20,20,0.55) 40%,
+              rgba(38,20,20,0.1)  65%,
+              transparent 80%
+            ),
+            /* 120° top-light specular */
+            radial-gradient(
+              ellipse 70% 55% at 18% 0%,
+              rgba(213,143,107,0.18) 0%,
+              transparent 65%
+            );
+          pointer-events: none;
+        }
+
+        /* Text pinned to bottom-left */
+        .pfc-text {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: clamp(2rem, 4vw, 3rem);
+          color: #F7E7C4;
+        }
+        .pfc-heading {
+          font-family: 'Outfit', sans-serif;
+          font-weight: 800;
+          line-height: 0.95;
+          letter-spacing: -0.04em;
+          margin: 0 0 1.25rem 0;
+          display: flex;
+          flex-direction: column;
+        }
+        .pfc-heading span {
+          font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+          display: block;
+          color: #F7E7C4;
+        }
+        .pfc-heading .pfc-accent {
+          font-family: 'Newsreader', Georgia, serif;
+          font-style: italic;
+          font-weight: 400;
+          color: #D58F6B;
+          margin-top: 2px;
+        }
+        .pfc-divider {
+          width: 48px;
+          height: 2px;
+          background: linear-gradient(90deg, rgba(213,143,107,0.9), rgba(213,143,107,0));
+          margin-bottom: 1rem;
+        }
+        .pfc-name {
+          font-family: 'Outfit', sans-serif;
+          font-weight: 700;
+          font-size: clamp(1rem, 1.6vw, 1.35rem);
+          color: #F7E7C4;
+          margin: 0 0 6px 0;
+          line-height: 1.2;
+        }
+        .pfc-tagline {
+          font-family: 'Newsreader', Georgia, serif;
+          font-style: italic;
+          font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+          color: rgba(247,231,196,0.75);
+          margin: 0;
+          line-height: 1.55;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+          .wib-grid { grid-template-columns: 1fr; gap: 4rem; }
+          .wib-right-col { max-width: 600px; width: 100%; margin: 0 auto; height: 400px; }
+        }
+        @media (max-width: 768px) {
+          .wib-container { padding: 80px 6vw 60px; min-height: auto; }
+          .pfc-card { max-width: 480px; margin: 0 auto; height: 420px; }
+        }
+        @media (max-width: 480px) {
+          .pfc-card { height: 360px; }
+          .wib-right-col { height: 340px; }
+        }
+
+        .wib-profile-card {
+          width: 100%;
+          height: clamp(420px, 34vw, 520px);
+          /* Sharp corners matching CardSwap cards */
+          border-radius: 0;
+          overflow: hidden;
+          /* Flat dark brown — same base as CardSwap dark cards */
+          background: #382525;
+          display: flex;
+          position: relative;
+          /* Bold border matching CardSwap's 4px solid currentColor */
+          border: 4px solid #382525;
+          box-sizing: border-box;
+          /* Layered shadow: lift + warm ambient glow */
+          box-shadow:
+            0 8px 16px rgba(56, 37, 37, 0.14),
+            0 24px 48px rgba(56, 37, 37, 0.22),
+            0 40px 80px rgba(56, 37, 37, 0.18);
+          transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Left accent strip — gradient bookmark, like a spine */
+        .wib-profile-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 5px;
+          height: 100%;
+          background: linear-gradient(180deg, #D58F6B 0%, #8a4020 50%, #D58F6B 100%);
+          z-index: 5;
+        }
+
+        /* 120° top-light: radial specular highlight from upper-left */
+        .wib-profile-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(
+              ellipse 65% 50% at 15% 0%,
+              rgba(255, 255, 255, 0.12) 0%,
+              rgba(255, 230, 180, 0.05) 45%,
+              transparent 70%
+            );
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        .wib-profile-card:hover {
+          box-shadow:
+            0 12px 24px rgba(56, 37, 37, 0.18),
+            0 32px 64px rgba(56, 37, 37, 0.28),
+            0 60px 100px rgba(56, 37, 37, 0.22),
+            0 0 0 1px rgba(213, 143, 107, 0.3);
+        }
+        
+        .wib-profile-content {
+          flex: 1;
+          /* Indent past the accent strip */
+          padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3rem) clamp(2.2rem, 4.5vw, 3.2rem);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          color: #F7E7C4;
+          position: relative;
+          z-index: 4;
+        }
+        
+        .wib-profile-content h2 {
+          font-family: 'Outfit', sans-serif;
+          font-weight: 800;
+          line-height: 1;
+          letter-spacing: -0.03em;
+          margin: 0 0 1.5rem 0;
+          /* Match CardSwap header font size */
+          font-size: clamp(1.9rem, 3.2vw, 3rem);
+          display: flex;
+          flex-direction: column;
+          color: #F7E7C4;
+        }
+        
+        .wib-profile-content h2 span {
+          display: block;
+        }
+        
+        .wib-profile-content h2 .pfc-accent {
+          font-family: 'Newsreader', Georgia, serif;
+          font-style: italic;
+          font-weight: 400;
+          /* Copper accent for the italic — same as CardSwap accent usage */
+          color: #D58F6B;
+          margin-top: 2px;
+        }
+
+        /* Thin copper divider — matching the CardSwap inner dividers */
+        .wib-profile-divider {
+          width: 40px;
+          height: 3px;
+          background: linear-gradient(90deg, #D58F6B 0%, rgba(213,143,107,0.2) 100%);
+          margin-bottom: 1.25rem;
+        }
+        
+        .wib-profile-bio h3 {
+          font-family: 'Outfit', sans-serif;
+          font-weight: 800;
+          /* Match CardSwap h3 sizing */
+          font-size: clamp(1rem, 1.6vw, 1.35rem);
+          margin: 0 0 10px 0;
+          line-height: 1.3;
+          color: #F7E7C4;
+          letter-spacing: -0.01em;
+        }
+        
+        .wib-profile-bio p {
+          font-family: 'Newsreader', Georgia, serif;
+          font-style: italic;
+          font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+          line-height: 1.65;
+          /* Slightly muted cream — matching CardSwap p opacity: 0.9 effect */
+          color: rgba(247, 231, 196, 0.82);
+          margin: 0;
+        }
+        
+        /* Image column — wider for breathing room */
+        .wib-profile-image {
+          flex: 1.4;
+          height: 100%;
+          position: relative;
+          z-index: 1;
+        }
+
+        /* Warm vignette on left edge to blend into the dark card base */
+        .wib-profile-image::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to right,
+            rgba(56, 37, 37, 0.7) 0%,
+            rgba(56, 37, 37, 0.1) 30%,
+            transparent 55%
+          );
+          z-index: 1;
+          pointer-events: none;
+        }
+        
+        .wib-profile-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .wib-profile-card:hover .wib-profile-image img {
+          transform: scale(1.04);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1100px) {
           .wib-grid {
-            flex-direction: column;
-            align-items: stretch;
-          }
-          .wib-text-col,
-          .wib-photo-col,
-          .wib-right-col {
-            flex: 1 1 auto;
-          }
-          .wib-photo-frame {
-            max-width: 100%;
+            grid-template-columns: 1fr;
+            gap: 4rem;
           }
           .wib-right-col {
-            height: 380px;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            height: 400px;
           }
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
           .wib-container {
+            padding: 80px 6vw 60px;
             min-height: auto;
-            padding: 100px 5vw 60px;
           }
-          .wib-grid {
-            gap: 2.5rem;
+          .wib-profile-card {
+            flex-direction: column;
+            height: auto;
+          }
+          .wib-profile-image {
+            height: 400px;
+          }
+          .wib-profile-content {
+            gap: 1.5rem;
+            padding: 2.5rem;
           }
         }
 
         @media (max-width: 480px) {
-          .wib-container {
-            padding: 80px 5vw 40px;
+          .wib-profile-image {
+            height: 300px;
           }
           .wib-right-col {
             height: 340px;
@@ -548,9 +809,9 @@ export default function WhoIsBehind() {
 
         /* New Joyful Timeline Styles */
         @keyframes floatSlow {
-          0% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(10deg); }
-          100% { transform: translateY(0) rotate(0deg); }
+          0% { transform: translate(-50%, 0) rotate(0deg); }
+          50% { transform: translate(-50%, -6px) rotate(1deg); }
+          100% { transform: translate(-50%, 0) rotate(0deg); }
         }
         @keyframes floatFast {
           0% { transform: translateY(0) rotate(0deg); }
@@ -692,61 +953,80 @@ export default function WhoIsBehind() {
       <div className="wib-container">
         <div className="wib-grid">
 
-          {/* Left: Heading & byline */}
-          <div className="wib-text-col">
-            <h2
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: 'clamp(3rem, 6.5vw, 6rem)',
-                fontWeight: 800,
-                lineHeight: 1.03,
-                letterSpacing: '-0.03em',
-                color: '#382525',
-                marginBottom: '2rem',
-                overflow: 'visible',
+          {/* Left Column (restructured: sub-split layout with card and photo) */}
+          <div className="wib-left-col">
+            <motion.div
+              className="pfc-card"
+              initial="hidden"
+              whileInView="visible"
+              whileHover="hover"
+              viewport={{ once: true, amount: 0.15 }}
+              variants={{
+                hidden: { opacity: 0, y: 30, scale: 0.97 },
+                visible: { 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1,
+                  transition: { 
+                    duration: 0.85, 
+                    ease: [0.16, 1, 0.3, 1],
+                    staggerChildren: 0.12,
+                    delayChildren: 0.2
+                  }
+                },
+                hover: {
+                  y: -6,
+                  scale: 1.012,
+                  boxShadow: "0 12px 24px rgba(56,37,37,0.18), 0 32px 60px rgba(56,37,37,0.26), 0 60px 100px rgba(56,37,37,0.2)",
+                  transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] }
+                }
               }}
             >
-              <div style={{ display: 'block', marginBottom: '0.06em' }}>
-                <Word word="WHO" index={0} style={{ marginRight: '0.2em' }} />
-                <Word word="IS" index={1} />
-              </div>
-              <div style={{ display: 'block', marginBottom: '0.06em' }}>
-                <Word word="BEHIND" index={2} />
-              </div>
-              <span style={{
-                color: '#D58F6B',
-                fontFamily: "'Newsreader', Georgia, serif",
-                fontStyle: 'italic',
-                fontWeight: 400
-              }}>
-                TCQ?
-              </span>
-            </h2>
+              {/* Full-bleed background photo */}
+              <motion.img
+                src={drVishnuImg}
+                alt="Dr. Vishnu Aravind"
+                className="pfc-bg-img"
+                loading="lazy"
+                variants={{
+                  hover: { scale: 1.04, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
+                }}
+              />
 
-            <div>
-              <div style={{ fontWeight: 800, fontSize: 'clamp(1.3rem, 1.7vw, 1.7rem)', letterSpacing: '0.02em', color: '#382525' }}>
-                Dr. Vishnu Aravind, MBBS, MD
-              </div>
-              <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', color: '#D58F6B', marginTop: '6px', fontStyle: 'italic', fontFamily: "'Newsreader', Georgia, serif" }}>
-                Scientist by the day. Artist also by the day. Sleep is for the night.
-              </div>
-            </div>
-          </div>
+              {/* Gradient overlay */}
+              <div className="pfc-overlay" />
 
-          {/* Middle: full, uncropped photo */}
-          <div className="wib-photo-col">
-            <motion.div
-              className="wib-photo-frame"
-              initial={{ opacity: 0, scale: 0.92 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: false, amount: 0.1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <img src={drVishnuImg} alt="Dr. Vishnu Aravind speaking at a TCQ event" />
+              {/* Text overlaid at bottom */}
+              <div className="pfc-text">
+                <motion.h2 
+                  className="pfc-heading"
+                >
+                  <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>WHOIS</motion.span>
+                  <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>BEHIND</motion.span>
+                  <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }} className="pfc-accent">TCQ?</motion.span>
+                </motion.h2>
+                <motion.div 
+                  className="pfc-divider" 
+                  variants={{ hidden: { scaleX: 0, opacity: 0, transformOrigin: 'left' }, visible: { scaleX: 1, opacity: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
+                />
+                <motion.p 
+                  className="pfc-name"
+                  variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
+                >
+                  Dr. Vishnu Aravind, MBBS, MD
+                </motion.p>
+                <motion.p 
+                  className="pfc-tagline"
+                  variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
+                >
+                  Scientist by the day. Artist also by the day.<br />
+                  Sleep is for the night.
+                </motion.p>
+              </div>
             </motion.div>
           </div>
 
-          {/* Right: CardSwap */}
+          {/* Right Column: CardSwap (existing) */}
           <div className="wib-right-col">
             <CardSwap
               width="100%"
