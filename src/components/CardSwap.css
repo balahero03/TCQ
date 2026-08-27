@@ -28,7 +28,7 @@
     left: 50%;
     right: auto;
     transform-origin: center center;
-    transform: translateX(calc(-50% - 20px)) translateY(25px) scale(0.9);
+    transform: translateX(calc(-50% - 20px)) translateY(50px) scale(0.9);
   }
 }
 
@@ -37,6 +37,6 @@
     left: 50%;
     right: auto;
     transform-origin: center center;
-    transform: translateX(calc(-50% - 16px)) translateY(30px) scale(0.82);
+    transform: translateX(calc(-50% - 16px)) translateY(60px) scale(0.82);
   }
 }

@@ -591,11 +591,11 @@ export default function WhoIsBehind() {
         @media (max-width: 768px) {
           .wib-container { padding: 80px 6vw 60px; min-height: auto; }
           .pfc-card { max-width: 480px; margin: 0 auto; height: 420px; }
-          .wib-right-col { max-width: 100%; width: 100%; margin: 3rem auto 1.5rem; height: 450px; display: flex; justify-content: center; align-items: center; }
+          .wib-right-col { max-width: 100%; width: 100%; margin: 6rem auto 1.5rem; height: 450px; display: flex; justify-content: center; align-items: center; }
         }
         @media (max-width: 480px) {
           .pfc-card { height: 360px; }
-          .wib-right-col { height: 420px; margin: 3.5rem auto 2rem; }
+          .wib-right-col { height: 420px; margin: 8rem auto 2rem; }
         }
 
         .wib-profile-card {
