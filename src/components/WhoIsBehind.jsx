@@ -72,7 +72,7 @@ function OrganicTimeline() {
     const leftX = isMobile ? 35 : 25;
     const rightX = isMobile ? 65 : 75;
 
-    const d = [`M 50 0`];
+    const d = [`M 50 -10`];
     const n = [];
 
     timeline.forEach((item, i) => {
@@ -81,17 +81,17 @@ function OrganicTimeline() {
       const y = (i + 1) * step;
       
       const prevX = i === 0 ? 50 : (isNodeLeft ? rightX : leftX);
-      const prevY = i === 0 ? 0 : i * step;
+      const prevY = i === 0 ? -10 : i * step;
       
       // Smooth cubic bezier curve to next point
       d.push(`C ${prevX} ${prevY + step/2}, ${x} ${y - step/2}, ${x} ${y}`);
       n.push({ x, y, isNodeLeft, data: item });
     });
 
-    // Line exiting the bottom
+    // Line exiting the bottom off-screen
     const lastX = n[n.length - 1].x;
     const lastY = n[n.length - 1].y;
-    d.push(`C ${lastX} ${lastY + step/2}, 50 ${lastY + step/2}, 50 100`);
+    d.push(`C ${lastX} ${lastY + step/2}, 50 ${lastY + step/2}, 50 110`);
 
     return { pathData: d.join(" "), nodes: n };
   }, [step]);
@@ -158,8 +158,13 @@ function OrganicTimeline() {
         const image = el.querySelector('.organic-image');
         const particles = el.querySelectorAll('.burst-particle');
         
-        // Time on the timeline (0 to 1) matches the percentage position.
-        const progressTime = (i + 1) * step / 100;
+        // Calculate precise trigger time based on path length weighting.
+        // The first and last curves have half the horizontal width, so they are shorter.
+        // We use an empirical weight of 0.6 for the edges and 1.0 for the middle segments.
+        const edgeWeight = 0.6;
+        const totalWeight = (edgeWeight * 2) + (timeline.length - 1);
+        const currentWeight = edgeWeight + (i * 1.0);
+        const progressTime = currentWeight / totalWeight;
 
         // Celebration Particle Burst!
         if (particles.length > 0) {
@@ -177,9 +182,9 @@ function OrganicTimeline() {
                 return `calc(-50% + ${Math.sin(angle * Math.PI / 180) * 50}px)`;
               },
               ease: "power2.out", 
-              duration: 0.1 
+              duration: 0.05 
             }, 
-            progressTime - 0.02
+            progressTime - 0.01
           );
         }
 
@@ -188,26 +193,26 @@ function OrganicTimeline() {
           scale: 1,
           opacity: 1,
           ease: "back.out(2)",
-          duration: 0.05
-        }, progressTime - 0.02);
+          duration: 0.03
+        }, progressTime - 0.01);
 
-        // Slide in the content block
+        // Slide in the content block rapidly
         tl.to(content, {
           opacity: 1,
           y: 0,
           ease: "power3.out",
-          duration: 0.1
-        }, progressTime - 0.02);
+          duration: 0.04
+        }, progressTime - 0.01);
 
-        // Reveal the milestone image in the open space opposite the content
+        // Reveal the milestone image
         if (image) {
           tl.to(image, {
             opacity: 1,
             y: 0,
             scale: 1,
             ease: "back.out(1.6)",
-            duration: 0.12
-          }, progressTime - 0.02);
+            duration: 0.05
+          }, progressTime - 0.01);
         }
       });
 
@@ -242,7 +247,7 @@ function OrganicTimeline() {
 
           {/* Dynamic Wavy SVG Background */}
           {/* Removed SVG filter: drop-shadow for massive performance boost and stutter elimination */}
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none' }}>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none', overflow: 'visible' }}>
             {/* Subtle background track */}
             <path d={pathData} fill="none" stroke="rgba(56,37,37,0.08)" strokeWidth="0.3" />
             
@@ -359,7 +364,7 @@ function OrganicTimeline() {
                   // Switch sides based on node position - closer gap to path
                   left: node.isNodeLeft ? `${node.x + 8}%` : 'auto',
                   right: !node.isNodeLeft ? `${100 - node.x + 8}%` : 'auto',
-                  width: 'clamp(280px, 35vw, 420px)',
+                  width: 'clamp(320px, 45vw, 550px)',
                   zIndex: 10,
                 }}
               >
@@ -819,7 +824,7 @@ export default function WhoIsBehind() {
           z-index: 1;
         }
         .content-inner {
-          padding: 2.5rem;
+          padding: 1.5rem 2.2rem;
           background: rgba(247, 231, 196, 0.98);
           border-radius: 24px;
           border: 1px solid rgba(56,37,37,0.12);

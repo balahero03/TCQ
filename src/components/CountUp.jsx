@@ -46,12 +46,9 @@ export default function CountUp({
     return () => cancelAnimationFrame(animationFrame);
   }, [inView, to, from, duration]);
 
-  // format with commas if it's an integer >= 1000
+  // format without commas
   const formatNumber = (num) => {
-    const fixed = num.toFixed(decimals);
-    const parts = fixed.split('.');
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join('.');
+    return num.toFixed(decimals);
   };
 
   return (

@@ -572,7 +572,8 @@
 .wr-endcap-panel {
   justify-content: center;
   align-items: center;
-  width: 80vw;
+  width: 100vw;
+  padding: 0;
 }
 .wr-endcap-word {
   font-size: clamp(2.5rem, 7vw, 7rem);

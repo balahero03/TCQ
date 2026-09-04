@@ -109,9 +109,8 @@
 
 .hero-cat-backdrop {
   position: absolute;
-  top: 50%;
+  bottom: 0;
   right: 0;
-  transform: translateY(-58%);
   width: 55%;
   z-index: -1;
   pointer-events: none;
@@ -173,7 +172,7 @@
   position: absolute;
   top: 42px;
   left: 92px;
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0.04em;
@@ -233,14 +232,14 @@
 }
 
 .hero-heading-making {
-  font-size: clamp(4rem, 11vw, 11rem);
+  font-size: clamp(2rem, 5.5vw, 5rem);
   font-weight: 600;
   line-height: 1;
   display: block;
 }
 
 .hero-heading-curiosity {
-  font-size: clamp(3.6rem, 10vw, 10rem);
+  font-size: clamp(1.8rem, 5vw, 4.5rem);
   font-weight: 400;
   font-family: 'Newsreader', Georgia, serif;
   font-style: italic;
@@ -251,11 +250,11 @@
 }
 
 .hero-heading-social {
-  font-size: clamp(4rem, 11vw, 11rem);
+  font-size: clamp(2rem, 5.5vw, 5rem);
   font-weight: 600;
   line-height: 1;
   display: block;
-  margin-top: -30px;
+  margin-top: -5px;
 }
 
 
@@ -270,18 +269,22 @@
 }
 
 .hero-paragraph {
-  font-size: clamp(1rem, 1.3vw, 1.15rem);
-  line-height: 1.6;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  line-height: 1.5;
   font-weight: 400;
   color: #5a3e3e;
   margin: 0;
-  text-align: justify;
+  text-align: left;
 }
 
 .hero-button-container {
   display: flex;
   gap: 16px;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
+  position: relative;
+  bottom: auto;
+  left: auto;
+  z-index: 20;
 }
 
 .explore-button {
@@ -407,9 +410,14 @@
     display: block;
   }
 
-  /* Remove cat backdrop animation on mobile completely */
+  /* Display cat backdrop on mobile */
   .hero-cat-backdrop {
-    display: none !important;
+    display: block !important;
+    width: 90%;
+    right: -5%;
+    bottom: -5%;
+    opacity: 0.25; /* Act as a watermark behind the text */
+    z-index: 0;
   }
 
   /* Expand Hero section layout on mobile */
@@ -436,6 +444,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    z-index: 2; /* Ensures text is always clickable and above the SVG */
   }
 
   /* Mobile Eyebrow Badge */
@@ -473,14 +483,14 @@
   }
 
   .hero-heading-making {
-    font-size: clamp(2.5rem, 9.8vw, 3.8rem);
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
     font-weight: 700;
     line-height: 1.05;
     display: inline-block;
   }
 
   .hero-heading-curiosity {
-    font-size: clamp(2.4rem, 9.2vw, 3.6rem);
+    font-size: clamp(1.6rem, 5.5vw, 2.3rem);
     font-weight: 400;
     font-family: 'Newsreader', Georgia, serif;
     font-style: italic;
@@ -492,7 +502,7 @@
   }
 
   .hero-heading-social {
-    font-size: clamp(2.5rem, 9.8vw, 3.8rem);
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
     font-weight: 700;
     line-height: 1.05;
     display: inline-block;
@@ -550,6 +560,9 @@
     margin-top: 1.5rem;
     padding: 0;
     justify-content: flex-start;
+    position: relative;
+    bottom: auto;
+    left: auto;
   }
 
   .explore-button {
@@ -604,7 +617,8 @@
 
 /* ── Highlight animation for the main question ── */
 .hero-question-highlight {
-  display: inline-block;
+  display: block;
+  margin-bottom: 1rem;
   font-weight: 500;
   color: #8D424E; /* Maroon/Red accent color */
   animation: subtle-pulse 4s ease-in-out infinite alternate;

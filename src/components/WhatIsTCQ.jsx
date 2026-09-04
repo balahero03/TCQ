@@ -249,7 +249,7 @@ export default function WhatIsTCQ() {
 
           <ScrollReveal delay={0.4} className="tcq-content-col">
             <p>
-              Through quizzes, lectures, workshops, conversations and experiments, TCQ has grown into a community of more than 2,000 people brought together by a shared love for curiosity and one simple instinct: the desire to know more. Today, we take that instinct into physical spaces and digital platforms, develop new ways to experience ideas, and collaborate with brands, creators and organisations to turn those ideas into experiences.
+              Through quizzes, lectures, workshops, conversations and experiments, TCQ has grown into a community of more than 2000 people brought together by a shared love for curiosity and one simple instinct: the desire to know more. Today, we take that instinct into physical spaces and digital platforms, develop new ways to experience ideas, and collaborate with brands, creators and organisations to turn those ideas into experiences.
             </p>
             <p>
               We celebrate new communities and go beyond simply creating experiential marketing campaigns. We create stories that people will never forget.

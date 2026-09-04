@@ -3,11 +3,12 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { WINGS } from './wingsData';
 import GalleryModal from './GalleryModal';
 import './WingReel.css';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 /* ── Static scatter positions for the 5 cards (% of the play area) ──
    Each card also carries a "depth" — nearer cards (bigger depth) react
@@ -39,9 +40,10 @@ function MagneticCard({ wing, layout, mx, my }) {
     const el = document.getElementById(wingSectionId(wing));
     if (el) {
       const targetY = el._scrollTrigger ? el._scrollTrigger.start : window.scrollY + el.getBoundingClientRect().top;
-      window.scrollTo({
-        top: targetY,
-        behavior: 'smooth'
+      gsap.to(window, {
+        duration: 1.5,
+        scrollTo: targetY,
+        ease: "power3.inOut"
       });
     }
   };
@@ -244,9 +246,10 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
       const st = ScrollTrigger.create({
         trigger: pinRef.current,
         start: 'top top',
-        end: () => `+=${distance() + window.innerHeight * 0.5}`,
+        // Multiply the scroll distance by 4.0 to make it normal/slower
+        end: () => `+=${(distance() + window.innerHeight * 0.5) * 4.0}`,
         pin: true,
-        scrub: 0.6,
+        scrub: true,
         animation: tween,
         invalidateOnRefresh: true,
       });

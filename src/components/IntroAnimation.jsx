@@ -47,7 +47,7 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
       setProgress(current);
       if (current >= 100) {
         clearInterval(interval);
-        setPhase('logo');
+        setTimeout(() => setPhase('logo'), 400); // Wait so 100% is visible
       }
     }, 30);
 
@@ -157,7 +157,15 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   opacity: 1, scale: 1, y: 0, filter: 'blur(0px)',
                   transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                 }}
-                style={{ display: 'flex', alignItems: 'center', gap: '2.5rem', zIndex: 2 }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                  gap: 'clamp(1.5rem, 4vw, 2.5rem)',
+                  zIndex: 2,
+                  textAlign: 'left'
+                }}
               >
                 {/* ref lives here so we can capture its screen position */}
                 <motion.img
@@ -167,7 +175,7 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   initial={{ scale: 0.4, rotate: -10, opacity: 0 }}
                   animate={{ scale: 1, rotate: 0, opacity: 1 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-                  style={{ height: '200px', width: 'auto', display: 'block' }}
+                  style={{ height: 'clamp(120px, 20vw, 200px)', width: 'auto', display: 'block' }}
                 />
                 <motion.div
                   initial={{ opacity: 0, x: 30, scale: 0.85 }}
@@ -175,9 +183,9 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   transition={{ delay: 0.25, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   style={{
                     color: '#F7E7C4',
-                    fontFamily: "'Fredoka', sans-serif",
+                    fontFamily: "'Outfit', sans-serif",
                     fontWeight: 500,
-                    fontSize: '1.6rem',
+                    fontSize: 'clamp(1.2rem, 3vw, 1.6rem)',
                     letterSpacing: '0.35em',
                     textTransform: 'uppercase',
                     lineHeight: 1.6,
