@@ -48,7 +48,7 @@ function BrandTile({ slot }) {
   return (
     <motion.div className="wbs-tile" variants={tileVariants}>
       {slot.logo ? (
-        <img src={slot.logo} alt={`${slot.name} logo`} style={{ maxWidth: '90%', maxHeight: '64px', objectFit: 'contain' }} />
+        <img src={slot.logo} alt={`${slot.name} logo`} style={{ maxWidth: '85%', maxHeight: '85%', width: 'auto', height: 'auto', objectFit: 'contain' }} />
       ) : slot.name ? (
         <span className="wbs-tile-name">{slot.name}</span>
       ) : (

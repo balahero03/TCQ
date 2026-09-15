@@ -7,12 +7,15 @@
 .wbs-section {
   position: relative;
   width: 100%;
+  min-height: 100vh;
   background: var(--cream-light);
   overflow: hidden;
   padding: clamp(80px, 10vh, 120px) 6vw;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: clamp(2.5rem, 6vh, 4rem);
+  box-sizing: border-box;
 }
 
 .wbs-glow {
@@ -86,23 +89,24 @@
 
 .wbs-tile {
   position: relative;
-  aspect-ratio: 1;
+  aspect-ratio: 16 / 10;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  padding: 1rem;
   border-radius: 18px;
-  background:
-    repeating-linear-gradient(45deg, rgba(56, 37, 37, 0.03) 0 10px, rgba(56, 37, 37, 0.06) 10px 20px),
-    rgba(255, 255, 255, 0.35);
-  border: 1.5px dashed rgba(56, 37, 37, 0.18);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(56, 37, 37, 0.1);
+  box-shadow: 0 4px 16px rgba(56, 37, 37, 0.05);
   cursor: default;
-  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .wbs-tile:hover {
   border-color: rgba(213, 143, 107, 0.5);
+  box-shadow: 0 8px 24px rgba(56, 37, 37, 0.1);
   transform: translateY(-4px);
 }
 
@@ -166,8 +170,8 @@
   gap: 0.6rem;
   padding: 0.9rem 1.6rem;
   border-radius: 100px;
-  border: 1.5px dashed rgba(56, 37, 37, 0.16);
-  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(56, 37, 37, 0.1);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 .wbs-marquee-icon {
@@ -195,6 +199,7 @@
 
 @media (max-width: 768px) {
   .wbs-section {
+    min-height: auto;
     gap: 2.5rem;
   }
   .wbs-grid {
