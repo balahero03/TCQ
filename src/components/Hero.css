@@ -107,11 +107,20 @@
   will-change: transform, opacity;
 }
 
+.hero-dust {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #D58F6B 0%, rgba(213, 143, 107, 0) 70%);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
 .hero-cat-backdrop {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 55%;
+  bottom: -4%;
+  right: -4%;
+  width: 68%;
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
@@ -308,6 +317,26 @@
 .explore-button:hover {
   background-color: #4a3030;
   gap: 18px;
+}
+
+.explore-button-secondary {
+  background-color: transparent;
+  color: #382525;
+  padding: 13px 26px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  border: 1.5px solid rgba(56, 37, 37, 0.35);
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s;
+  font-family: 'Outfit', sans-serif;
+}
+
+.explore-button-secondary:hover {
+  border-color: #382525;
+  background-color: rgba(56, 37, 37, 0.05);
 }
 
 .explore-button .btn-arrow {
@@ -559,6 +588,7 @@
     width: 100%;
     margin-top: 1.5rem;
     padding: 0;
+    flex-direction: column;
     justify-content: flex-start;
     position: relative;
     bottom: auto;
@@ -575,6 +605,15 @@
     background-color: #382525;
     color: #F7E7C4;
     box-shadow: 0 6px 18px rgba(56, 37, 37, 0.18);
+  }
+
+  .explore-button-secondary {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    padding: 13px 28px;
+    font-size: 0.95rem;
+    border-radius: 100px;
   }
 }
 
@@ -609,6 +648,12 @@
     justify-content: center;
   }
 
+  .explore-button-secondary {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+  }
+
   .hero-button-container {
     width: 100%;
     padding: 0;
@@ -618,8 +663,12 @@
 /* ── Highlight animation for the main question ── */
 .hero-question-highlight {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
+  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
   font-weight: 500;
+  line-height: 1.3;
   color: #8D424E; /* Maroon/Red accent color */
   animation: subtle-pulse 4s ease-in-out infinite alternate;
 }
