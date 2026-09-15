@@ -246,8 +246,7 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
       const st = ScrollTrigger.create({
         trigger: pinRef.current,
         start: 'top top',
-        // Multiply the scroll distance by 4.0 to make it normal/slower
-        end: () => `+=${(distance() + window.innerHeight * 0.5) * 4.0}`,
+        end: () => `+=${distance() + window.innerHeight * 0.5}`,
         pin: true,
         scrub: true,
         animation: tween,
