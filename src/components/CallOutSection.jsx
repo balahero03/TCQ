@@ -136,12 +136,11 @@ export default function CallOutSection() {
 
         {/* TABS */}
         <div style={{
-          display: 'flex',
-          gap: 'clamp(1rem, 2vw, 2rem)',
+          display: 'grid',
+          gridTemplateColumns: `repeat(${AUDIENCES.length}, 1fr)`,
           marginBottom: '3rem',
           borderBottom: '1px solid rgba(247, 231, 196, 0.15)',
           paddingBottom: '1rem',
-          flexWrap: 'wrap',
         }}>
           {AUDIENCES.map((audience, idx) => (
             <button
@@ -155,11 +154,10 @@ export default function CallOutSection() {
                 fontWeight: active === idx ? 600 : 400,
                 cursor: 'pointer',
                 padding: '0 0 0.5rem 0',
-                borderBottom: active === idx ? `2px solid #D58F6B` : 'none',
                 transition: 'all 0.3s ease',
                 fontFamily: "'Outfit', sans-serif",
                 textTransform: 'capitalize',
-                whiteSpace: 'nowrap',
+                textAlign: 'left',
               }}
             >
               {audience.label.split(' &')[0]}
@@ -284,24 +282,18 @@ export default function CallOutSection() {
           {/* Horizontal timeline */}
           <div style={{
             position: 'relative',
-            display: 'flex',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(5, 1fr)',
             gap: 'clamp(0.5rem, 2vw, 1rem)',
             alignItems: 'flex-start',
-            overflow: 'hidden',
           }}>
-            {/* Items */}
-            <div style={{
-              display: 'flex',
-              gap: 'clamp(0.5rem, 2vw, 1rem)',
-              width: '100%',
-            }}>
-              {[
-                { text: 'A question.', emoji: '?' },
-                { text: 'A half-formed idea.', emoji: '💭' },
-                { text: 'A brand looking for its people.', emoji: '✦' },
-                { text: 'A school looking to do things differently.', emoji: '🎓' },
-                { text: 'An event that deserves a bigger audience.', emoji: '◎' },
-              ].map((item, idx) => (
+            {[
+              { text: 'A question.', emoji: '?' },
+              { text: 'A half-formed idea.', emoji: '💭' },
+              { text: 'A brand looking for its people.', emoji: '✦' },
+              { text: 'A school looking to do things differently.', emoji: '🎓' },
+              { text: 'An event that deserves a bigger audience.', emoji: '◎' },
+            ].map((item, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: -20 }}
@@ -309,8 +301,6 @@ export default function CallOutSection() {
                   viewport={{ once: true, margin: '-80px' }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                   style={{
-                    flex: '1 1 auto',
-                    minWidth: 'clamp(100px, 18vw, 180px)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -347,7 +337,6 @@ export default function CallOutSection() {
                   </p>
                 </motion.div>
               ))}
-            </div>
           </div>
 
           {/* CLOSING STATEMENT - Centered */}
