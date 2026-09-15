@@ -1,17 +1,32 @@
 import { motion } from 'framer-motion';
 import './WingsBrandsSection.css';
 
+import kynLogo from '../assets/partners/kyn.png';
+import kisCafeLogo from '../assets/partners/kis-cafe.jpg';
+import mopVaishnavLogo from '../assets/partners/mop-vaishnav.jpg';
+import kraftCollectiveLogo from '../assets/partners/kraft-collective.png';
+import skySecretsLogo from '../assets/partners/sky-secrets.png';
+import goetheInstitutLogo from '../assets/partners/goethe-institut.png';
+import chennaiQuizFactoryLogo from '../assets/partners/chennai-quiz-factory.jpeg';
+import watsonsLogo from '../assets/partners/watsons.jpeg';
+import lecturesOnTheRocksLogo from '../assets/partners/lectures-on-the-rocks.png';
+import litArcadeLogo from '../assets/partners/lit-arcade.png';
+import bertyAshleyLogo from '../assets/partners/berty-ashley-think-tank.jpg';
+import instinctsSsnLogo from '../assets/partners/instincts-ssn.png';
+
 const BRAND_SLOTS = [
-  { id: 1, name: 'Google', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/google.svg' },
-  { id: 2, name: 'Amazon', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/amazon.svg' },
-  { id: 3, name: 'Tesla', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/tesla.svg' },
-  { id: 4, name: 'Nike', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/nike.svg' },
-  { id: 5, name: 'Apple', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/apple.svg' },
-  { id: 6, name: 'Spotify', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/spotify.svg' },
-  { id: 7, name: 'Netflix', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg' },
-  { id: 8, name: 'Adobe', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/adobe.svg' },
-  { id: 9, name: 'Airbnb', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/airbnb.svg' },
-  { id: 10, name: 'Notion', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/notion.svg' },
+  { id: 1, name: 'Kyn', logo: kynLogo },
+  { id: 2, name: 'KIS Cafe', logo: kisCafeLogo },
+  { id: 3, name: 'MOP Vaishnav College', logo: mopVaishnavLogo },
+  { id: 4, name: 'Kraft Collective', logo: kraftCollectiveLogo },
+  { id: 5, name: 'Sky Secrets', logo: skySecretsLogo },
+  { id: 6, name: 'Goethe-Institut', logo: goetheInstitutLogo },
+  { id: 7, name: 'Chennai Quiz Factory', logo: chennaiQuizFactoryLogo },
+  { id: 8, name: "Watson's — The Neighbourhood Bar", logo: watsonsLogo },
+  { id: 9, name: 'Lectures on the Rocks', logo: lecturesOnTheRocksLogo },
+  { id: 10, name: 'Lit Arcade', logo: litArcadeLogo },
+  { id: 11, name: 'Berty Ashley Think Tank', logo: bertyAshleyLogo },
+  { id: 12, name: "Instincts '26, SSN", logo: instinctsSsnLogo },
 ];
 
 const gridVariants = {
@@ -33,7 +48,7 @@ function BrandTile({ slot }) {
   return (
     <motion.div className="wbs-tile" variants={tileVariants}>
       {slot.logo ? (
-        <img src={slot.logo} alt={`${slot.name} logo`} style={{ maxWidth: '80px', maxHeight: '40px', filter: 'brightness(0) opacity(0.7)' }} />
+        <img src={slot.logo} alt={`${slot.name} logo`} style={{ maxWidth: '90%', maxHeight: '64px', objectFit: 'contain' }} />
       ) : slot.name ? (
         <span className="wbs-tile-name">{slot.name}</span>
       ) : (
@@ -81,7 +96,7 @@ export default function WingsBrandsSection() {
             <div className="wbs-marquee-tile" key={`${slot.id}-${i}`} aria-hidden={i >= BRAND_SLOTS.length} style={{ gap: '1rem' }}>
               {slot.logo ? (
                 <>
-                  <img src={slot.logo} alt="" style={{ height: '24px', filter: 'brightness(0) opacity(0.5)' }} />
+                  <img src={slot.logo} alt="" style={{ height: '28px', objectFit: 'contain', opacity: 0.85 }} />
                   <span className="wbs-marquee-label">{slot.name}</span>
                 </>
               ) : (

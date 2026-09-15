@@ -119,7 +119,7 @@ export default function GalleryModal({ event, onClose }) {
     };
   }, [onClose]);
 
-  const tiles = makeTiles(event.photos, 14);
+  const tiles = makeTiles(event.galleryPhotos || event.photos, 14);
   const columns = buildColumns(tiles, cols);
 
   return createPortal(

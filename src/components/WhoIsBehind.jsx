@@ -4,6 +4,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import drVishnuImg from '../assets/dr_vishnu_aravind.jpg';
+import redbullLogo from '../assets/timeline/redbull.svg';
+import fullyFilmyLogo from '../assets/timeline/fully-filmy.webp';
+import gccEmblem from '../assets/timeline/gcc-emblem.png';
+import jiocinemaLogo from '../assets/timeline/jiocinema.svg';
+import srmcRiLogo from '../assets/timeline/srmc-ri.png';
 import CardSwap, { Card } from './CardSwap';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
@@ -17,28 +22,28 @@ const timeline = [
     role: 'Red Bull',
     sub: 'Student Brand Manager',
     desc: 'Worked on bringing the Red Bull brand to life on campus through events, identifying emerging trends and incubating them within the Red Bull ecosystem.',
-    img: null,
+    img: redbullLogo,
   },
   {
     year: '2020',
     role: 'Fully Filmy',
     sub: 'Content Creator & Writer',
     desc: 'Created and hosted content for Fully Filmy\'s YouTube channel, writing across film analysis, social and cultural commentary, and brand merchandising.',
-    img: null,
+    img: fullyFilmyLogo,
   },
   {
     year: '2021',
     role: 'Greater Chennai Corporation',
     sub: 'Medical Officer',
     desc: 'Worked as a Medical Officer during the COVID-19 pandemic, overseeing vaccination camps and telemedicine services, while triaging newly diagnosed COVID-19 patients in Wards 133 and 135, GCC Zone 10.',
-    img: null,
+    img: gccEmblem,
   },
   {
     year: '2023',
     role: 'JioCinema',
     sub: 'Fan Commentator, IPL 2023',
     desc: 'Covered all Chennai Super Kings matches and the playoffs as a fan commentator in both Tamil and English.',
-    img: null,
+    img: jiocinemaLogo,
   },
   {
     year: '2024',
@@ -52,7 +57,7 @@ const timeline = [
     role: 'Sri Ramachandra Hospital',
     sub: 'MD Preventive & Social Medicine',
     desc: 'Pursuing an MD in Preventive and Social Medicine, with a focus on lifestyle medicine, health economics and medical research, while exploring ways to make health and healthcare systems more accessible to the masses.',
-    img: null,
+    img: srmcRiLogo,
   },
 ];
 
@@ -846,23 +851,16 @@ export default function WhoIsBehind() {
           width: clamp(180px, 22vw, 300px);
           aspect-ratio: 4 / 3;
           transform: translateY(-50%) rotate(-2deg);
-          border-radius: 18px;
-          overflow: hidden;
-          background: #F7E7C4;
-          border: 1px solid rgba(56,37,37,0.12);
-          box-shadow: 0 12px 30px rgba(56, 37, 37, 0.08);
-          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           cursor: default;
         }
         .organic-image-frame:hover {
           transform: translateY(-50%) rotate(0deg) scale(1.04);
-          box-shadow: 0 20px 40px rgba(56, 37, 37, 0.15);
         }
         .organic-image-frame img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          border-radius: 12px;
+          object-fit: contain;
           display: block;
         }
         .organic-image-ph {
@@ -874,11 +872,9 @@ export default function WhoIsBehind() {
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          color: rgba(56,37,37,0.55);
-          background:
-            repeating-linear-gradient(45deg, rgba(56,37,37,0.04) 0 10px, rgba(56,37,37,0.08) 10px 20px),
-            #E8D0A0;
-          border: 1.5px dashed rgba(56,37,37,0.25);
+          color: rgba(56,37,37,0.4);
+          background: #F7E7C4;
+          border: 1.5px dashed rgba(56,37,37,0.18);
         }
         .organic-image-ph-label {
           font-family: 'Outfit', sans-serif;
@@ -902,17 +898,15 @@ export default function WhoIsBehind() {
             width: 100%;
             aspect-ratio: 16 / 9;
             max-height: 125px;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #F7E7C4;
-            border: 1px solid rgba(56,37,37,0.12);
-            box-shadow: 0 4px 14px rgba(56, 37, 37, 0.08);
           }
           .organic-image-frame-mobile img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
+          }
+          .organic-image-frame-mobile .organic-image-ph {
+            border-radius: 10px;
           }
           .organic-content {
             width: clamp(185px, 52vw, 260px) !important;
