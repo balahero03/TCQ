@@ -194,26 +194,28 @@ export default function CallOutSection() {
               {AUDIENCES[active].hook}
             </h3>
 
-            <button style={{
-              background: '#D58F6B',
-              color: '#2e1c1c',
-              border: 'none',
-              padding: '12px 28px',
-              borderRadius: '4px',
-              fontSize: '1rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-              fontFamily: "'Outfit', sans-serif",
-              transition: 'all 0.3s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = '#E8A47E';
-              e.target.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = '#D58F6B';
-              e.target.style.transform = 'translateY(0)';
-            }}
+            <button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              style={{
+                background: '#D58F6B',
+                color: '#2e1c1c',
+                border: 'none',
+                padding: '12px 28px',
+                borderRadius: '4px',
+                fontSize: '1rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontFamily: "'Outfit', sans-serif",
+                transition: 'all 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#E8A47E';
+                e.target.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = '#D58F6B';
+                e.target.style.transform = 'translateY(0)';
+              }}
             >
               Get in touch →
             </button>

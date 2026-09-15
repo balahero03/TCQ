@@ -32,9 +32,17 @@ import berty03 from '../assets/wings/circles/berty-ashley/berty-03.jpg';
 import intellect03 from '../assets/wings/teaches/intellect-club/intellect-03.jpg';
 import intellect09 from '../assets/wings/teaches/intellect-club/intellect-09.jpg';
 
-import heritage01 from '../assets/wings/teaches/heritage-walk-ethiraj/heritage-01.jpg';
-import heritage02 from '../assets/wings/teaches/heritage-walk-ethiraj/heritage-02.jpg';
-import heritage03 from '../assets/wings/teaches/heritage-walk-ethiraj/heritage-03.jpg';
+import heritage01 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-01.jpg';
+import heritage02 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-02.jpg';
+import heritage03 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-03.jpg';
+
+import antiDrug05 from '../assets/wings/teaches/anti-drug-awareness/heritage-05.jpg';
+import antiDrug06 from '../assets/wings/teaches/anti-drug-awareness/heritage-06.jpg';
+import antiDrug07 from '../assets/wings/teaches/anti-drug-awareness/heritage-07.jpg';
+
+import goetheWorkshop01 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-01.jpg';
+import goetheWorkshop02 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-02.jpg';
+import goetheWorkshop03 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-03.jpg';
 
 const ph = (w, h) => ({ src: null, w, h });
 const img = (src, w, h) => ({ src, w, h });
@@ -79,6 +87,18 @@ export const WINGS = [
         layout: 'collage',
         photos: [ph(16, 10), ph(3, 4)],
       },
+      {
+        name: 'How to Name It?',
+        venue: 'An exclusive Ilaiyaraaja fan tribe, for KYN',
+        layout: 'collage',
+        photos: [ph(16, 10), ph(3, 4)],
+      },
+      {
+        name: 'Madras D-Coded',
+        venue: 'A 40-day campaign of puzzles on Madras and its journey to Chennai',
+        layout: 'fan',
+        photos: [ph(3, 4), ph(4, 3), ph(3, 4)],
+      },
     ],
   },
   {
@@ -109,6 +129,18 @@ export const WINGS = [
         layout: 'fan',
         photos: [img(fundamavan07, 3, 4), img(fundamavan01, 4, 3), img(fundamavan06, 16, 9)],
         galleryPhotos: galleryFrom('quizzes/fundamavan-ssn'),
+      },
+      {
+        name: 'The Hungry Quiz',
+        venue: 'Part of the Unavu Project, Kraft Collective, 2026',
+        layout: 'strip',
+        photos: [ph(1, 1), ph(1, 1), ph(1, 1)],
+      },
+      {
+        name: 'Comics Quiz',
+        venue: 'La Nuit Blanche, Alliance Française Chennai, 2026',
+        layout: 'strip',
+        photos: [ph(1, 1), ph(1, 1), ph(1, 1)],
       },
     ],
   },
@@ -177,8 +209,22 @@ export const WINGS = [
         name: 'Anti-Drug Awareness Programme',
         venue: 'Ethiraj College for Women, 2025',
         layout: 'strip',
-        photos: [img(heritage01, 1, 1), img(heritage02, 1, 1), img(heritage03, 1, 1)],
-        galleryPhotos: galleryFrom('teaches/heritage-walk-ethiraj'),
+        photos: [img(antiDrug05, 3, 4), img(antiDrug06, 4, 3), img(antiDrug07, 3, 4)],
+        galleryPhotos: galleryFrom('teaches/anti-drug-awareness'),
+      },
+      {
+        name: 'Heritage Walk at The Hindu Offices',
+        venue: 'Ethiraj College for Women, 2025',
+        layout: 'strip',
+        photos: [img(heritage01, 4, 3), img(heritage02, 3, 4), img(heritage03, 3, 4)],
+        galleryPhotos: galleryFrom('teaches/heritage-walk-hindu-offices'),
+      },
+      {
+        name: 'What? Why? Wow — A Beginner\'s Workshop on the Art of Quizzing',
+        venue: 'Goethe-Institut Chennai, 2026',
+        layout: 'fan',
+        photos: [img(goetheWorkshop01, 3, 4), img(goetheWorkshop02, 3, 4), img(goetheWorkshop03, 3, 4)],
+        galleryPhotos: galleryFrom('teaches/goethe-quizzing-workshop'),
       },
     ],
   },

@@ -85,7 +85,7 @@ export default function WingsBrandsSection() {
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
       >
-        {BRAND_SLOTS.slice(0, 6).map((slot) => (
+        {BRAND_SLOTS.map((slot) => (
           <BrandTile key={slot.id} slot={slot} />
         ))}
       </motion.div>
@@ -109,6 +109,26 @@ export default function WingsBrandsSection() {
           ))}
         </div>
       </div>
+
+      <motion.p
+        className="wbs-closing"
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.6 }}
+      >
+        Want to be on this wall next?{' '}
+        <a
+          href="#collaborate"
+          className="wbs-closing-link"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('collaborate')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+        >
+          Let's talk →
+        </a>
+      </motion.p>
     </section>
   );
 }

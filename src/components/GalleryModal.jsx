@@ -16,12 +16,12 @@ const ASPECT_POOL = [
   { w: 3, h: 2 },   // wide landscape
 ];
 
-function makeTiles(photos, count = 12) {
-  const tiles = [];
-  // First: the real event photos
-  photos.forEach((p, i) => tiles.push({ ...p, key: `real-${i}` }));
-  // Then: fill to `count` with placeholder tiles cycling through aspect pool
-  for (let i = tiles.length; i < count; i++) {
+// Only pad with placeholder tiles when there are too few real photos to fill
+// out a reasonable-looking grid (`minCount`) — never pad past that just to
+// hit a fixed target, so events with plenty of real photos show only those.
+function makeTiles(photos, minCount = 6) {
+  const tiles = photos.map((p, i) => ({ ...p, key: `real-${i}` }));
+  for (let i = tiles.length; i < minCount; i++) {
     const aspect = ASPECT_POOL[i % ASPECT_POOL.length];
     tiles.push({ src: null, w: aspect.w, h: aspect.h, key: `ph-${i}` });
   }
@@ -104,10 +104,15 @@ function GalleryTile({ tile, index, onOpen }) {
 
 export default function GalleryModal({ event, onClose }) {
   const [cols, setCols] = useState(getCols);
+  const [lightboxSrc, setLightboxSrc] = useState(null);
 
-  /* Close on Escape; keep column count in sync with viewport while open */
+  /* Close on Escape (lightbox first, then the modal); keep column count in sync while open */
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return;
+      if (lightboxSrc) setLightboxSrc(null);
+      else onClose();
+    };
     const onResize = () => setCols(getCols());
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', onResize);
@@ -117,10 +122,12 @@ export default function GalleryModal({ event, onClose }) {
       window.removeEventListener('resize', onResize);
       document.body.style.overflow = '';
     };
-  }, [onClose]);
+  }, [onClose, lightboxSrc]);
 
-  const tiles = makeTiles(event.galleryPhotos || event.photos, 14);
+  const realPhotos = event.galleryPhotos || event.photos;
+  const tiles = makeTiles(realPhotos);
   const columns = buildColumns(tiles, cols);
+  const hasPlaceholders = tiles.length > realPhotos.length;
 
   return createPortal(
     <AnimatePresence>
@@ -236,28 +243,87 @@ export default function GalleryModal({ event, onClose }) {
                     key={tile.key}
                     tile={tile}
                     index={ci * 4 + ti}
-                    onOpen={() => {}}
+                    onOpen={(t) => { if (t.src) setLightboxSrc(t.src); }}
                   />
                 ))}
               </div>
             ))}
           </div>
 
-          {/* Footer note */}
-          <p style={{
-            textAlign: 'center',
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '0.8rem',
-            color: 'rgba(247,231,196,0.3)',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            marginTop: '3rem',
-            paddingBottom: '2rem',
-          }}>
-            More photos coming soon
-          </p>
+          {/* Footer note — only shown when the gallery is still short on real photos */}
+          {hasPlaceholders && (
+            <p style={{
+              textAlign: 'center',
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: '0.8rem',
+              color: 'rgba(247,231,196,0.3)',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              marginTop: '3rem',
+              paddingBottom: '2rem',
+            }}>
+              More photos coming soon
+            </p>
+          )}
         </motion.div>
       </motion.div>
+
+      {/* Per-photo lightbox, layered above the gallery grid */}
+      {lightboxSrc && (
+        <motion.div
+          key="gallery-lightbox"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setLightboxSrc(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 200001,
+            background: 'rgba(56, 37, 37, 0.95)',
+            backdropFilter: 'blur(15px)',
+            WebkitBackdropFilter: 'blur(15px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'zoom-out',
+          }}
+        >
+          <button
+            onClick={() => setLightboxSrc(null)}
+            style={{
+              position: 'absolute',
+              top: '24px',
+              right: '40px',
+              background: 'none',
+              border: 'none',
+              color: '#F7E7C4',
+              fontSize: '3rem',
+              cursor: 'pointer',
+              lineHeight: 1,
+              zIndex: 10,
+            }}
+          >
+            &times;
+          </button>
+          <motion.img
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 180 }}
+            src={lightboxSrc}
+            alt="Enlarged view"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: '90vw',
+              maxHeight: '85vh',
+              borderRadius: '12px',
+              objectFit: 'contain',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+            }}
+          />
+        </motion.div>
+      )}
     </AnimatePresence>,
     document.body
   );
