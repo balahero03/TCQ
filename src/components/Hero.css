@@ -232,27 +232,27 @@
 }
 
 .hero-heading-making {
-  font-size: clamp(2rem, 5.5vw, 5rem);
+  font-size: clamp(2.8rem, 8vw, 8.2rem);
   font-weight: 600;
-  line-height: 1;
+  line-height: 0.95;
   display: block;
 }
 
 .hero-heading-curiosity {
-  font-size: clamp(1.8rem, 5vw, 4.5rem);
+  font-size: clamp(2.4rem, 7.3vw, 7.3rem);
   font-weight: 400;
   font-family: 'Newsreader', Georgia, serif;
   font-style: italic;
-  line-height: 1;
+  line-height: 0.95;
   display: block;
   padding-bottom: 0px;
   margin-left: -0.05em;
 }
 
 .hero-heading-social {
-  font-size: clamp(2rem, 5.5vw, 5rem);
+  font-size: clamp(2.8rem, 8vw, 8.2rem);
   font-weight: 600;
-  line-height: 1;
+  line-height: 0.95;
   display: block;
   margin-top: -5px;
 }
@@ -264,13 +264,13 @@
 }
 
 .hero-text-wrapper {
-  margin-top: 1.5rem;
-  max-width: 500px;
+  margin-top: 1.1rem;
+  max-width: 620px;
 }
 
 .hero-paragraph {
-  font-size: clamp(1rem, 1.2vw, 1.1rem);
-  line-height: 1.5;
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  line-height: 1.55;
   font-weight: 400;
   color: #5a3e3e;
   margin: 0;
@@ -280,7 +280,7 @@
 .hero-button-container {
   display: flex;
   gap: 16px;
-  margin-top: 2.5rem;
+  margin-top: 1.75rem;
   position: relative;
   bottom: auto;
   left: auto;
