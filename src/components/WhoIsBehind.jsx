@@ -1080,13 +1080,7 @@ export default function WhoIsBehind() {
                 </p>
               </Card>
               <Card style={{ padding: 'clamp(1.5rem, 4vw, 2.25rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#F7E7C4', color: '#382525' }}>
-                <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.65rem)', marginBottom: '0.85rem', fontWeight: 800, color: '#382525' }}>The Journey</h3>
-                <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'clamp(0.8rem, 2vw, 0.95rem)' }}>
-                  Medicine gave me a way of understanding people. Marketing, business and media gave me ways of understanding attention, stories and ideas. Together, they gave me a way of thinking: break things down to a science, understand what people need, find what makes an idea interesting, and make it accessible to the society to end up building cultures.
-                </p>
-              </Card>
-              <Card style={{ padding: 'clamp(1.5rem, 4vw, 2.25rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
-                <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.65rem)', marginBottom: '0.85rem', fontWeight: 800, color: '#F7E7C4' }}>The Vision</h3>
+                <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.65rem)', marginBottom: '0.85rem', fontWeight: 800, color: '#382525' }}>The Vision</h3>
                 <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'clamp(0.8rem, 2vw, 0.95rem)' }}>
                   TCQ is an extension of my way of thinking. We connect people to ideas they might not have discovered otherwise. We help schools and colleges open up new worlds for their students. We work with startups, brands and organisations to find interesting ways to connect with their audiences.
                 </p>

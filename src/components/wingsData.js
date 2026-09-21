@@ -64,9 +64,8 @@ export const WINGS = [
     no: '01',
     tag: 'EXPERIENCES FOR CULTURE',
     title: 'For Brands',
-    byline: 'Transform your brand into a story people want to be part of.',
     blurb:
-      'We craft immersive experiences that connect brands with audiences through authentic engagement. By blending curiosity-driven content with live and digital platforms, we create moments that resonate, inspire action, and build lasting communities around what your brand stands for.',
+      'Your stories already exist in 4D. We turn them into 5D experiences for people to decipher with that one extra dimension that we care about the most - Discovery.',
     events: [
       {
         name: 'Typical Chennai Quiz',
@@ -106,9 +105,8 @@ export const WINGS = [
     no: '02',
     tag: 'LEARNING AS PLAY',
     title: 'Quizzes',
-    byline: 'Knowledge wrapped in curiosity. Competition wrapped in community.',
     blurb:
-      'Quizzes are where learning becomes fun, where strangers become friends, and where the desire to know more becomes contagious. From school competitions to brand collaborations, we design quiz experiences that challenge minds, spark conversations, and leave people wanting more.',
+      'This is where TCQ was born. The Typical Chennai Question is what gave us our name. No matter how TCQ evolves, quizzes will always be our first language.',
     events: [
       {
         name: '6 to 60 Quizzes',
@@ -149,9 +147,8 @@ export const WINGS = [
     no: '03',
     tag: 'CONVERSATIONS & CULTURE',
     title: 'Circles',
-    byline: 'Where ideas collide and communities form.',
     blurb:
-      'An intimate platform where diverse minds gather to explore unexpected intersections. Our monthly Circles blend lectures, performances, and workshops with unfiltered conversations—creating spaces where niche knowledge becomes shared culture and strangers leave as part of something larger.',
+      'The crossroads of Chennai\'s communities. A place for people with shared interests to find each other, bring their worlds along, and have conversations that might not happen anywhere else.',
     events: [
       {
         name: 'Circles, Season One',
@@ -174,9 +171,8 @@ export const WINGS = [
     no: '04',
     tag: 'STORIES WORTH SHARING',
     title: 'Writes',
-    byline: 'The city\'s stories, told by people who get it.',
     blurb:
-      'A newsletter that digs deeper into Chennai\'s cultural landscape—uncovering hidden artists, emerging ideas, and untold stories. We celebrate the independent spirit and creativity that define our city, connecting readers with the people and experiences that make life interesting.',
+      'Millennial long-form content about Chennai—its newest cultures, icons, trends, and everything in between. Published on our Substack for those who like going beyond the scroll.',
     events: [
       {
         name: 'From our Substack',
@@ -194,9 +190,8 @@ export const WINGS = [
     no: '05',
     tag: 'LEARNING REIMAGINED',
     title: 'Teaches',
-    byline: 'Curiosity as a superpower. Knowledge as adventure.',
     blurb:
-      'We partner with educational institutions to transform how students learn and think. Through quizzes, workshops, and creative experiences, we help young minds explore beyond textbooks, develop critical thinking, and discover that learning can be as thrilling as it is rewarding.',
+      'Schools beyond exams. Colleges beyond degrees. We bring the world outside the syllabus into the classroom through people, ideas and experiences that make learning feel a little more alive.',
     events: [
       {
         name: 'Intellect Club',

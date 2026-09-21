@@ -264,9 +264,11 @@ export default function Hero({ logoLanded }) {
                   className="hero-paragraph"
                 >
                   <span className="hero-question-highlight">
-                    What if every question on your mind was an invitation to discover a new world?
+                    What if every question was an invitation to discover a new world?
                   </span>
-                  The Curiosity Quotient is a gateway to those worlds — bringing together knowledge, culture and people to create experiences that make learning feel less like learning and more like discovery. From conversations to events and content, to giving new cultures and brands a voice, we give your ideas a Petri dish to grow in, evolve, and become experiences worth having with the community.
+                  The Curiosity Quotient (TCQ) is your gateway to all those worlds under one roof, bringing together knowledge, culture and people to create experiences that make learning feel less like learning and more like discovery.
+                  <br /><br />
+                  Some of these experiences are our own. Others are created with people, communities, institutions and brands who have something worth sharing. At its heart, TCQ is a culture space. A place for ideas to meet people, for communities to find each other, and for healthy cultures to grow, evolve and discover their place in the microcosm called Chennai.
                 </motion.p>
               </div>
 

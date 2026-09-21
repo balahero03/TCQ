@@ -235,7 +235,7 @@ export default function WhatIsTCQ() {
 
           <ScrollReveal delay={0.2} className="tcq-content-col">
             <p className="lead tcq-dopamine-text">
-              TCQ began in 2023 with a slightly unreasonable yet very practical ask:
+              TCQ began in 2023 with a very practical ask:
             </p>
             <ul style={{ margin: '0 0 1.5rem 1.5rem', color: '#5a3e3e', fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', lineHeight: 1.6 }}>
               <li style={{ paddingBottom: '0.4rem' }}>That learning shouldn’t have to end with a degree.</li>
@@ -249,10 +249,13 @@ export default function WhatIsTCQ() {
 
           <ScrollReveal delay={0.4} className="tcq-content-col">
             <p>
-              Through quizzes, lectures, workshops, conversations and experiments, TCQ has grown into a community of more than 2000 people brought together by a shared love for curiosity and one simple instinct: the desire to know more. Today, we take that instinct into physical spaces and digital platforms, develop new ways to experience ideas, and collaborate with brands, creators and organisations to turn those ideas into experiences.
+              What began with a quiz slowly became a gathering of people who liked knowing things simply because they were interesting. Over time, that grew into a community of more than 2,000 curious people, brought together by conversations, question marks, rabbit holes and the occasional obsession with something wonderfully niche.
             </p>
             <p>
-              We celebrate new communities and go beyond simply creating experiential marketing campaigns. We create stories that people will never forget.
+              Since then, TCQ has found its way into classrooms, auditoriums, cafés, galleries, streets and screens. We’ve built quizzes, started discussions, brought unlikely people together, explored new corners of the city and made room for new people that deserved to be seen and heard.
+            </p>
+            <p>
+              We’re still figuring out on how to bracket it into one title. That, perhaps, is the point.
             </p>
             <div className="tcq-stats">
               <div>
