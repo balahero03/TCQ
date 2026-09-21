@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo.webp';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },

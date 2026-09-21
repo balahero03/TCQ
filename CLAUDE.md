@@ -24,6 +24,8 @@ The `*.cjs` scripts at the repo root (`trace.cjs`, `invert.cjs`, `bbox_logo.cjs`
 
 `WingsBrandsSection.jsx`/`.css` (a "Brands We've Worked With" logo grid + marquee) **is mounted** and its `BRAND_SLOTS` array now holds real partner logos, imported from `src/assets/partners/`.
 
+Section render order in `App.jsx` is: `Hero` → `WhatIsTCQ` → `WhoIsBehind` → `WingReel` → `CallOutSection` → `WingsBrandsSection` → `Contact`.
+
 The intro→hero handoff is deliberately seamless: the flying logo lands at the exact coordinates (`top:24, left:24`) where Hero renders its own logo — `onLanded` flips `logoLanded` so Hero reveals its logo precisely as the flying clone disappears. **When touching the intro or Hero header positioning, keep these coordinates in sync** ([IntroAnimation.jsx](src/components/IntroAnimation.jsx) `TARGET`, [Hero.css](src/components/Hero.css) `.hero-logo`).
 
 ### Two animation systems — know which one owns a property

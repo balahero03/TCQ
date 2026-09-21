@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo.webp';
+import logoLockupImg from '../assets/brand/logo-lockup-cream.webp';
 
 /**
  * IntroAnimation
@@ -148,8 +149,12 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
               />
             )}
 
-            {/* ── Centered logo + wordmark ── */}
-            {/* Shown during logo phase only; ref is valid when triggerFly fires */}
+            {/* ── Centered logo lockup (icon + wordmark, single image) ── */}
+            {/* Shown during logo phase only. The visible lockup is one flattened
+                image; a zero-size icon-only clone sits alongside it purely so
+                logoRef can capture the icon's own screen rect for the fly phase
+                (Hero's header keeps icon/wordmark as separate elements, so the
+                fly clone must be the icon alone, not the full lockup). */}
             {phase === 'logo' && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.3, y: 40, filter: 'blur(24px)' }}
@@ -158,41 +163,38 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
                 }}
                 style={{
+                  position: 'relative',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flexWrap: 'wrap',
-                  gap: 'clamp(1.5rem, 4vw, 2.5rem)',
                   zIndex: 2,
-                  textAlign: 'left'
                 }}
               >
-                {/* ref lives here so we can capture its screen position */}
                 <motion.img
-                  ref={logoRef}
-                  src={logoImg}
-                  alt="The Curiosity Quotient Logo"
+                  src={logoLockupImg}
+                  alt="The Curiosity Quotient"
                   initial={{ scale: 0.4, rotate: -10, opacity: 0 }}
                   animate={{ scale: 1, rotate: 0, opacity: 1 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-                  style={{ height: 'clamp(120px, 20vw, 200px)', width: 'auto', display: 'block' }}
+                  style={{ height: 'clamp(140px, 22vw, 260px)', width: 'auto', display: 'block' }}
                 />
-                <motion.div
-                  initial={{ opacity: 0, x: 30, scale: 0.85 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  transition={{ delay: 0.25, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                {/* icon-only, invisible — measurement anchor for the fly phase */}
+                <img
+                  ref={logoRef}
+                  src={logoImg}
+                  alt=""
+                  aria-hidden="true"
                   style={{
-                    color: '#F7E7C4',
-                    fontFamily: "'Outfit', sans-serif",
-                    fontWeight: 500,
-                    fontSize: 'clamp(1.2rem, 3vw, 1.6rem)',
-                    letterSpacing: '0.35em',
-                    textTransform: 'uppercase',
-                    lineHeight: 1.6,
+                    position: 'absolute',
+                    left: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    height: '41.5%',
+                    width: 'auto',
+                    opacity: 0,
+                    pointerEvents: 'none',
                   }}
-                >
-                  THE<br />CURIOSITY<br />QUOTIENT
-                </motion.div>
+                />
               </motion.div>
             )}
 

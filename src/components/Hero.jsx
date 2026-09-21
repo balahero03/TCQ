@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo.webp';
 import TrueFocus from './TrueFocus';
-import BlobCursor from './BlobCursor';
 import CatHeroAnimation from './CatHeroAnimation';
 import BlurText from './BlurText';
 import './Hero.css';
