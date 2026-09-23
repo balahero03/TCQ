@@ -9,6 +9,7 @@ import fullyFilmyLogo from '../assets/timeline/fully-filmy.webp';
 import gccEmblem from '../assets/timeline/gcc-emblem.png';
 import jiocinemaLogo from '../assets/timeline/jiocinema.svg';
 import srmcRiLogo from '../assets/timeline/srmc-ri.png';
+import carromBallMediaLogo from '../assets/timeline/carrom-ball-media.jpg';
 import CardSwap, { Card } from './CardSwap';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
@@ -47,10 +48,10 @@ const timeline = [
   },
   {
     year: '2024',
-    role: 'Ravichandran Ashwin',
+    role: 'Carrom Ball Media',
     sub: 'Subtitle Translator',
     desc: 'Translated subtitles for cricketer Ravichandran Ashwin\'s YouTube channel.',
-    img: null,
+    img: carromBallMediaLogo,
   },
   {
     year: '2025',
