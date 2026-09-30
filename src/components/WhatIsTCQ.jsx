@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+﻿import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import CountUp from './CountUp';
@@ -153,45 +153,49 @@ export default function WhatIsTCQ() {
           line-height: 1.3;
           margin-bottom: 1.8rem;
         }
-        .tcq-stats-wrap {
-          margin-top: 0.5rem;
-        }
-        .tcq-stats {
+        /* ── inline stats strip at bottom of right column ── */
+        .tcq-stats-strip {
           display: flex;
-          gap: 1rem;
-          flex-wrap: wrap;
+          align-items: center;
+          gap: 0;
+          margin-top: 2rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid rgba(56,37,37,0.1);
         }
-        .tcq-stat-card {
-          flex: 1 1 140px;
-          padding: 1.25rem 1.4rem;
-          border-radius: 14px;
-          background: rgba(56, 37, 37, 0.04);
-          border: 1px solid rgba(56, 37, 37, 0.08);
-          transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-          cursor: pointer;
+        .tcq-strip-stat {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          min-width: 80px;
         }
-        .tcq-stat-card:hover {
-          transform: translateY(-4px);
-          background: rgba(213, 143, 107, 0.1);
-          border-color: rgba(213, 143, 107, 0.35);
+        .tcq-strip-stat--center {
+          align-items: center;
+          flex: 1;
+          padding: 0 0.5rem;
         }
-        .tcq-stat-num {
-          font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+        .tcq-strip-num {
+          font-size: clamp(1.4rem, 2.2vw, 2rem);
           font-weight: 800;
           color: #382525;
           line-height: 1;
-          margin-bottom: 0.35rem;
-          transition: color 0.3s ease;
         }
-        .tcq-stat-card:hover .tcq-stat-num {
-          color: #D58F6B;
-        }
-        .tcq-stat-label {
-          font-size: 0.78rem;
+        .tcq-strip-label {
+          font-size: 0.65rem;
           text-transform: uppercase;
-          letter-spacing: 0.1em;
+          letter-spacing: 0.12em;
           color: #D58F6B;
           font-weight: 700;
+          margin-top: 0.2rem;
+        }
+        .tcq-strip-badge {
+          width: clamp(52px, 5vw, 72px);
+          height: clamp(52px, 5vw, 72px);
+        }
+        .tcq-strip-badge svg {
+          width: 100%;
+          height: 100%;
+          display: block;
+          overflow: visible;
         }
 
         .tcq-dopamine-text {
@@ -340,18 +344,9 @@ export default function WhatIsTCQ() {
                 <li>And that curious people deserve a place to come home to.</li>
               </ul>
             </div>
-            <div className="tcq-stats-wrap">
-              <div className="tcq-stats">
-                <div className="tcq-stat-card">
-                  <div className="tcq-stat-num"><CountUp to={5} suffix="+" /></div>
-                  <div className="tcq-stat-label">Wings</div>
-                </div>
-                <div className="tcq-stat-card">
-                  <div className="tcq-stat-num"><CountUp to={2000} suffix="+" /></div>
-                  <div className="tcq-stat-label">Curious Cats</div>
-                </div>
-              </div>
-            </div>
+            <p style={{ margin: 0, color: '#5a3e3e' }}>
+              There wasn't anything around, so we started building one.
+            </p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.4} className="tcq-content-col">
@@ -364,6 +359,24 @@ export default function WhatIsTCQ() {
             <p>
               We’re still figuring out on how to bracket it into one title. That, perhaps, is the point.
             </p>
+
+            {/* Stats strip */}
+            <div className="tcq-stats-strip">
+              <div className="tcq-strip-stat">
+                <div className="tcq-strip-num"><CountUp to={5} suffix="+" /></div>
+                <div className="tcq-strip-label">Wings</div>
+              </div>
+
+              <div className="tcq-strip-stat tcq-strip-stat--center">
+                <div className="tcq-strip-label" style={{ marginTop: 0, marginBottom: '0.2rem' }}>Found In</div>
+                <div className="tcq-strip-num">2023</div>
+              </div>
+
+              <div className="tcq-strip-stat" style={{ alignItems: 'flex-end' }}>
+                <div className="tcq-strip-num"><CountUp to={2000} suffix="+" /></div>
+                <div className="tcq-strip-label">Curious Cats</div>
+              </div>
+            </div>
           </ScrollReveal>
 
         </div>

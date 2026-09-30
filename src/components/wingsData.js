@@ -62,47 +62,6 @@ export const WINGS = [
   {
     id: 1,
     no: '01',
-    tag: 'EXPERIENCES FOR CULTURE',
-    title: 'For Brands',
-    blurb:
-      'Your stories already exist in 4D. We turn them into 5D experiences for people to decipher with that one extra dimension that we care about the most - Discovery.',
-    events: [
-      {
-        name: 'Typical Chennai Quiz',
-        venue: 'For KYN app, 2025',
-        layout: 'split',
-        photos: [img(tcq05, 3, 4), img(tcq20, 16, 9)],
-        galleryPhotos: galleryFrom('for-brands/typical-chennai-quiz'),
-      },
-      {
-        name: 'Walls on Wheels',
-        venue: 'For Five Feet Collective — a mural workshop',
-        layout: 'hero',
-        photos: [ph(16, 9)],
-      },
-      {
-        name: 'TCQ Jams',
-        venue: 'For KIS Cafe, a music-themed cafe at Adyar',
-        layout: 'collage',
-        photos: [ph(16, 10), ph(3, 4)],
-      },
-      {
-        name: 'How to Name It?',
-        venue: 'An exclusive Ilaiyaraaja fan tribe, for KYN',
-        layout: 'collage',
-        photos: [ph(16, 10), ph(3, 4)],
-      },
-      {
-        name: 'Madras D-Coded',
-        venue: 'A 40-day campaign of puzzles on Madras and its journey to Chennai',
-        layout: 'fan',
-        photos: [ph(3, 4), ph(4, 3), ph(3, 4)],
-      },
-    ],
-  },
-  {
-    id: 2,
-    no: '02',
     tag: 'LEARNING AS PLAY',
     title: 'Quizzes',
     blurb:
@@ -143,12 +102,12 @@ export const WINGS = [
     ],
   },
   {
-    id: 3,
-    no: '03',
+    id: 2,
+    no: '02',
     tag: 'CONVERSATIONS & CULTURE',
     title: 'Circles',
     blurb:
-      'The crossroads of Chennai\'s communities. A place for people with shared interests to find each other, bring their worlds along, and have conversations that might not happen anywhere else.',
+      'The crossroads of Chennai’s communities. A place for people with shared interests to find each other, bring their worlds along, and have conversations that might not happen anywhere else.',
     events: [
       {
         name: 'Circles, Season One',
@@ -163,6 +122,47 @@ export const WINGS = [
         layout: 'fan',
         photos: [img(berty03, 3, 4), img(berty01, 4, 3), img(berty02, 3, 4)],
         galleryPhotos: galleryFrom('circles/berty-ashley'),
+      },
+    ],
+  },
+  {
+    id: 3,
+    no: '03',
+    tag: 'EXPERIENCES FOR CULTURE',
+    title: 'Collabs',
+    blurb:
+      'Your stories already exist in 4D. We turn them into 5D experiences for people to decipher with that one extra dimension that we care about the most - Discovery',
+    events: [
+      {
+        name: 'Typical Chennai Quiz',
+        venue: 'For KYN app, 2025',
+        layout: 'split',
+        photos: [img(tcq05, 3, 4), img(tcq20, 16, 9)],
+        galleryPhotos: galleryFrom('for-brands/typical-chennai-quiz'),
+      },
+      {
+        name: 'Walls on Wheels',
+        venue: 'For Five Feet Collective — a mural workshop',
+        layout: 'hero',
+        photos: [ph(16, 9)],
+      },
+      {
+        name: 'TCQ Jams',
+        venue: 'For KIS Cafe, a music-themed cafe at Adyar',
+        layout: 'collage',
+        photos: [ph(16, 10), ph(3, 4)],
+      },
+      {
+        name: 'How to Name It?',
+        venue: 'An exclusive Ilaiyaraaja fan tribe, for KYN',
+        layout: 'collage',
+        photos: [ph(16, 10), ph(3, 4)],
+      },
+      {
+        name: 'Madras D-Coded',
+        venue: 'A 40-day campaign of puzzles on Madras and its journey to Chennai',
+        layout: 'fan',
+        photos: [ph(3, 4), ph(4, 3), ph(3, 4)],
       },
     ],
   },

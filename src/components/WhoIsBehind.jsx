@@ -75,8 +75,8 @@ function OrganicTimeline() {
   // Dynamically generate the smooth wavy SVG path and node coordinates
   const { pathData, nodes } = useMemo(() => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    const leftX = isMobile ? 35 : 25;
-    const rightX = isMobile ? 65 : 75;
+    const leftX = isMobile ? 35 : 42;
+    const rightX = isMobile ? 65 : 58;
 
     const d = [`M 50 -10`];
     const n = [];
@@ -368,8 +368,8 @@ function OrganicTimeline() {
                   position: 'absolute',
                   top: '50%',
                   // Switch sides based on node position - closer gap to path
-                  left: node.isNodeLeft ? `${node.x + 8}%` : 'auto',
-                  right: !node.isNodeLeft ? `${100 - node.x + 8}%` : 'auto',
+                  left: node.isNodeLeft ? `${node.x + 6}%` : 'auto',
+                  right: !node.isNodeLeft ? `${100 - node.x + 6}%` : 'auto',
                   width: 'clamp(320px, 45vw, 550px)',
                   zIndex: 10,
                 }}
@@ -429,9 +429,9 @@ function OrganicTimeline() {
                 style={{
                   position: 'absolute',
                   top: '50%',
-                  // Mirror of the content block: opposite side of the node.
-                  right: node.isNodeLeft ? `${100 - node.x + 8}%` : 'auto',
-                  left: !node.isNodeLeft ? `${node.x + 8}%` : 'auto',
+                  // Anchor to the edge of the screen to safely prevent overlap with the node pill
+                  left: node.isNodeLeft ? '4vw' : 'auto',
+                  right: !node.isNodeLeft ? '4vw' : 'auto',
                   zIndex: 9,
                 }}
               >
@@ -831,7 +831,7 @@ export default function WhoIsBehind() {
         }
         .content-inner {
           padding: 1.5rem 2.2rem;
-          background: rgba(247, 231, 196, 0.98);
+          background: #FFFFFF;
           border-radius: 24px;
           border: 1px solid rgba(56,37,37,0.12);
           box-shadow: 0 12px 30px rgba(56, 37, 37, 0.07);
@@ -849,7 +849,7 @@ export default function WhoIsBehind() {
 
         /* Milestone image placeholder (opposite side of the content) */
         .organic-image-frame {
-          width: clamp(180px, 22vw, 300px);
+          width: clamp(140px, 18vw, 260px);
           aspect-ratio: 4 / 3;
           transform: translateY(-50%) rotate(-2deg);
           transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
