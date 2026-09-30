@@ -176,7 +176,7 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   initial={{ scale: 0.4, rotate: -10, opacity: 0 }}
                   animate={{ scale: 1, rotate: 0, opacity: 1 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-                  style={{ height: 'clamp(140px, 22vw, 260px)', width: 'auto', display: 'block' }}
+                  style={{ height: 'clamp(170px, 26vw, 320px)', width: 'auto', display: 'block' }}
                 />
                 {/* icon-only, invisible — measurement anchor for the fly phase */}
                 <img
@@ -213,7 +213,7 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                     color: '#F7E7C4',
                     fontFamily: "'Outfit', sans-serif",
                     fontWeight: 300,
-                    fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                    fontSize: 'clamp(2rem, 4vw, 3.5rem)',
                     fontVariantNumeric: 'tabular-nums',
                     letterSpacing: '0.05em',
                     zIndex: 2,

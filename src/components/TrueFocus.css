@@ -12,7 +12,9 @@
 .focus-word {
   position: relative;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
   text-decoration: none;
   color: #1F090C;
   cursor: pointer;

@@ -27,11 +27,13 @@ export default function BlurText({
   const ref = useRef(null);
   const inView = useInView(ref, { once: false, margin: '-50px' });
   const [completed, setCompleted] = useState(0);
+  const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     if (!inView) {
       // Re-arm the completion counter once the element leaves the viewport.
       const frame = requestAnimationFrame(() => setCompleted(0));
+      setSettled(false);
       return () => cancelAnimationFrame(frame);
     }
   }, [inView]);
@@ -51,8 +53,9 @@ export default function BlurText({
   const { x: dx, y: dy } = directionMap[direction] || directionMap.top;
 
   useEffect(() => {
-    if (completed === tokens.length && onAnimationComplete) {
-      onAnimationComplete();
+    if (completed === tokens.length) {
+      setSettled(true);
+      if (onAnimationComplete) onAnimationComplete();
     }
   }, [completed, tokens.length, onAnimationComplete]);
 
@@ -82,7 +85,10 @@ export default function BlurText({
             ease: [0.16, 1, 0.3, 1],
           }}
           onAnimationComplete={() => setCompleted((c) => c + 1)}
-          style={{ display: 'inline-block', willChange: 'transform, filter, opacity' }}
+          style={{
+            display: 'inline-block',
+            ...(settled ? { filter: 'none', willChange: 'auto' } : { willChange: 'transform, filter, opacity' }),
+          }}
         >
           {animateBy === 'characters' && token === ' ' ? '\u00A0' : token}
         </motion.span>

@@ -183,8 +183,9 @@
   left: 92px;
   font-family: 'Outfit', sans-serif;
   font-size: 1.25rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: #382525;
   white-space: nowrap;
   pointer-events: none;
@@ -235,35 +236,36 @@
   letter-spacing: -0.04em;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   position: relative;
   z-index: 10;
 }
 
 .hero-heading-making {
-  font-size: clamp(2.8rem, 8vw, 8.2rem);
+  font-size: clamp(3.2rem, 9vw, 9.2rem);
   font-weight: 600;
   line-height: 0.95;
   display: block;
 }
 
 .hero-heading-curiosity {
-  font-size: clamp(2.4rem, 7.3vw, 7.3rem);
+  font-size: clamp(2.7rem, 8.2vw, 8.2rem);
   font-weight: 400;
   font-family: 'Newsreader', Georgia, serif;
   font-style: italic;
-  line-height: 0.95;
+  line-height: 1.15;
   display: block;
   padding-bottom: 0px;
-  margin-left: -0.05em;
+  margin-top: calc(0.15em - 0.1em);
+  text-align: center;
 }
 
 .hero-heading-social {
-  font-size: clamp(2.8rem, 8vw, 8.2rem);
+  font-size: clamp(3.2rem, 9vw, 9.2rem);
   font-weight: 600;
   line-height: 0.95;
   display: block;
-  margin-top: -5px;
+  margin-top: calc(-5px - 0.15em);
 }
 
 
@@ -278,7 +280,7 @@
 }
 
 .hero-paragraph {
-  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  font-size: clamp(0.9rem, 1.05vw, 1.02rem);
   line-height: 1.55;
   font-weight: 400;
   color: #5a3e3e;
@@ -664,7 +666,7 @@
 .hero-question-highlight {
   display: block;
   margin-bottom: 0.9rem;
-  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
   font-family: 'Newsreader', Georgia, serif;
   font-style: italic;
   font-weight: 500;

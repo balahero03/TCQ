@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import CountUp from './CountUp';
+import logoImg from '../assets/logo.webp';
 
 export default function WhatIsTCQ() {
   const containerRef = useRef(null);
@@ -20,12 +21,40 @@ export default function WhatIsTCQ() {
 
         /* ── TOP BAND ── fills the upper viewport ── */
         .tcq-top-band {
+          position: relative;
           min-height: 50vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
           padding: clamp(60px, 8vh, 100px) 6vw;
           border-bottom: 1px solid rgba(56,37,37,0.08);
+        }
+
+        .tcq-founded-badge {
+          position: absolute;
+          top: clamp(28px, 4vh, 52px);
+          right: 6vw;
+          width: clamp(104px, 9vw, 136px);
+          height: clamp(104px, 9vw, 136px);
+          filter: drop-shadow(0 10px 24px rgba(56, 37, 37, 0.18));
+        }
+        .tcq-founded-badge svg {
+          width: 100%;
+          height: 100%;
+          display: block;
+          overflow: visible;
+        }
+        .tcq-founded-orbit {
+          animation: tcq-badge-spin 28s linear infinite;
+          transform-origin: 50px 50px;
+        }
+        @keyframes tcq-badge-spin {
+          to { transform: rotate(360deg); }
+        }
+        @media (max-width: 900px) {
+          .tcq-founded-badge {
+            display: none;
+          }
         }
 
         /* ════════ HEADING — clean editorial statement ════════ */
@@ -62,7 +91,7 @@ export default function WhatIsTCQ() {
           padding: 0;
           font-family: 'Outfit', sans-serif;
           font-weight: 800;
-          font-size: clamp(3rem, 7vw, 7rem);
+          font-size: clamp(3.2rem, 7.6vw, 7.6rem);
           line-height: 1.12;
           color: #382525;
         }
@@ -95,42 +124,76 @@ export default function WhatIsTCQ() {
         .tcq-content-col {
           padding: 4vh 5vw;
           font-family: 'Outfit', sans-serif;
-          font-size: clamp(0.95rem, 1.3vw, 1.1rem);
-          line-height: 1.75;
+          font-size: clamp(1rem, 1.25vw, 1.2rem);
+          line-height: 1.85;
           color: #5a3e3e;
           border-right: 1px solid rgba(56,37,37,0.08);
         }
         .tcq-content-col:last-child { border-right: none; }
+        .tcq-content-col--intro {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          gap: 1.5rem;
+        }
+        .tcq-ask-list {
+          margin: 0 0 0 1.5rem;
+          padding: 0;
+          color: #5a3e3e;
+          font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+          line-height: 1.5;
+        }
+        .tcq-ask-list li { padding-bottom: 1.2rem; }
+        .tcq-ask-list li::marker { color: #D58F6B; }
         .tcq-content-col p { margin: 0 0 1rem; }
         .tcq-content-col p.lead {
           font-weight: 600;
           color: #382525;
-          font-size: clamp(1rem, 1.5vw, 1.2rem);
-          margin-bottom: 1.25rem;
+          font-size: clamp(1.25rem, 1.8vw, 1.7rem);
+          line-height: 1.3;
+          margin-bottom: 1.8rem;
+        }
+        .tcq-stats-wrap {
+          margin-top: 0.5rem;
         }
         .tcq-stats {
           display: flex;
-          gap: 2.5rem;
+          gap: 1rem;
           flex-wrap: wrap;
-          border-top: 1px solid rgba(56,37,37,0.1);
-          padding-top: 1.5rem;
-          margin-top: 1.5rem;
+        }
+        .tcq-stat-card {
+          flex: 1 1 140px;
+          padding: 1.25rem 1.4rem;
+          border-radius: 14px;
+          background: rgba(56, 37, 37, 0.04);
+          border: 1px solid rgba(56, 37, 37, 0.08);
+          transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+          cursor: pointer;
+        }
+        .tcq-stat-card:hover {
+          transform: translateY(-4px);
+          background: rgba(213, 143, 107, 0.1);
+          border-color: rgba(213, 143, 107, 0.35);
         }
         .tcq-stat-num {
-          font-size: clamp(1.4rem, 2vw, 2rem);
+          font-size: clamp(1.9rem, 2.8vw, 2.6rem);
           font-weight: 800;
           color: #382525;
           line-height: 1;
-          margin-bottom: 0.2rem;
+          margin-bottom: 0.35rem;
+          transition: color 0.3s ease;
+        }
+        .tcq-stat-card:hover .tcq-stat-num {
+          color: #D58F6B;
         }
         .tcq-stat-label {
-          font-size: 0.7rem;
+          font-size: 0.78rem;
           text-transform: uppercase;
           letter-spacing: 0.1em;
           color: #D58F6B;
           font-weight: 700;
         }
-        
+
         .tcq-dopamine-text {
           background: linear-gradient(90deg, #382525 0%, #D58F6B 50%, #382525 100%);
           background-size: 200% auto;
@@ -144,19 +207,6 @@ export default function WhatIsTCQ() {
           to {
             background-position: 200% center;
           }
-        }
-        
-        .tcq-stats > div {
-          transition: transform 0.3s ease, text-shadow 0.3s ease;
-          cursor: pointer;
-        }
-        .tcq-stats > div:hover {
-          transform: translateY(-5px);
-        }
-        .tcq-stats > div:hover .tcq-stat-num {
-          text-shadow: 0 0 15px rgba(213, 143, 107, 0.4);
-          color: #D58F6B;
-          transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
         /* ── Mobile ── */
@@ -187,7 +237,53 @@ export default function WhatIsTCQ() {
         {/* ─── TOP BAND ─── */}
         <div className="tcq-top-band">
 
+          <motion.div
+            className="tcq-founded-badge"
+            initial={{ opacity: 0, scale: 0.7, rotate: -20 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <svg viewBox="0 0 100 100">
+              <defs>
+                <path id="tcq-badge-arc" d="M 50,50 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
+              </defs>
 
+              {/* dashed orbit ring */}
+              <circle
+                className="tcq-founded-orbit"
+                cx="50" cy="50" r="42"
+                fill="none"
+                stroke="#382525"
+                strokeOpacity="0.22"
+                strokeWidth="1"
+                strokeDasharray="1 5"
+                strokeLinecap="round"
+              />
+
+              {/* orbiting label */}
+              <g className="tcq-founded-orbit">
+                <text fontFamily="'Outfit', sans-serif" fontSize="7" fontWeight="700" letterSpacing="2.5" fill="#382525">
+                  <textPath href="#tcq-badge-arc" startOffset="0%">
+                    EST · 2023 · CHENNAI ·
+                  </textPath>
+                </text>
+              </g>
+
+              {/* solid medallion behind the logo */}
+              <circle cx="50" cy="50" r="29" fill="#D58F6B" />
+              <clipPath id="tcq-badge-clip">
+                <circle cx="50" cy="50" r="29" />
+              </clipPath>
+              <image
+                href={logoImg}
+                x="24" y="24"
+                width="52" height="52"
+                clipPath="url(#tcq-badge-clip)"
+                preserveAspectRatio="xMidYMid meet"
+              />
+            </svg>
+          </motion.div>
 
           <motion.div
             className="tcq-hero"
@@ -233,18 +329,29 @@ export default function WhatIsTCQ() {
         {/* ─── BOTTOM BAND ─── */}
         <div className="tcq-bottom-band">
 
-          <ScrollReveal delay={0.2} className="tcq-content-col">
-            <p className="lead tcq-dopamine-text">
-              TCQ began in 2023 with a very practical ask:
-            </p>
-            <ul style={{ margin: '0 0 1.5rem 1.5rem', color: '#5a3e3e', fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', lineHeight: 1.6 }}>
-              <li style={{ paddingBottom: '0.4rem' }}>That learning shouldn’t have to end with a degree.</li>
-              <li style={{ paddingBottom: '0.4rem' }}>That curiosity shouldn’t have to be a solitary pursuit.</li>
-              <li style={{ paddingBottom: '0.4rem' }}>And that curious people deserve a place to come home to.</li>
-            </ul>
-            <p>
-              There wasn’t anything around, so we started building one.
-            </p>
+          <ScrollReveal delay={0.2} className="tcq-content-col tcq-content-col--intro">
+            <div>
+              <p className="lead tcq-dopamine-text">
+                TCQ began in 2023 with a very practical ask:
+              </p>
+              <ul className="tcq-ask-list">
+                <li>That learning shouldn’t have to end with a degree.</li>
+                <li>That curiosity shouldn’t have to be a solitary pursuit.</li>
+                <li>And that curious people deserve a place to come home to.</li>
+              </ul>
+            </div>
+            <div className="tcq-stats-wrap">
+              <div className="tcq-stats">
+                <div className="tcq-stat-card">
+                  <div className="tcq-stat-num"><CountUp to={5} suffix="+" /></div>
+                  <div className="tcq-stat-label">Wings</div>
+                </div>
+                <div className="tcq-stat-card">
+                  <div className="tcq-stat-num"><CountUp to={2000} suffix="+" /></div>
+                  <div className="tcq-stat-label">Curious Cats</div>
+                </div>
+              </div>
+            </div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.4} className="tcq-content-col">
@@ -257,20 +364,6 @@ export default function WhatIsTCQ() {
             <p>
               We’re still figuring out on how to bracket it into one title. That, perhaps, is the point.
             </p>
-            <div className="tcq-stats">
-              <div>
-                <div className="tcq-stat-num"><CountUp to={5} suffix="+" /></div>
-                <div className="tcq-stat-label">Wings</div>
-              </div>
-              <div>
-                <div className="tcq-stat-num"><CountUp to={2023} /></div>
-                <div className="tcq-stat-label">Found In</div>
-              </div>
-              <div>
-                <div className="tcq-stat-num"><CountUp to={2000} suffix="+" /></div>
-                <div className="tcq-stat-label">Curious Cats</div>
-              </div>
-            </div>
           </ScrollReveal>
 
         </div>
