@@ -8,19 +8,17 @@
 //   layout 'grid'   → contact-sheet grid (used for Writes' 6 cards)
 // ─────────────────────────────────────────────────────────────
 
-import tcq05 from '../assets/wings/for-brands/typical-chennai-quiz/tcq-05.jpg';
-import tcq20 from '../assets/wings/for-brands/typical-chennai-quiz/tcq-20.jpg';
+import sixToSixtyThumb from '../assets/wings/quizzes/6-to-60/six-to-60-thumb.jpg';
 
-import sixToSixty04 from '../assets/wings/quizzes/6-to-60/six-to-60-04.jpg';
-import sixToSixty06 from '../assets/wings/quizzes/6-to-60/six-to-60-06.jpg';
-import sixToSixty08 from '../assets/wings/quizzes/6-to-60/six-to-60-08.jpg';
-import sixToSixty12 from '../assets/wings/quizzes/6-to-60/six-to-60-12.jpg';
-import sixToSixty13 from '../assets/wings/quizzes/6-to-60/six-to-60-13.jpg';
-import sixToSixty14 from '../assets/wings/quizzes/6-to-60/six-to-60-14.jpg';
+import abuzz02 from '../assets/wings/quizzes/abuzz-psbb/abuzz-02.jpg';
+import abuzz03 from '../assets/wings/quizzes/abuzz-psbb/abuzz-03.jpg';
+import abuzz04 from '../assets/wings/quizzes/abuzz-psbb/abuzz-04.jpg';
 
 import fundamavan01 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-01.jpg';
 import fundamavan06 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-06.jpg';
 import fundamavan07 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-07.jpg';
+
+import tcqThumb from '../assets/wings/quizzes/typical-chennai-quiz/tcq-thumb.jpg';
 
 import circles01 from '../assets/wings/circles/season-one/circles-01.jpg';
 import circles02 from '../assets/wings/circles/season-one/circles-02.jpg';
@@ -32,17 +30,26 @@ import berty03 from '../assets/wings/circles/berty-ashley/berty-03.jpg';
 import intellect03 from '../assets/wings/teaches/intellect-club/intellect-03.jpg';
 import intellect09 from '../assets/wings/teaches/intellect-club/intellect-09.jpg';
 
-import heritage01 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-01.jpg';
-import heritage02 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-02.jpg';
-import heritage03 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-03.jpg';
-
-import antiDrug05 from '../assets/wings/teaches/anti-drug-awareness/heritage-05.jpg';
-import antiDrug06 from '../assets/wings/teaches/anti-drug-awareness/heritage-06.jpg';
-import antiDrug07 from '../assets/wings/teaches/anti-drug-awareness/heritage-07.jpg';
+import antiDrug01 from '../assets/wings/teaches/anti-drug-awareness/anti-drug-01.jpg';
+import antiDrug02 from '../assets/wings/teaches/anti-drug-awareness/anti-drug-02.jpg';
+import heritage05 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-05.jpg';
+import heritage06 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-06.jpg';
+import heritage07 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-07.jpg';
 
 import goetheWorkshop01 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-01.jpg';
 import goetheWorkshop02 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-02.jpg';
 import goetheWorkshop03 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-03.jpg';
+
+import resume01 from '../assets/wings/teaches/resume-building/resume-01.jpg';
+import resume03 from '../assets/wings/teaches/resume-building/resume-03.jpg';
+import resume05 from '../assets/wings/teaches/resume-building/resume-05.jpg';
+
+import writes01 from '../assets/wings/writes/substack/writes-01.jpg';
+import writes02 from '../assets/wings/writes/substack/writes-02.jpg';
+import writes03 from '../assets/wings/writes/substack/writes-03.jpg';
+import writes04 from '../assets/wings/writes/substack/writes-04.jpg';
+import writes05 from '../assets/wings/writes/substack/writes-05.jpg';
+import writes06 from '../assets/wings/writes/substack/writes-06.jpg';
 
 const ph = (w, h) => ({ src: null, w, h });
 const img = (src, w, h) => ({ src, w, h });
@@ -70,15 +77,16 @@ export const WINGS = [
       {
         name: '6 to 60 Quizzes',
         venue: '15 weeks of endless curiosity at KIS Cafe',
-        layout: 'fan',
-        photos: [img(sixToSixty04, 3, 4), img(sixToSixty06, 3, 4), img(sixToSixty08, 3, 4)],
+        layout: 'thumb',
+        photos: [img(sixToSixtyThumb, 1, 1)],
         galleryPhotos: galleryFrom('quizzes/6-to-60'),
       },
       {
         name: 'Abuzz 2025',
         venue: 'Inter-school Quiz Finals — PSBB Group of Schools',
-        layout: 'strip',
-        photos: [img(sixToSixty12, 1, 1), img(sixToSixty13, 1, 1), img(sixToSixty14, 1, 1)],
+        layout: 'fan',
+        photos: [img(abuzz02, 16, 9), img(abuzz03, 16, 9), img(abuzz04, 16, 9)],
+        galleryPhotos: galleryFrom('quizzes/abuzz-psbb'),
       },
       {
         name: "Fundamavan '26",
@@ -86,6 +94,13 @@ export const WINGS = [
         layout: 'fan',
         photos: [img(fundamavan07, 3, 4), img(fundamavan01, 4, 3), img(fundamavan06, 16, 9)],
         galleryPhotos: galleryFrom('quizzes/fundamavan-ssn'),
+      },
+      {
+        name: 'Typical Chennai Quiz 2025',
+        venue: 'For KYN app, 2025',
+        layout: 'hero',
+        photos: [img(tcqThumb, 16, 9)],
+        galleryPhotos: galleryFrom('quizzes/typical-chennai-quiz'),
       },
       {
         name: 'The Hungry Quiz',
@@ -134,13 +149,6 @@ export const WINGS = [
       'Your stories already exist in 4D. We turn them into 5D experiences for people to decipher with that one extra dimension that we care about the most - Discovery',
     events: [
       {
-        name: 'Typical Chennai Quiz',
-        venue: 'For KYN app, 2025',
-        layout: 'split',
-        photos: [img(tcq05, 3, 4), img(tcq20, 16, 9)],
-        galleryPhotos: galleryFrom('for-brands/typical-chennai-quiz'),
-      },
-      {
         name: 'Walls on Wheels',
         venue: 'For Five Feet Collective — a mural workshop',
         layout: 'hero',
@@ -179,9 +187,14 @@ export const WINGS = [
         venue: 'thecuriosityquotient.substack.com',
         layout: 'grid',
         photos: [
-          ph(3, 4), ph(3, 4), ph(3, 4),
-          ph(3, 4), ph(3, 4), ph(3, 4),
+          img(writes01, 3, 4),
+          img(writes02, 3, 4),
+          img(writes03, 3, 4),
+          img(writes04, 3, 4),
+          img(writes05, 3, 4),
+          img(writes06, 3, 4),
         ],
+        galleryPhotos: galleryFrom('writes/substack'),
       },
     ],
   },
@@ -201,18 +214,23 @@ export const WINGS = [
         galleryPhotos: galleryFrom('teaches/intellect-club'),
       },
       {
-        name: 'Anti-Drug Awareness Programme',
-        venue: 'Ethiraj College for Women, 2025',
-        layout: 'strip',
-        photos: [img(antiDrug05, 3, 4), img(antiDrug06, 4, 3), img(antiDrug07, 3, 4)],
-        galleryPhotos: galleryFrom('teaches/anti-drug-awareness'),
+        name: 'Resume Building Workshop',
+        venue: 'Ethiraj College for Women, 2024',
+        layout: 'fan',
+        photos: [img(resume01, 3, 2), img(resume03, 3, 2), img(resume05, 3, 2)],
+        galleryPhotos: galleryFrom('teaches/resume-building'),
       },
       {
-        name: 'Heritage Walk at The Hindu Offices',
+        name: 'Anti-Drug Awareness Programme',
         venue: 'Ethiraj College for Women, 2025',
-        layout: 'strip',
-        photos: [img(heritage01, 4, 3), img(heritage02, 3, 4), img(heritage03, 3, 4)],
-        galleryPhotos: galleryFrom('teaches/heritage-walk-hindu-offices'),
+        layout: 'fan',
+        photos: [img(antiDrug01, 9, 16), img(antiDrug02, 9, 16)],
+        galleryPhotos: [
+          ...galleryFrom('teaches/anti-drug-awareness'),
+          img(heritage05, 4, 3),
+          img(heritage06, 4, 3),
+          img(heritage07, 4, 3),
+        ],
       },
       {
         name: 'What? Why? Wow — A Beginner\'s Workshop on the Art of Quizzing',

@@ -353,7 +353,7 @@
 
 /* fan layout: overlapping polaroids */
 .wr-photos--fan .wr-frame {
-  width: clamp(180px, 22vw, 320px);
+  width: clamp(240px, 28vw, 400px);
   margin-left: -3.5vw;
   transform: rotate(calc((var(--i) - 1) * 4deg));
 }
@@ -362,7 +362,13 @@
 
 /* hero layout: one cinematic frame */
 .wr-photos--hero .wr-frame {
-  width: clamp(420px, 52vw, 760px);
+  width: clamp(520px, 58vw, 880px);
+}
+
+/* Square event thumbnails keep a compact footprint beside their caption. */
+.wr-photos--thumb .wr-frame {
+  width: clamp(300px, 34vw, 520px);
+  aspect-ratio: 1 / 1 !important;
 }
 
 /* grid layout: contact-sheet (e.g. Writes' 6 article cards) */
@@ -374,7 +380,7 @@
   perspective: 1400px;
 }
 .wr-photos--grid .wr-frame {
-  width: clamp(150px, 15vw, 230px);
+  width: clamp(180px, 18vw, 270px);
   aspect-ratio: 3 / 4 !important;
 }
 
@@ -428,7 +434,7 @@
   perspective: 1200px;
 }
 .wr-photos--strip .wr-frame {
-  width: clamp(120px, 13vw, 190px);
+  width: clamp(180px, 20vw, 300px);
   aspect-ratio: 1 / 1 !important;
   border-radius: 8px;
 }
@@ -696,11 +702,15 @@
 
   /* Photo Layouts for Mobile */
   .wr-photos--fan .wr-frame {
-    width: clamp(140px, 42vw, 210px);
+    width: clamp(170px, 48vw, 250px);
     margin-left: -5vw;
   }
   .wr-photos--hero .wr-frame {
-    width: clamp(260px, 82vw, 400px);
+    width: clamp(300px, 88vw, 460px);
+    max-height: 48vh;
+  }
+  .wr-photos--thumb .wr-frame {
+    width: clamp(220px, 62vw, 340px);
     max-height: 42vh;
   }
   .wr-photos--grid {
@@ -708,7 +718,7 @@
     gap: 0.5rem;
   }
   .wr-photos--grid .wr-frame {
-    width: clamp(85px, 26vw, 125px);
+    width: clamp(100px, 28vw, 145px);
     aspect-ratio: 3 / 4 !important;
   }
   .wr-photos--split {
@@ -731,7 +741,7 @@
     gap: 0.75rem;
   }
   .wr-photos--strip .wr-frame {
-    width: clamp(85px, 24vw, 125px);
+    width: clamp(110px, 30vw, 160px);
   }
 
   /* Caption Tab on Mobile */
