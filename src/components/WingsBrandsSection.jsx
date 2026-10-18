@@ -1,18 +1,18 @@
 import { motion } from 'framer-motion';
 import './WingsBrandsSection.css';
 
-import kynLogo from '../assets/partners/kyn.png';
-import kisCafeLogo from '../assets/partners/kis-cafe.jpg';
-import mopVaishnavLogo from '../assets/partners/mop-vaishnav.jpg';
-import kraftCollectiveLogo from '../assets/partners/kraft-collective.png';
-import skySecretsLogo from '../assets/partners/sky-secrets.png';
-import goetheInstitutLogo from '../assets/partners/goethe-institut.png';
-import chennaiQuizFactoryLogo from '../assets/partners/chennai-quiz-factory.jpeg';
-import watsonsLogo from '../assets/partners/watsons.jpeg';
-import lecturesOnTheRocksLogo from '../assets/partners/lectures-on-the-rocks.png';
-import litArcadeLogo from '../assets/partners/lit-arcade.png';
-import bertyAshleyLogo from '../assets/partners/berty-ashley-think-tank.jpg';
-import instinctsSsnLogo from '../assets/partners/instincts-ssn.png';
+import kynLogo from '../assets/partners/kyn.webp';
+import kisCafeLogo from '../assets/partners/kis-cafe.webp';
+import mopVaishnavLogo from '../assets/partners/mop-vaishnav.webp';
+import kraftCollectiveLogo from '../assets/partners/kraft-collective.webp';
+import skySecretsLogo from '../assets/partners/sky-secrets.webp';
+import goetheInstitutLogo from '../assets/partners/goethe-institut.webp';
+import chennaiQuizFactoryLogo from '../assets/partners/chennai-quiz-factory.webp';
+import watsonsLogo from '../assets/partners/watsons.webp';
+import lecturesOnTheRocksLogo from '../assets/partners/lectures-on-the-rocks.webp';
+import litArcadeLogo from '../assets/partners/lit-arcade.webp';
+import bertyAshleyLogo from '../assets/partners/berty-ashley-think-tank.webp';
+import instinctsSsnLogo from '../assets/partners/instincts-ssn.webp';
 
 const BRAND_SLOTS = [
   { id: 1, name: 'Kyn', logo: kynLogo },

@@ -8,54 +8,69 @@
 //   layout 'grid'   → contact-sheet grid (used for Writes' 6 cards)
 // ─────────────────────────────────────────────────────────────
 
-import sixToSixtyThumb from '../assets/wings/quizzes/6-to-60/six-to-60-thumb.jpg';
+import sixToSixtyThumb from '../assets/wings/quizzes/6-to-60/six-to-60-thumb.webp';
 
-import abuzz02 from '../assets/wings/quizzes/abuzz-psbb/abuzz-02.jpg';
-import abuzz03 from '../assets/wings/quizzes/abuzz-psbb/abuzz-03.jpg';
-import abuzz04 from '../assets/wings/quizzes/abuzz-psbb/abuzz-04.jpg';
+import abuzz02 from '../assets/wings/quizzes/abuzz-psbb/abuzz-02.webp';
+import abuzz03 from '../assets/wings/quizzes/abuzz-psbb/abuzz-03.webp';
+import abuzz04 from '../assets/wings/quizzes/abuzz-psbb/abuzz-04.webp';
 
-import fundamavan01 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-01.jpg';
-import fundamavan06 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-06.jpg';
-import fundamavan07 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-07.jpg';
+import fundamavan01 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-01.webp';
+import fundamavan06 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-06.webp';
+import fundamavan07 from '../assets/wings/quizzes/fundamavan-ssn/fundamavan-07.webp';
 
-import tcqThumb from '../assets/wings/quizzes/typical-chennai-quiz/tcq-thumb.jpg';
+import tcqThumb from '../assets/wings/quizzes/typical-chennai-quiz/tcq-thumb.webp';
 
-import circles01 from '../assets/wings/circles/season-one/circles-01.jpg';
-import circles02 from '../assets/wings/circles/season-one/circles-02.jpg';
+import circles01 from '../assets/wings/circles/season-one/circles-01.webp';
+import circles03 from '../assets/wings/circles/season-one/circles-03.webp';
 
-import berty01 from '../assets/wings/circles/berty-ashley/berty-01.jpg';
-import berty02 from '../assets/wings/circles/berty-ashley/berty-02.jpg';
-import berty03 from '../assets/wings/circles/berty-ashley/berty-03.jpg';
+import berty01 from '../assets/wings/circles/berty-ashley/berty-01.webp';
+import berty02 from '../assets/wings/circles/berty-ashley/berty-02.webp';
+import berty03 from '../assets/wings/circles/berty-ashley/berty-03.webp';
 
-import intellect03 from '../assets/wings/teaches/intellect-club/intellect-03.jpg';
-import intellect09 from '../assets/wings/teaches/intellect-club/intellect-09.jpg';
+import intellect03 from '../assets/wings/teaches/intellect-club/intellect-03.webp';
+import intellect09 from '../assets/wings/teaches/intellect-club/intellect-09.webp';
 
-import antiDrug01 from '../assets/wings/teaches/anti-drug-awareness/anti-drug-01.jpg';
-import antiDrug02 from '../assets/wings/teaches/anti-drug-awareness/anti-drug-02.jpg';
-import heritage05 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-05.jpg';
-import heritage06 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-06.jpg';
-import heritage07 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-07.jpg';
+import antiDrug01 from '../assets/wings/teaches/anti-drug-awareness/anti-drug-01.webp';
+import antiDrug02 from '../assets/wings/teaches/anti-drug-awareness/anti-drug-02.webp';
+import heritage05 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-05.webp';
+import heritage06 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-06.webp';
+import heritage07 from '../assets/wings/teaches/heritage-walk-hindu-offices/heritage-07.webp';
 
-import goetheWorkshop01 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-01.jpg';
-import goetheWorkshop02 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-02.jpg';
-import goetheWorkshop03 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-03.jpg';
+import goetheWorkshop01 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-01.webp';
+import goetheWorkshop02 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-02.webp';
+import goetheWorkshop03 from '../assets/wings/teaches/goethe-quizzing-workshop/goethe-workshop-03.webp';
 
-import resume01 from '../assets/wings/teaches/resume-building/resume-01.jpg';
-import resume03 from '../assets/wings/teaches/resume-building/resume-03.jpg';
-import resume05 from '../assets/wings/teaches/resume-building/resume-05.jpg';
+import resume01 from '../assets/wings/teaches/resume-building/resume-01.webp';
+import resume03 from '../assets/wings/teaches/resume-building/resume-03.webp';
+import resume05 from '../assets/wings/teaches/resume-building/resume-05.webp';
 
-import writes01 from '../assets/wings/writes/substack/writes-01.jpg';
-import writes02 from '../assets/wings/writes/substack/writes-02.jpg';
-import writes03 from '../assets/wings/writes/substack/writes-03.jpg';
-import writes04 from '../assets/wings/writes/substack/writes-04.jpg';
-import writes05 from '../assets/wings/writes/substack/writes-05.jpg';
-import writes06 from '../assets/wings/writes/substack/writes-06.jpg';
+import writes01 from '../assets/wings/writes/substack/writes-01.webp';
+import writes02 from '../assets/wings/writes/substack/writes-02.webp';
+import writes03 from '../assets/wings/writes/substack/writes-03.webp';
+import writes04 from '../assets/wings/writes/substack/writes-04.webp';
+import writes05 from '../assets/wings/writes/substack/writes-05.webp';
+import writes06 from '../assets/wings/writes/substack/writes-06.webp';
 
+import hungryQuiz01 from '../assets/wings/quizzes/hungry-quiz/hungry-quiz-01.webp';
+import hungryQuiz03 from '../assets/wings/quizzes/hungry-quiz/hungry-quiz-03.webp';
+import hungryQuiz06 from '../assets/wings/quizzes/hungry-quiz/hungry-quiz-06.webp';
+
+import wallsOnWheels02 from '../assets/wings/collabs/walls-on-wheels/walls-on-wheels-02.webp';
+import wallsOnWheels04 from '../assets/wings/collabs/walls-on-wheels/walls-on-wheels-04.webp';
+
+import howToNameIt01 from '../assets/wings/collabs/how-to-name-it/gnanipazham-01.webp';
+import howToNameIt02 from '../assets/wings/collabs/how-to-name-it/hidden-cassette-01.webp';
+
+import madrasDCoded06 from '../assets/wings/collabs/madras-d-coded/madras-d-coded-06.webp';
+import madrasDCoded01 from '../assets/wings/collabs/madras-d-coded/madras-d-coded-01.webp';
+import madrasDCoded08 from '../assets/wings/collabs/madras-d-coded/madras-d-coded-08.webp';
+
+// eslint-disable-next-line no-unused-vars -- kept for events whose photos haven't landed yet
 const ph = (w, h) => ({ src: null, w, h });
 const img = (src, w, h) => ({ src, w, h });
 
 // All wing photos, keyed by path, for building each event's full gallery set.
-const ALL_PHOTOS = import.meta.glob('../assets/wings/**/*.jpg', { eager: true, import: 'default' });
+const ALL_PHOTOS = import.meta.glob('../assets/wings/**/*.webp', { eager: true, import: 'default' });
 
 // Returns every photo in a wing/event folder as { src, w, h } (aspect from natural size unknown at build time, default 4:3).
 function galleryFrom(folder) {
@@ -105,14 +120,9 @@ export const WINGS = [
       {
         name: 'The Hungry Quiz',
         venue: 'Part of the Unavu Project, Kraft Collective, 2026',
-        layout: 'strip',
-        photos: [ph(1, 1), ph(1, 1), ph(1, 1)],
-      },
-      {
-        name: 'Comics Quiz',
-        venue: 'La Nuit Blanche, Alliance Française Chennai, 2026',
-        layout: 'strip',
-        photos: [ph(1, 1), ph(1, 1), ph(1, 1)],
+        layout: 'fan',
+        photos: [img(hungryQuiz01, 3, 4), img(hungryQuiz03, 3, 4), img(hungryQuiz06, 3, 4)],
+        galleryPhotos: galleryFrom('quizzes/hungry-quiz'),
       },
     ],
   },
@@ -128,7 +138,7 @@ export const WINGS = [
         name: 'Circles, Season One',
         venue: 'Indie Music · Stargazing · Madras History · an Umpire\'s POV of cricket',
         layout: 'split',
-        photos: [img(circles01, 3, 4), img(circles02, 16, 9)],
+        photos: [img(circles01, 3, 4), img(circles03, 16, 9)],
         galleryPhotos: galleryFrom('circles/season-one'),
       },
       {
@@ -151,26 +161,23 @@ export const WINGS = [
       {
         name: 'Walls on Wheels',
         venue: 'For Five Feet Collective — a mural workshop',
-        layout: 'hero',
-        photos: [ph(16, 9)],
-      },
-      {
-        name: 'TCQ Jams',
-        venue: 'For KIS Cafe, a music-themed cafe at Adyar',
         layout: 'collage',
-        photos: [ph(16, 10), ph(3, 4)],
+        photos: [img(wallsOnWheels04, 16, 9), img(wallsOnWheels02, 4, 3)],
+        galleryPhotos: galleryFrom('collabs/walls-on-wheels'),
       },
       {
         name: 'How to Name It?',
         venue: 'An exclusive Ilaiyaraaja fan tribe, for KYN',
         layout: 'collage',
-        photos: [ph(16, 10), ph(3, 4)],
+        photos: [img(howToNameIt01, 1, 1), img(howToNameIt02, 1, 1)],
+        galleryPhotos: galleryFrom('collabs/how-to-name-it'),
       },
       {
         name: 'Madras D-Coded',
         venue: 'A 40-day campaign of puzzles on Madras and its journey to Chennai',
         layout: 'fan',
-        photos: [ph(3, 4), ph(4, 3), ph(3, 4)],
+        photos: [img(madrasDCoded06, 4, 5), img(madrasDCoded01, 3, 4), img(madrasDCoded08, 3, 4)],
+        galleryPhotos: galleryFrom('collabs/madras-d-coded'),
       },
     ],
   },

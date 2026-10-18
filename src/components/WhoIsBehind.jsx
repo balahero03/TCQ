@@ -3,13 +3,13 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import drVishnuImg from '../assets/dr_vishnu_aravind.jpg';
+import drVishnuImg from '../assets/dr_vishnu_aravind.webp';
 import redbullLogo from '../assets/timeline/redbull.svg';
 import fullyFilmyLogo from '../assets/timeline/fully-filmy.webp';
-import gccEmblem from '../assets/timeline/gcc-emblem.png';
+import gccEmblem from '../assets/timeline/gcc-emblem.webp';
 import jiocinemaLogo from '../assets/timeline/jiocinema.svg';
-import srmcRiLogo from '../assets/timeline/srmc-ri.png';
-import carromBallMediaLogo from '../assets/timeline/carrom-ball-media.jpg';
+import srmcRiLogo from '../assets/timeline/srmc-ri.webp';
+import carromBallMediaLogo from '../assets/timeline/carrom-ball-media.webp';
 import CardSwap, { Card } from './CardSwap';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
