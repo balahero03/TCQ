@@ -68,8 +68,8 @@ function App() {
         <>
           <BlobCursor
             fillColor="#D58F6B"
-            dotSize={18}
-            lineWidth={4}
+            dotSize={9}
+            lineWidth={2}
             trailLength={18}
             zIndex={9999}
           />

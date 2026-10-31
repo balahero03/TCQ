@@ -135,8 +135,7 @@ function OrganicTimeline() {
         if (img) gsap.set(img, { opacity: 0, y: 30, scale: 0.85 });
       });
 
-      const endScroll = isMobile ? timeline.length * 360 : timeline.length * 800;
-      const cameraY = isMobile ? '-65vh' : '-120vh';
+      const endScroll = isMobile ? timeline.length * 500 : timeline.length * 800;
 
       // Master Timeline for ScrollTrigger
       const tl = gsap.timeline({
@@ -146,11 +145,13 @@ function OrganicTimeline() {
           end: `+=${endScroll}`, // Tighter scroll distance for mobile
           scrub: 0.5, // 0.5 gives a tight, extremely responsive but smoothed scroll feel
           pin: true, // Lock the screen while animating
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
         }
       });
 
       // 1. Camera Pan: move content up so we reach the bottom perfectly
-      tl.to(scrollContentRef.current, { y: cameraY, ease: "none", duration: 1 }, 0);
+      tl.to(scrollContentRef.current, { y: () => window.innerHeight - scrollContentRef.current.offsetHeight, ease: "none", duration: 1 }, 0);
 
       // 2. Draw the line down over the entire scroll duration
       tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 }, 0);
@@ -253,22 +254,22 @@ function OrganicTimeline() {
   }, [nodes, step, isMobile, reduce]);
 
   return (
-    <div style={{ background: '#F7E7C4' }}>
+    <div style={{ background: '#FAF3E6' }}>
       <div ref={pinRef} style={{ width: '100%', height: reduce ? 'auto' : '100vh', position: 'relative', overflow: 'hidden', fontFamily: "'Outfit', sans-serif" }}>
         
         {/* Scrolling Canvas */}
-        <div ref={scrollContentRef} style={{ position: reduce ? 'relative' : 'absolute', top: 0, left: 0, width: '100%', height: isMobile ? '165vh' : '220vh', willChange: 'transform', overflow: 'hidden' }}>
+        <div ref={scrollContentRef} style={{ position: reduce ? 'relative' : 'absolute', top: 0, left: 0, width: '100%', height: isMobile ? 'max(165vh, 3000px)' : 'max(220vh, 2200px)', willChange: 'transform', overflow: 'hidden' }}>
           
           {/* Title Header matching WhatIsTCQ style - now scrolls away naturally */}
           <div style={{ position: 'absolute', top: '7vh', left: '5vw', zIndex: 3 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-              <div style={{ width: '2rem', height: '2px', background: '#D58F6B' }} />
-              <div style={{ fontSize: '0.7rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#D58F6B', fontWeight: 700 }}>
+              <span className="dot-line" aria-hidden="true" />
+              <div style={{ fontSize: '0.7rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--orange-deep)', fontWeight: 700 }}>
                 Journey
               </div>
             </div>
             <div style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#382525', letterSpacing: '-0.04em', lineHeight: 1 }}>
-              The Journey <span style={{ fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', fontWeight: 400, color: '#D58F6B' }}>So Far</span>
+              The Journey <span style={{ fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--orange-deep)' }}>So Far</span>
             </div>
           </div>
 
@@ -287,56 +288,29 @@ function OrganicTimeline() {
               d={pathData} 
               fill="none" 
               stroke="#382525" 
-              strokeWidth="0.8" 
+              strokeWidth="0.35" 
               strokeLinecap="round"
               style={{ willChange: 'stroke-dashoffset, stroke-dasharray' }}
             />
           </svg>
 
-          {/* 3D Spacecraft traveling along the path */}
-          <div 
-            ref={runnerRef} 
-            style={{ 
-              position: 'absolute', 
-              top: 0, 
-              left: 0, 
-              width: '36px', 
-              height: '36px',
+          {/* The dot leading the drawn line — same dot-and-line as the cursor */}
+          <div
+            ref={runnerRef}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '16px',
+              height: '16px',
+              borderRadius: '50%',
+              background: '#D58F6B',
               zIndex: 30,
               opacity: 0,
               pointerEvents: 'none',
-              transform: 'translate(-50%, -50%)',
-              willChange: 'transform' // Forces GPU acceleration
+              willChange: 'transform',
             }}
-          >
-            <svg viewBox="0 0 32 32" width="100%" height="100%" style={{ overflow: 'visible' }}>
-              {/* Spacecraft drop shadow */}
-              <ellipse cx="16" cy="18" rx="8" ry="12" fill="rgba(56,37,37,0.2)" />
-              {/* Glow */}
-              <ellipse cx="16" cy="16" rx="14" ry="14" fill="rgba(213,143,107,0.12)" />
-              
-              {/* Animated Engine Flame */}
-              <g className="rocket-flame" style={{ transformOrigin: "16px 26px" }}>
-                 <path d="M 12 26 C 12 26 16 36 20 26 Z" fill="#E67E22" />
-                 <path d="M 14 26 C 14 26 16 32 18 26 Z" fill="#F1C40F" />
-              </g>
-
-              {/* Spacecraft Body */}
-              <path d="M 16 2 C 16 2 24 10 24 20 C 24 26 16 28 16 28 C 16 28 8 26 8 20 C 8 10 16 2 16 2 Z" fill="#382525" />
-              
-              {/* Left Fin */}
-              <path d="M 8 20 L 2 28 L 10 25 Z" fill="#D58F6B" stroke="#382525" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-              {/* Right Fin */}
-              <path d="M 24 20 L 30 28 L 22 25 Z" fill="#D58F6B" stroke="#382525" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-              
-              {/* Window */}
-              <circle cx="16" cy="14" r="3.5" fill="#FFFFFF" />
-              <circle cx="16" cy="14" r="2" fill="rgba(56,37,37,0.3)" />
-              
-              {/* Nose cone tip */}
-              <path d="M 16 2 L 14 7 Q 16 8 18 7 Z" fill="#D58F6B" />
-            </svg>
-          </div>
+          />
 
           {/* Nodes & Alternating Content Blocks */}
           {nodes.map((node, i) => (
@@ -433,10 +407,9 @@ function OrganicTimeline() {
                   <h3 style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', color: '#382525', marginBottom: '0.3rem', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2 }}>
                     {node.data.role}
                   </h3>
-                  <div style={{ fontSize: 'clamp(0.78rem, 1vw, 0.9rem)', color: '#D58F6B', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.7rem' }}>
+                  <div style={{ fontSize: 'clamp(0.78rem, 1vw, 0.9rem)', color: 'var(--orange-deep)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.7rem' }}>
                     {node.data.sub}
                   </div>
-                  <div style={{ width: 40, height: 3, background: 'linear-gradient(90deg, #382525, #D58F6B)', marginBottom: '0.8rem', borderRadius: 2 }} />
                   <p style={{ color: '#5a3e3e', fontSize: 'clamp(0.82rem, 1.1vw, 0.95rem)', lineHeight: 1.7, margin: 0 }}>
                     {node.data.desc || node.data.sub}
                   </p>
@@ -485,7 +458,7 @@ export default function WhoIsBehind() {
   const sectionRef = useRef(null);
 
   return (
-    <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#F7E7C4', paddingBottom: 0, fontFamily: "'Outfit', sans-serif", position: 'relative', overflow: 'clip' }}>
+    <section id="who-s-behind-tcq" ref={sectionRef} style={{ background: '#FAF3E6', paddingBottom: 0, fontFamily: "'Outfit', sans-serif", position: 'relative', overflow: 'clip' }}>
 
       <style>{`
         /* Restructured layout */
@@ -548,10 +521,9 @@ export default function WhoIsBehind() {
             /* Bottom dark scrim for text legibility */
             linear-gradient(
               to top,
-              rgba(38,20,20,0.92) 0%,
-              rgba(38,20,20,0.55) 40%,
-              rgba(38,20,20,0.1)  65%,
-              transparent 80%
+              rgba(38,20,20,0.85) 0%,
+              rgba(38,20,20,0.4) 40%,
+              transparent 65%
             ),
             /* 120° top-light specular */
             radial-gradient(
@@ -569,7 +541,7 @@ export default function WhoIsBehind() {
           left: 0;
           right: 0;
           padding: clamp(2rem, 4vw, 3rem);
-          color: #F7E7C4;
+          color: #FAF3E6;
         }
         .pfc-heading {
           font-family: 'Outfit', sans-serif;
@@ -583,7 +555,7 @@ export default function WhoIsBehind() {
         .pfc-heading span {
           font-size: clamp(2.4rem, 4.2vw, 3.8rem);
           display: block;
-          color: #F7E7C4;
+          color: #FAF3E6;
         }
         .pfc-heading .pfc-accent {
           font-family: 'Newsreader', Georgia, serif;
@@ -602,7 +574,7 @@ export default function WhoIsBehind() {
           font-family: 'Outfit', sans-serif;
           font-weight: 700;
           font-size: clamp(1rem, 1.6vw, 1.35rem);
-          color: #F7E7C4;
+          color: #FAF3E6;
           margin: 0 0 6px 0;
           line-height: 1.2;
         }
@@ -610,7 +582,7 @@ export default function WhoIsBehind() {
           font-family: 'Newsreader', Georgia, serif;
           font-style: italic;
           font-size: clamp(0.9rem, 1.2vw, 1.05rem);
-          color: rgba(247,231,196,0.75);
+          color: rgba(250, 243, 230,0.75);
           margin: 0;
           line-height: 1.55;
         }
@@ -694,7 +666,7 @@ export default function WhoIsBehind() {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          color: #F7E7C4;
+          color: #FAF3E6;
           position: relative;
           z-index: 4;
         }
@@ -709,7 +681,7 @@ export default function WhoIsBehind() {
           font-size: clamp(1.9rem, 3.2vw, 3rem);
           display: flex;
           flex-direction: column;
-          color: #F7E7C4;
+          color: #FAF3E6;
         }
         
         .wib-profile-content h2 span {
@@ -740,7 +712,7 @@ export default function WhoIsBehind() {
           font-size: clamp(1rem, 1.6vw, 1.35rem);
           margin: 0 0 10px 0;
           line-height: 1.3;
-          color: #F7E7C4;
+          color: #FAF3E6;
           letter-spacing: -0.01em;
         }
         
@@ -750,7 +722,7 @@ export default function WhoIsBehind() {
           font-size: clamp(0.9rem, 1.2vw, 1.05rem);
           line-height: 1.65;
           /* Slightly muted cream — matching CardSwap p opacity: 0.9 effect */
-          color: rgba(247, 231, 196, 0.82);
+          color: rgba(250, 243, 230, 0.82);
           margin: 0;
         }
         
@@ -895,7 +867,7 @@ export default function WhoIsBehind() {
           justify-content: center;
           gap: 0.5rem;
           color: rgba(56,37,37,0.4);
-          background: #F7E7C4;
+          background: #FAF3E6;
           border: 1.5px dashed rgba(56,37,37,0.18);
         }
         .organic-image-ph-label {
@@ -964,7 +936,7 @@ export default function WhoIsBehind() {
           white-space: nowrap;
         }
         .year-pill-text {
-          color: #F7E7C4;
+          color: #FAF3E6;
           font-weight: 700;
           font-size: 0.95rem;
           letter-spacing: 0.15em;
@@ -980,15 +952,6 @@ export default function WhoIsBehind() {
           opacity: 0.7;
         }
 
-        /* Spacecraft & Particles */
-        @keyframes flameFlicker {
-          0% { transform: scaleY(1); opacity: 1; }
-          50% { transform: scaleY(1.3); opacity: 0.8; }
-          100% { transform: scaleY(0.9); opacity: 1; }
-        }
-        .rocket-flame {
-          animation: flameFlicker 0.1s infinite alternate;
-        }
         .burst-particle {
           position: absolute;
           top: 50%; 
@@ -1092,8 +1055,8 @@ export default function WhoIsBehind() {
               pauseOnHover={true}
               easing="linear"
             >
-              <Card style={{ padding: 'clamp(1.5rem, 4vw, 2.25rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#F7E7C4' }}>
-                <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.65rem)', marginBottom: '0.85rem', fontWeight: 800, color: '#F7E7C4' }}>The Roots</h3>
+              <Card style={{ padding: 'clamp(1.5rem, 4vw, 2.25rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#FAF3E6' }}>
+                <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.65rem)', marginBottom: '0.85rem', fontWeight: 800, color: '#FAF3E6' }}>The Roots</h3>
                 <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'clamp(0.8rem, 2vw, 0.95rem)' }}>
                   I was born in Chennai, grew up with the internet, and somehow ended up studying medicine. Along the way, I developed a habit that has proved considerably harder to cure by my own standards: asking questions.
                 </p>
@@ -1101,7 +1064,7 @@ export default function WhoIsBehind() {
                   One answer usually leads to another question. One niche leads to another. One interesting idea leads to the urge to share it with someone else. And then, one random morning, it became TCQ.
                 </p>
               </Card>
-              <Card style={{ padding: 'clamp(1.5rem, 4vw, 2.25rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#F7E7C4', color: '#382525' }}>
+              <Card style={{ padding: 'clamp(1.5rem, 4vw, 2.25rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#FAF3E6', color: '#382525' }}>
                 <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.65rem)', marginBottom: '0.85rem', fontWeight: 800, color: '#382525' }}>The Vision</h3>
                 <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'clamp(0.8rem, 2vw, 0.95rem)' }}>
                   TCQ is an extension of my way of thinking. We connect people to ideas they might not have discovered otherwise. We help schools and colleges open up new worlds for their students. We work with startups, brands and organisations to find interesting ways to connect with their audiences.

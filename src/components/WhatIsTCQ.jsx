@@ -2,14 +2,13 @@
 import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import CountUp from './CountUp';
-import logoImg from '../assets/logo.webp';
 
 export default function WhatIsTCQ() {
   const containerRef = useRef(null);
 
   return (
     <section ref={containerRef} style={{
-      background: '#F7E7C4',
+      background: '#FAF3E6',
       fontFamily: "'Outfit', sans-serif",
     }}>
       <style>{`
@@ -30,33 +29,6 @@ export default function WhatIsTCQ() {
           border-bottom: 1px solid rgba(56,37,37,0.08);
         }
 
-        .tcq-founded-badge {
-          position: absolute;
-          top: clamp(28px, 4vh, 52px);
-          right: 6vw;
-          width: clamp(104px, 9vw, 136px);
-          height: clamp(104px, 9vw, 136px);
-          filter: drop-shadow(0 10px 24px rgba(56, 37, 37, 0.18));
-        }
-        .tcq-founded-badge svg {
-          width: 100%;
-          height: 100%;
-          display: block;
-          overflow: visible;
-        }
-        .tcq-founded-orbit {
-          animation: tcq-badge-spin 28s linear infinite;
-          transform-origin: 50px 50px;
-        }
-        @keyframes tcq-badge-spin {
-          to { transform: rotate(360deg); }
-        }
-        @media (max-width: 900px) {
-          .tcq-founded-badge {
-            display: none;
-          }
-        }
-
         /* ════════ HEADING — clean editorial statement ════════ */
         .tcq-hero {
           width: 100%;
@@ -71,17 +43,12 @@ export default function WhatIsTCQ() {
           gap: 0.85rem;
           margin-bottom: clamp(1.5rem, 4vh, 3rem);
         }
-        .tcq-eyebrow-rule {
-          width: 2.5rem;
-          height: 2px;
-          background: #D58F6B;
-        }
         .tcq-eyebrow {
           font-family: 'Outfit', sans-serif;
           font-size: 0.75rem;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #D58F6B;
+          color: var(--orange-deep);
           font-weight: 700;
         }
 
@@ -103,10 +70,7 @@ export default function WhatIsTCQ() {
           font-weight: 400;
           font-style: italic;
           letter-spacing: -0.02em;
-          background: linear-gradient(120deg, #382525 0%, #D58F6B 60%, #382525 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          color: transparent;
+          color: var(--orange-deep);
           font-size: 1em;
           line-height: normal;
           display: inline-block;
@@ -183,7 +147,7 @@ export default function WhatIsTCQ() {
           font-size: 0.65rem;
           text-transform: uppercase;
           letter-spacing: 0.12em;
-          color: #D58F6B;
+          color: var(--orange-deep);
           font-weight: 700;
           margin-top: 0.2rem;
         }
@@ -242,54 +206,6 @@ export default function WhatIsTCQ() {
         <div className="tcq-top-band">
 
           <motion.div
-            className="tcq-founded-badge"
-            initial={{ opacity: 0, scale: 0.7, rotate: -20 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <svg viewBox="0 0 100 100">
-              <defs>
-                <path id="tcq-badge-arc" d="M 50,50 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
-              </defs>
-
-              {/* dashed orbit ring */}
-              <circle
-                className="tcq-founded-orbit"
-                cx="50" cy="50" r="42"
-                fill="none"
-                stroke="#382525"
-                strokeOpacity="0.22"
-                strokeWidth="1"
-                strokeDasharray="1 5"
-                strokeLinecap="round"
-              />
-
-              {/* orbiting label */}
-              <g className="tcq-founded-orbit">
-                <text fontFamily="'Outfit', sans-serif" fontSize="7" fontWeight="700" letterSpacing="2.5" fill="#382525">
-                  <textPath href="#tcq-badge-arc" startOffset="0%">
-                    EST · 2023 · CHENNAI ·
-                  </textPath>
-                </text>
-              </g>
-
-              {/* solid medallion behind the logo */}
-              <circle cx="50" cy="50" r="29" fill="#D58F6B" />
-              <clipPath id="tcq-badge-clip">
-                <circle cx="50" cy="50" r="29" />
-              </clipPath>
-              <image
-                href={logoImg}
-                x="24" y="24"
-                width="52" height="52"
-                clipPath="url(#tcq-badge-clip)"
-                preserveAspectRatio="xMidYMid meet"
-              />
-            </svg>
-          </motion.div>
-
-          <motion.div
             className="tcq-hero"
             initial="hidden"
             whileInView="visible"
@@ -302,7 +218,7 @@ export default function WhatIsTCQ() {
                 visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
               }}
             >
-              <span className="tcq-eyebrow-rule" />
+              <span className="dot-line" aria-hidden="true" />
               <span className="tcq-eyebrow">About TCQ</span>
             </motion.div>
 

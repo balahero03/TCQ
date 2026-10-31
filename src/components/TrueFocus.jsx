@@ -13,8 +13,7 @@ const TrueFocus = ({
   pauseBetweenAnimations = 1
 }) => {
   const words = sentence.split(separator);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [lastActiveIndex, setLastActiveIndex] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(manualMode ? null : 0);
   const containerRef = useRef(null);
   const wordRefs = useRef([]);
   const [focusRect, setFocusRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
@@ -33,7 +32,7 @@ const TrueFocus = ({
   }, [manualMode, animationDuration, pauseBetweenAnimations, words.length]);
 
   useEffect(() => {
-    if (currentIndex === null || currentIndex === -1) return;
+    if (currentIndex === null) return;
 
     if (!wordRefs.current[currentIndex] || !containerRef.current) return;
 
@@ -49,16 +48,11 @@ const TrueFocus = ({
   }, [currentIndex, words.length]);
 
   const handleMouseEnter = index => {
-    if (manualMode) {
-      setLastActiveIndex(index);
-      setCurrentIndex(index);
-    }
+    if (manualMode) setCurrentIndex(index);
   };
 
   const handleMouseLeave = () => {
-    if (manualMode) {
-      setCurrentIndex(lastActiveIndex);
-    }
+    if (manualMode) setCurrentIndex(null);
   };
 
   return (
@@ -72,13 +66,7 @@ const TrueFocus = ({
             ref={el => (wordRefs.current[index] = el)}
             className={`focus-word ${manualMode ? 'manual' : ''} ${isActive && !manualMode ? 'active' : ''}`}
             style={{
-              filter: manualMode
-                ? isActive
-                  ? `blur(0px)`
-                  : `blur(${blurAmount}px)`
-                : isActive
-                  ? `blur(0px)`
-                  : `blur(${blurAmount}px)`,
+              filter: isActive ? 'blur(0px)' : `blur(${blurAmount}px)`,
               '--border-color': borderColor,
               '--glow-color': glowColor,
               transition: `filter ${animationDuration}s ease`
@@ -93,6 +81,8 @@ const TrueFocus = ({
             }}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
+            onFocus={() => handleMouseEnter(index)}
+            onBlur={handleMouseLeave}
           >
             {word}
           </a>
@@ -106,7 +96,7 @@ const TrueFocus = ({
           y: focusRect.y,
           width: focusRect.width,
           height: focusRect.height,
-          opacity: currentIndex >= 0 ? 1 : 0
+          opacity: currentIndex === null ? 0 : 1
         }}
         transition={{
           duration: animationDuration

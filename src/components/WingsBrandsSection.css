@@ -46,7 +46,10 @@
   font-weight: 700;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--orange);
+  color: var(--orange-deep);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .wbs-title {
@@ -63,7 +66,7 @@
   font-family: 'Newsreader', Georgia, serif;
   font-weight: 400;
   font-style: italic;
-  color: var(--orange);
+  color: var(--orange-deep);
 }
 
 .wbs-sub {
@@ -134,61 +137,6 @@
 }
 
 /* ══════════════════════════════
-   Endless marquee strip
-   ══════════════════════════════ */
-.wbs-marquee-wrap {
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  padding: 0.5rem 0;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-
-.wbs-marquee-track {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(1rem, 2vw, 1.6rem);
-  white-space: nowrap;
-  animation: wbs-marquee 32s linear infinite;
-  will-change: transform;
-}
-
-.wbs-marquee-wrap:hover .wbs-marquee-track {
-  animation-play-state: paused;
-}
-
-@keyframes wbs-marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.wbs-marquee-tile {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.9rem 1.6rem;
-  border-radius: 100px;
-  border: 1px solid rgba(56, 37, 37, 0.1);
-  background: rgba(255, 255, 255, 0.45);
-}
-
-.wbs-marquee-icon {
-  font-size: 0.9rem;
-  color: rgba(213, 143, 107, 0.7);
-}
-
-.wbs-marquee-label {
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(56, 37, 37, 0.45);
-}
-
-/* ══════════════════════════════
    Closing statement
    ══════════════════════════════ */
 .wbs-closing {
@@ -196,25 +144,25 @@
   z-index: 1;
   margin: 0;
   text-align: center;
-  font-family: 'Newsreader', Georgia, serif;
-  font-style: italic;
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   color: rgba(56, 37, 37, 0.75);
 }
 
 .wbs-closing-link {
-  font-family: 'Outfit', sans-serif;
-  font-style: normal;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-left: 0.25rem;
   font-weight: 600;
-  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-  color: var(--orange);
+  color: var(--orange-deep);
   text-decoration: none;
   border-bottom: 1.5px solid transparent;
   transition: border-color 0.25s ease;
 }
 
 .wbs-closing-link:hover {
-  border-color: var(--orange);
+  border-color: var(--orange-deep);
 }
 
 /* ══════════════════════════════
@@ -242,8 +190,3 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .wbs-marquee-track {
-    animation: none;
-  }
-}

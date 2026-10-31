@@ -25,6 +25,64 @@ const letter = {
   },
 };
 
+const lineIcon = { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.5 };
+const solidIcon = { width: 24, height: 24, viewBox: '0 0 24 24', fill: 'currentColor' };
+
+const SOCIALS = [
+  {
+    label: 'Instagram',
+    href: 'https://instagram.com/tcq_india',
+    icon: (
+      <svg {...lineIcon}>
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <circle cx="17.5" cy="6.5" r="1.5" />
+      </svg>
+    ),
+  },
+  {
+    label: 'WhatsApp',
+    href: 'https://api.whatsapp.com/send?phone=918754400743',
+    icon: <svg {...solidIcon}><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" /></svg>,
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/the-curiosity-quotient',
+    icon: (
+      <svg {...lineIcon}>
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Email',
+    href: 'mailto:thecuriosityquotient@gmail.com',
+    icon: (
+      <svg {...lineIcon}>
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Substack',
+    href: 'https://thecuriosityquotient.substack.com/',
+    icon: <svg {...solidIcon}><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" /></svg>,
+  },
+  {
+    label: 'YouTube',
+    href: 'https://youtube.com/@thecuriosityquotientindia?si=PZKQmduBIacDRWfr',
+    icon: (
+      <svg {...lineIcon}>
+        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+      </svg>
+    ),
+  },
+];
+
 export default function Contact() {
   return (
     <section
@@ -35,7 +93,7 @@ export default function Contact() {
         fontFamily: "'Outfit', sans-serif",
         background:
           'radial-gradient(120% 90% at 50% -10%, #3d2929 0%, #2e1c1c 45%, #1a0f0f 100%)',
-        color: '#F7E7C4',
+        color: '#FAF3E6',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -56,17 +114,9 @@ export default function Contact() {
           100% { transform: translateX(-50%); }
         }
         .ctf-marquee-group { display: inline-flex; align-items: center; }
-        @keyframes ctf-shine {
-          0% { background-position: -120% 0; }
-          60%,100% { background-position: 220% 0; }
-        }
         @keyframes ctf-ghost {
           0%,100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
-        }
-        @keyframes ctf-pulse {
-          0% { box-shadow: 0 0 0 0 rgba(120,220,180,0.5); }
-          100% { box-shadow: 0 0 0 9px rgba(120,220,180,0); }
         }
 
         .ctf-orb {
@@ -122,7 +172,14 @@ export default function Contact() {
           font-weight: 300;
           font-style: italic;
         }
-        .ctf-marquee-star { color: #D58F6B; padding: 0 0.4rem; }
+        .ctf-marquee-dot {
+          flex-shrink: 0;
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: #D58F6B;
+          margin: 0 0.4rem;
+        }
 
         .ctf-row {
           display: grid;
@@ -170,20 +227,14 @@ export default function Contact() {
         }
         .ctf-credit-link:hover { color: #F0EAE2; }
 
-        .ctf-cta {
-          position: relative;
-          overflow: hidden;
-          isolation: isolate;
+        .ctf-social {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: #FAF3E6;
+          transition: color 0.25s ease;
         }
-        .ctf-cta::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
-          background-size: 220% 100%;
-          animation: ctf-shine 3.5s ease-in-out infinite;
-          z-index: -1;
-        }
+        .ctf-social:hover { color: #D58F6B; }
 
         @media (max-width: 820px) {
           .ctf-row {
@@ -243,39 +294,6 @@ export default function Contact() {
           textAlign: 'center',
         }}
       >
-        {/* live status chip */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            fontSize: '0.68rem',
-            letterSpacing: '0.3em',
-            textTransform: 'uppercase',
-            color: 'rgba(240,234,226,0.7)',
-            fontWeight: 600,
-            marginBottom: '1.4rem',
-            padding: '0.4rem 0.95rem',
-            border: '1px solid rgba(240,234,226,0.2)',
-            borderRadius: 100,
-          }}
-        >
-          <span
-            style={{
-              width: 7,
-              height: 7,
-              borderRadius: '50%',
-              background: '#8ee0b0',
-              animation: 'ctf-pulse 1.8s infinite',
-            }}
-          />
-          Open for collaborations
-        </motion.div>
-
         <motion.h2
           variants={letterContainer}
           initial="hidden"
@@ -286,7 +304,7 @@ export default function Contact() {
             fontSize: 'clamp(3rem, 9vw, 8rem)',
             fontWeight: 900,
             letterSpacing: '-0.04em',
-            color: '#F7E7C4',
+            color: '#FAF3E6',
             margin: 0,
             lineHeight: 0.92,
           }}
@@ -334,7 +352,7 @@ export default function Contact() {
 
         <motion.a
           href="mailto:thecuriosityquotient@gmail.com"
-          className="ctf-cta"
+          className="outline-btn"
           variants={fadeUp}
           custom={7}
           initial="hidden"
@@ -342,30 +360,9 @@ export default function Contact() {
           viewport={{ once: true, amount: 0.4 }}
           whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.97 }}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.6rem',
-            marginTop: '1.8rem',
-            padding: '0.85rem 2rem',
-            background: '#F7E7C4',
-            color: '#382525',
-            fontWeight: 700,
-            fontSize: '1rem',
-            borderRadius: '100px',
-            textDecoration: 'none',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-          }}
+          style={{ color: '#FAF3E6', marginTop: '1.8rem' }}
         >
           Start a conversation
-          <motion.span
-            aria-hidden="true"
-            style={{ fontSize: '1.1rem', lineHeight: 1 }}
-            animate={{ x: [0, 5, 0] }}
-            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            →
-          </motion.span>
         </motion.a>
       </div>
 
@@ -377,7 +374,7 @@ export default function Contact() {
               <span className="ctf-marquee-item">
                 Curiosity never killed a cat — <span className="soft">it raised a family of cats instead.</span>
               </span>
-              <span className="ctf-marquee-star">✦</span>
+              <span className="ctf-marquee-dot" aria-hidden="true" />
             </span>
           ))}
         </div>
@@ -388,15 +385,14 @@ export default function Contact() {
         {/* Brand */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', marginBottom: '1.1rem' }}>
-            <img src={logoImg} alt="TCQ" style={{ height: 44, width: 'auto', filter: 'brightness(0) invert(1)' }} />
+            <img src={logoImg} alt="TCQ" style={{ height: 56, width: 'auto', filter: 'brightness(0) invert(1)' }} />
             <div style={{ fontSize: '0.7rem', letterSpacing: '0.28em', textTransform: 'uppercase', lineHeight: 1.5, opacity: 0.8 }}>
               The<br />Curiosity<br />Quotient
             </div>
           </div>
-          <p style={{ color: 'rgba(240,234,226,0.55)', fontSize: '0.85rem', lineHeight: 1.7, maxWidth: 280, margin: 0 }}>
-            Making curiosity social since 2023. Quizzes, circles, and stories
-            that bring knowledge and people together.
-          </p>
+          <div style={{ color: '#D58F6B', fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)', fontWeight: 700, letterSpacing: '0.1em' }}>
+            CQ + PQ &gt; IQ
+          </div>
         </div>
 
         {/* Reach us */}
@@ -413,107 +409,17 @@ export default function Contact() {
               +91 87544 00743
             </a>
             <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
-              {/* Instagram */}
-              <a href="https://instagram.com/tcq_india" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.3s ease',
-                opacity: 0.7,
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <circle cx="17.5" cy="6.5" r="1.5"></circle>
-                </svg>
-              </a>
-
-              {/* WhatsApp */}
-              <a href="https://api.whatsapp.com/send?phone=918754400743" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.3s ease',
-                opacity: 0.7,
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" color="#F7E7C4">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
-                </svg>
-              </a>
-
-              {/* LinkedIn */}
-              <a href="https://www.linkedin.com/company/the-curiosity-quotient" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.3s ease',
-                opacity: 0.7,
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect x="2" y="9" width="4" height="12"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a>
-
-              {/* Email */}
-              <a href="mailto:thecuriosityquotient@gmail.com" aria-label="Email" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.3s ease',
-                opacity: 0.7,
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
-                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                </svg>
-              </a>
-
-              {/* Substack */}
-              <a href="https://thecuriosityquotient.substack.com/" target="_blank" rel="noopener noreferrer" aria-label="Substack" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.3s ease',
-                opacity: 0.7,
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" color="#F7E7C4">
-                  <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"></path>
-                </svg>
-              </a>
-
-              {/* YouTube */}
-              <a href="https://youtube.com/@thecuriosityquotientindia?si=PZKQmduBIacDRWfr" target="_blank" rel="noopener noreferrer" aria-label="YouTube" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.3s ease',
-                opacity: 0.7,
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.7'; }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" color="#F7E7C4">
-                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-                </svg>
-              </a>
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  aria-label={s.label}
+                  className="ctf-social"
+                  {...(s.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  {s.icon}
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -553,9 +459,6 @@ export default function Contact() {
       >
         <span style={{ color: 'rgba(240,234,226,0.35)', fontSize: '0.78rem' }}>
           © {new Date().getFullYear()} The Curiosity Quotient. Chennai.
-        </span>
-        <span style={{ color: 'rgba(240,234,226,0.35)', fontSize: '0.78rem', letterSpacing: '0.15em' }}>
-          CQ + PQ &gt; IQ
         </span>
       </div>
     </section>

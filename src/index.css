@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
-  --cream-light: #F7E7C4;
-  --cream-dark:  #E8D0A0;
+  --cream-light: #FAF3E6;
+  --cream-dark:  #F2E7D3;
   --brown:       #382525;
   --orange:      #D58F6B;
+  --orange-deep: #A85A36; /* orange for small text on cream, where #D58F6B lacks contrast */
   --white:       #ffffff;
 }
 
@@ -44,6 +45,58 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--brown);
   border-radius: 2px;
+}
+
+/* Dot-and-line: the cursor's motif (a dot leading a thin line). Replaces dashes
+   and arrows beside headings and hints. --reverse points left. */
+.dot-line {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 2.4rem;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--orange);
+  vertical-align: middle;
+}
+.dot-line::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--orange);
+  transform: translateY(-50%);
+}
+.dot-line--reverse::after { right: auto; left: -1px; }
+
+/* Outlined button shared across the site; takes its colour from `color`. */
+.outline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.7rem 1.6rem;
+  border: 1.5px solid currentColor;
+  border-radius: 100px;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+}
+.outline-btn:hover {
+  background-color: var(--orange);
+  border-color: var(--orange);
+  color: #2e1c1c;
 }
 
 /* Stops the looping CSS animations (marquees, orbs, pulses) for reduced motion. */

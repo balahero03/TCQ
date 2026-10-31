@@ -24,7 +24,7 @@ const BRAND_SLOTS = [
   { id: 7, name: 'Chennai Quiz Factory', logo: chennaiQuizFactoryLogo },
   { id: 8, name: "Watson's — The Neighbourhood Bar", logo: watsonsLogo },
   { id: 9, name: 'Lectures on the Rocks', logo: lecturesOnTheRocksLogo },
-  { id: 10, name: 'Lit Arcade', logo: litArcadeLogo },
+  { id: 10, name: 'Lit Arcade', logo: litArcadeLogo, darkTile: true },
   { id: 11, name: 'Berty Ashley Think Tank', logo: bertyAshleyLogo },
   { id: 12, name: "Instincts '26, SSN", logo: instinctsSsnLogo },
 ];
@@ -46,7 +46,7 @@ const tileVariants = {
 
 function BrandTile({ slot }) {
   return (
-    <motion.div className="wbs-tile" variants={tileVariants}>
+    <motion.div className="wbs-tile" variants={tileVariants} style={slot.darkTile ? { background: 'var(--brown)' } : undefined}>
       {slot.logo ? (
         <img src={slot.logo} alt={`${slot.name} logo`} style={{ maxWidth: '85%', maxHeight: '85%', width: 'auto', height: 'auto', objectFit: 'contain' }} />
       ) : slot.name ? (
@@ -62,14 +62,12 @@ function BrandTile({ slot }) {
 }
 
 export default function WingsBrandsSection() {
-  const marqueeSlots = [...BRAND_SLOTS, ...BRAND_SLOTS];
-
   return (
     <section className="wbs-section" id="brands">
       <div className="wbs-glow" />
 
       <div className="wbs-header">
-        <span className="wbs-eyebrow">Our Partners</span>
+        <span className="wbs-eyebrow"><i className="dot-line" aria-hidden="true" />Our Partners</span>
         <h2 className="wbs-title">
           Brands we've<br /><span className="wbs-title-accent">worked with</span>
         </h2>
@@ -90,26 +88,6 @@ export default function WingsBrandsSection() {
         ))}
       </motion.div>
 
-      <div className="wbs-marquee-wrap">
-        <div className="wbs-marquee-track">
-          {marqueeSlots.map((slot, i) => (
-            <div className="wbs-marquee-tile" key={`${slot.id}-${i}`} aria-hidden={i >= BRAND_SLOTS.length} style={{ gap: '1rem' }}>
-              {slot.logo ? (
-                <>
-                  <img src={slot.logo} alt="" style={{ height: '28px', objectFit: 'contain', opacity: 0.85 }} />
-                  <span className="wbs-marquee-label">{slot.name}</span>
-                </>
-              ) : (
-                <>
-                  <span className="wbs-marquee-icon" aria-hidden="true">✦</span>
-                  <span className="wbs-marquee-label">{slot.name || 'Logo soon'}</span>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
       <motion.p
         className="wbs-closing"
         initial={{ opacity: 0, y: 12 }}
@@ -126,7 +104,7 @@ export default function WingsBrandsSection() {
             document.getElementById('collaborate')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }}
         >
-          Let's talk →
+          Let's talk <span className="dot-line" aria-hidden="true" />
         </a>
       </motion.p>
     </section>

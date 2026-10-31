@@ -6,39 +6,6 @@ import CatHeroAnimation from './CatHeroAnimation';
 import BlurText from './BlurText';
 import './Hero.css';
 
-// Two sparkle silhouettes: a classic 5-point star and a slim 4-point diamond twinkle
-const SPARKLE_PATHS = [
-  'M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z',
-  'M12 0C12 6.5 12.5 9 12.5 9C12.5 9 15 9.5 21.5 12C15 14.5 12.5 15 12.5 15C12.5 15 12 17.5 12 24C12 17.5 11.5 15 11.5 15C11.5 15 9 14.5 2.5 12C9 9.5 11.5 9 11.5 9C11.5 9 12 6.5 12 0Z',
-];
-
-const SPARKLE_COLORS = ['#382525', '#D58F6B', '#E8D0A0', '#D58F6B'];
-
-const SPARKLES = [
-  { top: '10%', left: '52%', size: 14, dur: 3.1, delay: 0.0, rot: 1, c: 1, shape: 1 },
-  { top: '18%', left: '68%', size: 24, dur: 3.8, delay: 0.7, rot: -1, c: 0, shape: 0 },
-  { top: '14%', left: '86%', size: 12, dur: 2.6, delay: 1.6, rot: 1, c: 2, shape: 1 },
-  { top: '30%', left: '96%', size: 18, dur: 3.4, delay: 0.3, rot: -1, c: 2, shape: 0 },
-  { top: '40%', left: '58%', size: 10, dur: 2.9, delay: 2.1, rot: 1, c: 3, shape: 1 },
-  { top: '46%', left: '84%', size: 22, dur: 4.1, delay: 1.1, rot: -1, c: 1, shape: 0 },
-  { top: '58%', left: '95%', size: 15, dur: 3.3, delay: 2.6, rot: 1, c: 0, shape: 1 },
-  { top: '64%', left: '66%', size: 13, dur: 2.7, delay: 0.9, rot: -1, c: 3, shape: 1 },
-  { top: '72%', left: '88%', size: 20, dur: 3.9, delay: 1.8, rot: 1, c: 2, shape: 0 },
-  { top: '80%', left: '58%', size: 11, dur: 3.0, delay: 0.5, rot: -1, c: 1, shape: 1 },
-  { top: '24%', left: '58%', size: 8, dur: 2.4, delay: 2.9, rot: 1, c: 3, shape: 1 },
-  { top: '52%', left: '70%', size: 9, dur: 2.5, delay: 1.4, rot: -1, c: 0, shape: 1 },
-];
-
-// A handful of tiny soft dust specks scattered through the same field, for ambient depth
-const DUST = [
-  { top: '22%', left: '76%', size: 4, dur: 4.5, delay: 0.2 },
-  { top: '36%', left: '62%', size: 3, dur: 5.2, delay: 1.7 },
-  { top: '54%', left: '90%', size: 5, dur: 4.8, delay: 0.9 },
-  { top: '68%', left: '76%', size: 3, dur: 5.6, delay: 2.4 },
-  { top: '12%', left: '92%', size: 4, dur: 4.2, delay: 1.2 },
-  { top: '76%', left: '96%', size: 3, dur: 5.0, delay: 0.6 },
-];
-
 export default function Hero({ logoLanded }) {
   const ref = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -91,39 +58,6 @@ export default function Hero({ logoLanded }) {
       <motion.div className="hero-orb hero-orb-1" style={{ x: orb1X, y: orb1Y }} />
       <motion.div className="hero-orb hero-orb-2" style={{ x: orb2X, y: orb2Y }} />
 
-      {/* ── Soft ambient dust specks (depth layer behind the sparkles) ── */}
-      {DUST.map((d, i) => (
-        <motion.span
-          key={`dust-${i}`}
-          className="hero-dust"
-          style={{ top: d.top, left: d.left, width: d.size, height: d.size }}
-          animate={{
-            opacity: [0, 0.5, 0],
-            scale: [0.6, 1, 0.6],
-          }}
-          transition={{ duration: d.dur, delay: d.delay, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      ))}
-
-      {/* ── Twinkling sparkle stars (mixed 5-point / 4-point shapes) ── */}
-      {SPARKLES.map((s, i) => (
-        <motion.svg
-          key={i}
-          className="hero-sparkle"
-          viewBox="0 0 24 24"
-          style={{ top: s.top, left: s.left, width: s.size, height: s.size, color: SPARKLE_COLORS[s.c] }}
-          animate={{
-            opacity: [0, 1, 0.3, 0],
-            scale: [0.15, 1.2, 0.65, 0.15],
-            rotate: [0, s.rot * 60, s.rot * 150],
-            y: [0, -14, 0],
-          }}
-          transition={{ duration: s.dur, delay: s.delay, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <path d={SPARKLE_PATHS[s.shape]} fill="currentColor" />
-        </motion.svg>
-      ))}
-
       {/* ── Full-section cat backdrop ── */}
       <motion.div
         className="hero-cat-backdrop"
@@ -165,12 +99,11 @@ export default function Hero({ logoLanded }) {
           <TrueFocus
             sentence="Who's behind TCQ|What we do|Collaborate|Contact"
             separator="|"
-            manualMode={false}
-            blurAmount={2}
-            borderColor="#8D424E"
-            glowColor="rgba(141, 66, 78, 0.3)"
-            animationDuration={0.8}
-            pauseBetweenAnimations={1.5}
+            manualMode
+            blurAmount={0}
+            borderColor="#D58F6B"
+            glowColor="rgba(213, 143, 107, 0.3)"
+            animationDuration={0.3}
           />
         </motion.nav>
         <button
@@ -238,7 +171,7 @@ export default function Hero({ logoLanded }) {
               viewport={{ once: false, amount: 0.1 }}
               transition={{ duration: 0.6, delay: (startDelay - 100) / 1000 }}
             >
-              <span className="hero-eyebrow-spark">✦</span>
+              <span className="dot-line" aria-hidden="true" />
               <span className="hero-eyebrow-text">The Curiosity Quotient</span>
             </motion.div>
 
@@ -282,7 +215,6 @@ export default function Hero({ logoLanded }) {
                   onClick={() => scrollToSection('what-we-do')}
                 >
                   Explore TCQ
-                  <span className="btn-arrow" style={{ color: '#E6BABE', fontSize: '1rem', lineHeight: 1 }}>→</span>
                 </motion.button>
                 <motion.button
                   initial={{ opacity: 0 }}

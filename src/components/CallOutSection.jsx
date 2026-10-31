@@ -66,7 +66,7 @@ export default function CallOutSection() {
       ref={containerRef}
       style={{
         background: '#2e1c1c',
-        color: '#F7E7C4',
+        color: '#FAF3E6',
         position: 'relative',
         overflow: 'hidden',
         minHeight: '100vh',
@@ -99,7 +99,7 @@ export default function CallOutSection() {
         style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', position: 'relative', zIndex: 2 }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '2rem' }}>
-          <div style={{ width: '2.5rem', height: '2px', background: '#D58F6B' }} />
+          <span className="dot-line" aria-hidden="true" />
           <span style={{
             fontSize: '0.72rem', fontWeight: 700,
             letterSpacing: '0.3em', textTransform: 'uppercase', color: '#D58F6B',
@@ -113,11 +113,10 @@ export default function CallOutSection() {
           fontWeight: 800,
           lineHeight: 1.1,
           letterSpacing: '-0.03em',
-          color: '#F7E7C4',
+          color: '#FAF3E6',
           margin: '0 0 1rem',
         }}>
-          What Could We{' '}
-          <span style={{ fontStyle: 'italic', fontWeight: 400, color: '#D58F6B' }}>Make Together?</span>
+          What Could We Make Together?
         </h2>
 
         <p style={{
@@ -139,7 +138,7 @@ export default function CallOutSection() {
           display: 'grid',
           gridTemplateColumns: `repeat(${AUDIENCES.length}, 1fr)`,
           marginBottom: '3rem',
-          borderBottom: '1px solid rgba(247, 231, 196, 0.15)',
+          borderBottom: '1px solid rgba(250, 243, 230, 0.15)',
           paddingBottom: '1rem',
         }}>
           {AUDIENCES.map((audience, idx) => (
@@ -149,7 +148,7 @@ export default function CallOutSection() {
               style={{
                 background: 'none',
                 border: 'none',
-                color: active === idx ? '#D58F6B' : 'rgba(247, 231, 196, 0.6)',
+                color: active === idx ? '#D58F6B' : 'rgba(250, 243, 230, 0.6)',
                 fontSize: 'clamp(0.85rem, 1vw, 1rem)',
                 fontWeight: active === idx ? 600 : 400,
                 cursor: 'pointer',
@@ -186,7 +185,7 @@ export default function CallOutSection() {
               fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
               fontWeight: 600,
               lineHeight: 1.3,
-              color: '#F7E7C4',
+              color: '#FAF3E6',
               marginBottom: '1.5rem',
               fontStyle: 'italic',
               fontFamily: "'Newsreader', Georgia, serif",
@@ -195,29 +194,11 @@ export default function CallOutSection() {
             </h3>
 
             <button
+              className="outline-btn"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-              style={{
-                background: '#D58F6B',
-                color: '#2e1c1c',
-                border: 'none',
-                padding: '12px 28px',
-                borderRadius: '4px',
-                fontSize: '1rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontFamily: "'Outfit', sans-serif",
-                transition: 'all 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#E8A47E';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#D58F6B';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              style={{ color: '#FAF3E6' }}
             >
-              Get in touch →
+              Get in touch
             </button>
           </motion.div>
 
@@ -278,7 +259,7 @@ export default function CallOutSection() {
           style={{
             marginTop: 'clamp(3rem, 6vh, 4rem)',
             paddingTop: '2.5rem',
-            borderTop: '1px solid rgba(247, 231, 196, 0.15)',
+            borderTop: '1px solid rgba(250, 243, 230, 0.15)',
           }}
         >
           {/* Horizontal timeline */}
@@ -329,7 +310,7 @@ export default function CallOutSection() {
                   <p style={{
                     fontSize: 'clamp(0.75rem, 0.95vw, 0.95rem)',
                     lineHeight: 1.4,
-                    color: '#F7E7C4',
+                    color: '#FAF3E6',
                     fontStyle: 'italic',
                     margin: 0,
                     fontWeight: 500,

@@ -76,7 +76,7 @@ function MagneticCard({ wing, layout, mx, my }) {
       <span className="wr-mcard-no">{wing.no}</span>
       <span className="wr-mcard-name">{wing.title}</span>
       <span className="wr-mcard-tag">{wing.tag}</span>
-      <span className="wr-mcard-spark" aria-hidden="true">✦</span>
+      <span className="wr-mcard-dot" aria-hidden="true" />
     </motion.div>
   );
 }
@@ -136,13 +136,13 @@ function PhotoFrame({ photo, idx, label, onPhotoClick }) {
     <figure
       ref={ref}
       className="wr-frame"
-      style={{ aspectRatio: photo.w / photo.h, '--i': idx }}
+      style={{ '--i': idx }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       onClick={() => onPhotoClick(photo.src || 'placeholder')}
     >
       {photo.src ? (
-        <img src={photo.src} alt={label} loading="lazy" />
+        <img src={photo.src} alt={label} loading="lazy" decoding="async" />
       ) : (
         <div className="wr-placeholder">
           <span className="wr-ph-icon" aria-hidden="true">✦</span>
@@ -166,12 +166,14 @@ function EventPanel({ event, index, onPhotoClick }) {
       </div>
 
       <figcaption className="wr-caption">
-        <span className="wr-caption-index">{String(index + 1).padStart(2, '0')}</span>
+        {!event.hideIndex && (
+          <span className="wr-caption-index">{String(index + 1).padStart(2, '0')}</span>
+        )}
         <div>
           <h3 className="wr-caption-title">{event.name}</h3>
           <p className="wr-caption-venue">{event.venue}</p>
           <motion.button
-            className="wr-explore-btn"
+            className="wr-explore-btn outline-btn"
             onClick={() => setShowGallery(true)}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
@@ -197,16 +199,16 @@ function WingTitlePanel({ wing, reverse }) {
     <div className="wr-panel wr-wingtitle" data-wing={wing.no}>
       <span className="wr-ghost-no">{wing.no}</span>
       <div className="wr-intro-inner">
-        <span className="wr-tag">{wing.tag}</span>
+        <span className="wr-tag"><i className="dot-line" aria-hidden="true" />{wing.tag}</span>
         <h2 className="wr-title">{wing.title}</h2>
         {wing.byline && (
           <p className="wr-byline">"{wing.byline}"</p>
         )}
         <p className="wr-blurb">{wing.blurb}</p>
         <span className="wr-scroll-hint">
-          {reverse && <span aria-hidden="true">←</span>}
-          scroll to explore
-          {!reverse && <span aria-hidden="true">→</span>}
+          {reverse && <span className="dot-line dot-line--reverse" aria-hidden="true" />}
+          Scroll to Explore
+          {!reverse && <span className="dot-line" aria-hidden="true" />}
         </span>
       </div>
     </div>
@@ -248,12 +250,24 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
         start: 'top top',
         end: () => `+=${distance() + window.innerHeight * 0.5}`,
         pin: true,
-        scrub: true,
+        scrub: 0.6,
+        anticipatePin: 1,
         animation: tween,
         invalidateOnRefresh: true,
       });
 
       pinRef.current._scrollTrigger = st;
+
+      // The closing panel stands alone: the number and direction cue step aside.
+      const endcap = pinRef.current.querySelector('.wr-endcap-panel');
+      if (endcap) {
+        ScrollTrigger.create({
+          trigger: endcap,
+          containerAnimation: tween,
+          start: 'left 70%',
+          toggleClass: { targets: pinRef.current, className: 'wr-section--ended' },
+        });
+      }
 
       // ── Title panel cascade — plain ScrollTrigger on the section (fires
       //    reliably when the wing pins; no containerAnimation guesswork). ──
@@ -357,12 +371,11 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
       onMouseLeave={onSpotLeave}
     >
       <div className="wr-spotlight" ref={spotRef} style={{ opacity: 0 }} />
-      <div className="wr-thread" />
 
       {/* small fixed direction cue */}
       <div className="wr-dirhint" aria-hidden="true">
         <span className="wr-dirhint-no">{wing.no}</span>
-        <span className="wr-dirhint-arrow">{reverse ? '←' : '→'}</span>
+        <span className={`wr-dirhint-arrow dot-line ${reverse ? 'dot-line--reverse' : ''}`} />
       </div>
 
       <div className="wr-track" ref={trackRef}>
@@ -389,7 +402,7 @@ export default function WingReel() {
       {/* ════════ Opening: its own vertical page (normal scroll) ════════ */}
       <section id="what-we-do" className="wr-opening-page">
         <div className="wr-opening">
-          <span className="wr-opening-eyebrow">What we do</span>
+          <span className="wr-opening-eyebrow"><i className="dot-line" aria-hidden="true" />What we do</span>
           <h2 className="wr-opening-title">
             Five wings,
             <br />
@@ -400,7 +413,7 @@ export default function WingReel() {
             to the five wings of TCQ.
           </p>
           <span className="wr-scroll-hint">
-            scroll to explore <span aria-hidden="true">↓</span>
+            Scroll to Explore <span className="dot-line" aria-hidden="true" />
           </span>
         </div>
 
@@ -449,7 +462,7 @@ export default function WingReel() {
                   right: '40px',
                   background: 'none',
                   border: 'none',
-                  color: '#F7E7C4',
+                  color: '#FAF3E6',
                   fontSize: '3rem',
                   cursor: 'pointer',
                   lineHeight: 1,
@@ -486,7 +499,7 @@ export default function WingReel() {
                       height: '400px',
                       maxWidth: '85vw',
                       maxHeight: '70vh',
-                      background: 'repeating-linear-gradient(45deg, rgba(213,143,107,0.05) 0 10px, rgba(213,143,107,0.09) 10px 20px), #E8D0A0',
+                      background: 'repeating-linear-gradient(45deg, rgba(213,143,107,0.05) 0 10px, rgba(213,143,107,0.09) 10px 20px), #F2E7D3',
                       border: '2px dashed rgba(56,37,37,0.3)',
                       borderRadius: '16px',
                       display: 'flex',

@@ -42,7 +42,16 @@ export default function BlobCursor({
     // the line can NEVER break or dash no matter how fast you move.
     const nodes = Array.from({ length: trailLength }, () => ({ x, y }));
 
+    // Nothing is drawn until the pointer has actually moved.
+    let moved = false;
     const onMove = (cx, cy) => {
+      if (!moved) {
+        moved = true;
+        nodes.forEach((n) => {
+          n.x = cx;
+          n.y = cy;
+        });
+      }
       x = cx;
       y = cy;
     };
@@ -60,6 +69,10 @@ export default function BlobCursor({
       const h = window.innerHeight;
       // Fully clear — no residue ever stays on screen.
       ctx.clearRect(0, 0, w, h);
+      if (!moved) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
 
       if (!reduce) {
         // Advance the chain: head chases the pointer, each node chases the

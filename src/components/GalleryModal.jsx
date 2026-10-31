@@ -139,17 +139,16 @@ export default function GalleryModal({ event, onClose }) {
                 fontFamily: "'Outfit', sans-serif",
                 fontWeight: 800,
                 fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
-                color: '#F7E7C4',
+                color: '#FAF3E6',
                 lineHeight: 1.1,
                 letterSpacing: '-0.02em',
               }}>
                 {event.name}
               </h2>
               <p style={{
-                fontFamily: "'Newsreader', Georgia, serif",
-                fontStyle: 'italic',
+                fontFamily: "'Outfit', sans-serif",
                 fontSize: '1rem',
-                color: 'rgba(247,231,196,0.6)',
+                color: 'rgba(250, 243, 230,0.6)',
                 marginTop: '0.3rem',
               }}>
                 {event.venue}
@@ -158,12 +157,12 @@ export default function GalleryModal({ event, onClose }) {
             <button
               onClick={onClose}
               style={{
-                background: 'rgba(247,231,196,0.08)',
-                border: '1px solid rgba(247,231,196,0.15)',
+                background: 'rgba(250, 243, 230,0.08)',
+                border: '1px solid rgba(250, 243, 230,0.15)',
                 borderRadius: '50%',
                 width: '44px',
                 height: '44px',
-                color: '#F7E7C4',
+                color: '#FAF3E6',
                 fontSize: '1.4rem',
                 cursor: 'pointer',
                 display: 'flex',
@@ -173,7 +172,7 @@ export default function GalleryModal({ event, onClose }) {
                 transition: 'background 0.2s',
               }}
               onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(213,143,107,0.2)'}
-              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(247,231,196,0.08)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(250, 243, 230,0.08)'}
             >
               &times;
             </button>
@@ -231,7 +230,7 @@ export default function GalleryModal({ event, onClose }) {
               right: '40px',
               background: 'none',
               border: 'none',
-              color: '#F7E7C4',
+              color: '#FAF3E6',
               fontSize: '3rem',
               cursor: 'pointer',
               lineHeight: 1,
