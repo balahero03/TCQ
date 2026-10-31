@@ -1,16 +1,35 @@
-# React + Vite
+# The Curiosity Quotient
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The website for The Curiosity Quotient (TCQ), a Chennai culture space. It's a single-page, animation-driven React site with no backend.
 
-Currently, two official plugins are available:
+## Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Requires Node.js.
 
-## React Compiler
+```bash
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Commands
 
-## Expanding the ESLint configuration
+| Command | What it does |
+|---|---|
+| `npm run dev` | Starts the Vite dev server |
+| `npm run build` | Builds for production into `dist/` |
+| `npm run preview` | Serves the production build locally |
+| `npm run lint` | Runs ESLint |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Editing content
+
+Site content lives in the components rather than a CMS:
+
+- **Wings, events and photos:** `src/components/wingsData.js`, with photos in `src/assets/wings/<wing>/<event>/`
+- **Journey timeline:** `timeline` in `src/components/WhoIsBehind.jsx`
+- **Partner logos:** `BRAND_SLOTS` in `src/components/WingsBrandsSection.jsx`, with logos in `src/assets/partners/`
+- **Collaboration options:** `AUDIENCES` in `src/components/CallOutSection.jsx`
+- **Contact details and social links:** `src/components/Contact.jsx`
+
+The intro plays once per browser tab. To see it again, open the site in a new tab.
+
+See `CLAUDE.md` for architecture notes and animation conventions.

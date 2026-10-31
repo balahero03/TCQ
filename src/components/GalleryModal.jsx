@@ -4,28 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const getCols = () => (window.innerWidth < 640 ? 2 : window.innerWidth < 1024 ? 3 : 4);
 
-/* ── Generates a set of varied placeholder tiles for the gallery.
-   Each tile gets a random aspect ratio drawn from a curated set so
-   the masonry columns feel authentically editorial. ── */
-const ASPECT_POOL = [
-  { w: 3, h: 4 },   // portrait standard
-  { w: 4, h: 3 },   // landscape standard
-  { w: 1, h: 1 },   // square
-  { w: 2, h: 3 },   // tall portrait
-  { w: 16, h: 9 },  // cinematic
-  { w: 3, h: 2 },   // wide landscape
-];
-
-// Only pad with placeholder tiles when there are too few real photos to fill
-// out a reasonable-looking grid (`minCount`) — never pad past that just to
-// hit a fixed target, so events with plenty of real photos show only those.
-function makeTiles(photos, minCount = 6) {
-  const tiles = photos.map((p, i) => ({ ...p, key: `real-${i}` }));
-  for (let i = tiles.length; i < minCount; i++) {
-    const aspect = ASPECT_POOL[i % ASPECT_POOL.length];
-    tiles.push({ src: null, w: aspect.w, h: aspect.h, key: `ph-${i}` });
-  }
-  return tiles;
+// Galleries show real photos only — `ph()` entries have nothing to display.
+function makeTiles(photos) {
+  return photos.filter((p) => p.src).map((p, i) => ({ ...p, key: `real-${i}` }));
 }
 
 /* ── Pinterest masonry: distributes tiles across N columns,
@@ -44,7 +25,6 @@ function buildColumns(tiles, cols) {
 }
 
 function GalleryTile({ tile, index, onOpen }) {
-  const isPlaceholder = !tile.src;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -58,10 +38,6 @@ function GalleryTile({ tile, index, onOpen }) {
         overflow: 'hidden',
         cursor: 'zoom-in',
         marginBottom: '14px',
-        background: isPlaceholder
-          ? 'linear-gradient(135deg, #E8D0A0 0%, #F7E7C4 50%, #E8D0A0 100%)'
-          : 'transparent',
-        border: isPlaceholder ? '1px solid rgba(56,37,37,0.08)' : 'none',
         boxShadow: '0 4px 18px rgba(56,37,37,0.08)',
         position: 'relative',
         flexShrink: 0,
@@ -69,35 +45,11 @@ function GalleryTile({ tile, index, onOpen }) {
       }}
       whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(56,37,37,0.16)' }}
     >
-      {tile.src ? (
-        <img
-          src={tile.src}
-          alt="Gallery photo"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
-      ) : (
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.5rem',
-            color: 'rgba(56,37,37,0.35)',
-          }}
-        >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-            <rect x="3" y="3" width="18" height="18" rx="2" />
-            <circle cx="8.5" cy="8.5" r="1.5" />
-            <polyline points="21 15 16 10 5 21" />
-          </svg>
-          <span style={{ fontSize: '0.65rem', fontFamily: "'Outfit', sans-serif", letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600 }}>
-            Photo
-          </span>
-        </div>
-      )}
+      <img
+        src={tile.src}
+        alt="Gallery photo"
+        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+      />
     </motion.div>
   );
 }
@@ -124,10 +76,8 @@ export default function GalleryModal({ event, onClose }) {
     };
   }, [onClose, lightboxSrc]);
 
-  const realPhotos = event.galleryPhotos || event.photos;
-  const tiles = makeTiles(realPhotos);
+  const tiles = makeTiles(event.galleryPhotos || event.photos);
   const columns = buildColumns(tiles, cols);
-  const hasPlaceholders = tiles.length > realPhotos.length;
 
   return createPortal(
     <AnimatePresence>
@@ -243,28 +193,12 @@ export default function GalleryModal({ event, onClose }) {
                     key={tile.key}
                     tile={tile}
                     index={ci * 4 + ti}
-                    onOpen={(t) => { if (t.src) setLightboxSrc(t.src); }}
+                    onOpen={(t) => setLightboxSrc(t.src)}
                   />
                 ))}
               </div>
             ))}
           </div>
-
-          {/* Footer note — only shown when the gallery is still short on real photos */}
-          {hasPlaceholders && (
-            <p style={{
-              textAlign: 'center',
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '0.8rem',
-              color: 'rgba(247,231,196,0.3)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              marginTop: '3rem',
-              paddingBottom: '2rem',
-            }}>
-              More photos coming soon
-            </p>
-          )}
         </motion.div>
       </motion.div>
 

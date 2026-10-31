@@ -209,12 +209,12 @@ export default function CallOutSection() {
                 transition: 'all 0.3s ease',
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = '#E8A47E';
-                e.target.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.background = '#E8A47E';
+                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = '#D58F6B';
-                e.target.style.transform = 'translateY(0)';
+                e.currentTarget.style.background = '#D58F6B';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
               Get in touch →
@@ -282,7 +282,7 @@ export default function CallOutSection() {
           }}
         >
           {/* Horizontal timeline */}
-          <div style={{
+          <div className="callout-lines" style={{
             position: 'relative',
             display: 'grid',
             gridTemplateColumns: 'repeat(5, 1fr)',

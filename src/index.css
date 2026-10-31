@@ -46,10 +46,11 @@ body {
   border-radius: 2px;
 }
 
-.section-tag {
-  font-size: 0.7rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--orange);
-  font-weight: 600;
+/* Stops the looping CSS animations (marquees, orbs, pulses) for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

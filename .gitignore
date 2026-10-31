@@ -2,3 +2,4 @@ node_modules
 dist
 images-raw
 public/Website Pics
+.playwright-mcp

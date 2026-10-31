@@ -27,16 +27,13 @@ export default function BlurText({
   const ref = useRef(null);
   const inView = useInView(ref, { once: false, margin: '-50px' });
   const [completed, setCompleted] = useState(0);
-  const [settled, setSettled] = useState(false);
+  const [prevInView, setPrevInView] = useState(inView);
 
-  useEffect(() => {
-    if (!inView) {
-      // Re-arm the completion counter once the element leaves the viewport.
-      const frame = requestAnimationFrame(() => setCompleted(0));
-      setSettled(false);
-      return () => cancelAnimationFrame(frame);
-    }
-  }, [inView]);
+  // Re-arm the completion counter whenever visibility flips.
+  if (inView !== prevInView) {
+    setPrevInView(inView);
+    setCompleted(0);
+  }
 
   const tokens =
     animateBy === 'characters'
@@ -52,12 +49,11 @@ export default function BlurText({
   };
   const { x: dx, y: dy } = directionMap[direction] || directionMap.top;
 
+  const settled = completed >= tokens.length;
+
   useEffect(() => {
-    if (completed === tokens.length) {
-      setSettled(true);
-      if (onAnimationComplete) onAnimationComplete();
-    }
-  }, [completed, tokens.length, onAnimationComplete]);
+    if (settled && onAnimationComplete) onAnimationComplete();
+  }, [settled, onAnimationComplete]);
 
   return (
     <span
@@ -84,7 +80,10 @@ export default function BlurText({
             delay: (initialDelay / 1000) + (i * (delay / 1000)),
             ease: [0.16, 1, 0.3, 1],
           }}
-          onAnimationComplete={() => setCompleted((c) => c + 1)}
+          onAnimationComplete={() => {
+            // Only the entrance counts — the blur-out on exit shouldn't settle.
+            if (inView) setCompleted((c) => c + 1);
+          }}
           style={{
             display: 'inline-block',
             ...(settled ? { filter: 'none', willChange: 'auto' } : { willChange: 'transform, filter, opacity' }),

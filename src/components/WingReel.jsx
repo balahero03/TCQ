@@ -54,7 +54,7 @@ function MagneticCard({ wing, layout, mx, my }) {
       role="link"
       tabIndex={0}
       aria-label={`Go to ${wing.title}`}
-      onPointerDown={goToWing}
+      onClick={goToWing}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -222,7 +222,7 @@ function WingTitlePanel({ wing, reverse }) {
 function WingPin({ wing, index, isLast, onPhotoClick }) {
   const pinRef = useRef(null);
   const trackRef = useRef(null);
-  const [spot, setSpot] = useState({ x: 50, y: 50, on: false });
+  const spotRef = useRef(null);
   const reverse = index % 2 === 1;
 
   useEffect(() => {
@@ -326,23 +326,26 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
     // everything has mounted so each wing's start/end is correct.
     const refresh = () => ScrollTrigger.refresh();
     const t = setTimeout(refresh, 200);
-    window.addEventListener('load', refresh);
 
     return () => {
       clearTimeout(t);
-      window.removeEventListener('load', refresh);
       ctx.revert();
     };
   }, [reverse]);
 
+  // Written straight to the DOM: state here would re-render the whole reel on
+  // every mouse move.
   const onSpot = (e) => {
     const r = pinRef.current?.getBoundingClientRect();
-    if (!r) return;
-    setSpot({
-      x: ((e.clientX - r.left) / r.width) * 100,
-      y: ((e.clientY - r.top) / r.height) * 100,
-      on: true,
-    });
+    const spotEl = spotRef.current;
+    if (!r || !spotEl) return;
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    spotEl.style.opacity = 1;
+    spotEl.style.background = `radial-gradient(420px circle at ${x}% ${y}%, rgba(214,131,139,0.16), transparent 70%)`;
+  };
+  const onSpotLeave = () => {
+    if (spotRef.current) spotRef.current.style.opacity = 0;
   };
 
   return (
@@ -351,15 +354,9 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
       className={`wr-section ${reverse ? 'wr-section--reverse' : ''}`}
       ref={pinRef}
       onMouseMove={onSpot}
-      onMouseLeave={() => setSpot((s) => ({ ...s, on: false }))}
+      onMouseLeave={onSpotLeave}
     >
-      <div
-        className="wr-spotlight"
-        style={{
-          opacity: spot.on ? 1 : 0,
-          background: `radial-gradient(420px circle at ${spot.x}% ${spot.y}%, rgba(214,131,139,0.16), transparent 70%)`,
-        }}
-      />
+      <div className="wr-spotlight" ref={spotRef} style={{ opacity: 0 }} />
       <div className="wr-thread" />
 
       {/* small fixed direction cue */}

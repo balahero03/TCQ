@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useRef, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -62,19 +62,31 @@ const timeline = [
   },
 ];
 
+const MOBILE_QUERY = '(max-width: 768px)';
+
 function OrganicTimeline() {
   const pinRef = useRef(null);
   const scrollContentRef = useRef(null);
   const pathRef = useRef(null);
   const runnerRef = useRef(null);
   const nodesRef = useRef([]);
+  const didInit = useRef(false);
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia(MOBILE_QUERY).matches);
+  const [reduce] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  // Rotating or resizing across the breakpoint rebuilds the path and scroll timeline.
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const onChange = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   // Calculate layout parameters
   const step = 100 / (timeline.length + 1); // vertical percentage spacing
   
   // Dynamically generate the smooth wavy SVG path and node coordinates
   const { pathData, nodes } = useMemo(() => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
     const leftX = isMobile ? 35 : 42;
     const rightX = isMobile ? 65 : 58;
 
@@ -100,9 +112,12 @@ function OrganicTimeline() {
     d.push(`C ${lastX} ${lastY + step/2}, 50 ${lastY + step/2}, 50 110`);
 
     return { pathData: d.join(" "), nodes: n };
-  }, [step]);
+  }, [step, isMobile]);
 
   useEffect(() => {
+    // Reduced motion: no pin or scrub — the whole timeline renders drawn and visible.
+    if (reduce) return;
+
     // GSAP Context for React 18 strict-mode safety
     let ctx = gsap.context(() => {
       const path = pathRef.current;
@@ -120,7 +135,6 @@ function OrganicTimeline() {
         if (img) gsap.set(img, { opacity: 0, y: 30, scale: 0.85 });
       });
 
-      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
       const endScroll = isMobile ? timeline.length * 360 : timeline.length * 800;
       const cameraY = isMobile ? '-65vh' : '-120vh';
 
@@ -228,15 +242,22 @@ function OrganicTimeline() {
 
     }, pinRef);
 
+    // A rebuild creates this trigger after the wings' — restore page order.
+    if (didInit.current) {
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+    }
+    didInit.current = true;
+
     return () => ctx.revert();
-  }, [nodes, step]);
+  }, [nodes, step, isMobile, reduce]);
 
   return (
     <div style={{ background: '#F7E7C4' }}>
-      <div ref={pinRef} style={{ width: '100%', height: '100vh', position: 'relative', overflow: 'hidden', fontFamily: "'Outfit', sans-serif" }}>
+      <div ref={pinRef} style={{ width: '100%', height: reduce ? 'auto' : '100vh', position: 'relative', overflow: 'hidden', fontFamily: "'Outfit', sans-serif" }}>
         
         {/* Scrolling Canvas */}
-        <div ref={scrollContentRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: typeof window !== 'undefined' && window.innerWidth <= 768 ? '165vh' : '220vh', willChange: 'transform', overflow: 'hidden' }}>
+        <div ref={scrollContentRef} style={{ position: reduce ? 'relative' : 'absolute', top: 0, left: 0, width: '100%', height: isMobile ? '165vh' : '220vh', willChange: 'transform', overflow: 'hidden' }}>
           
           {/* Title Header matching WhatIsTCQ style - now scrolls away naturally */}
           <div style={{ position: 'absolute', top: '7vh', left: '5vw', zIndex: 3 }}>
@@ -1035,7 +1056,7 @@ export default function WhoIsBehind() {
                 <motion.h2 
                   className="pfc-heading"
                 >
-                  <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>WHOIS</motion.span>
+                  <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>WHO IS</motion.span>
                   <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>BEHIND</motion.span>
                   <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }} className="pfc-accent">TCQ?</motion.span>
                 </motion.h2>

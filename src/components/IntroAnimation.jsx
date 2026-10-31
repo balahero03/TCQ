@@ -48,7 +48,8 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
       setProgress(current);
       if (current >= 100) {
         clearInterval(interval);
-        setTimeout(() => setPhase('logo'), 400); // Wait so 100% is visible
+        // Wait so 100% is visible; a skip may already have moved past 'cats'.
+        setTimeout(() => setPhase((p) => (p === 'cats' ? 'logo' : p)), 400);
       }
     }, 30);
 
@@ -60,6 +61,19 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
     const t = setTimeout(triggerFly, LOGO_HOLD_MS);
     return () => clearTimeout(t);
   }, [phase, triggerFly, LOGO_HOLD_MS]);
+
+  // Click or Escape jumps straight to the fly phase.
+  const skip = useCallback(() => {
+    if (phase === 'cats' || phase === 'logo') triggerFly();
+  }, [phase, triggerFly]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') skip();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [skip]);
 
   // Called by framer-motion when the fly animation finishes
   const handleLanded = useCallback(() => {
@@ -92,6 +106,7 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
             key="overlay"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.75, ease: 'easeInOut' } }}
+            onClick={skip}
             style={{
               position: 'fixed', inset: 0, zIndex: 9998,
               background: '#382525',

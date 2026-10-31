@@ -13,18 +13,16 @@ TCQ ("The Curiosity Quotient") is a single-page marketing/portfolio site for a C
 - `npm run preview` — serve the production build locally
 - `npm run lint` — ESLint over all `.{js,jsx}` files (no autofix script; run `npx eslint . --fix` to apply)
 
-The `*.cjs` scripts at the repo root (`trace.cjs`, `invert.cjs`, `bbox_logo.cjs`, `trace_logo.cjs`, `check_svg.cjs`) are **one-off asset-generation tools**, not part of the app build. They use `potrace`/`jimp` to convert PNGs in `src/assets/` into SVGs (e.g. the hand-drawn cat outline). Run them directly with `node trace.cjs` only when regenerating those traced assets; the generated SVGs are committed.
-
 ## Architecture
 
 ### Page composition
 [src/App.jsx](src/App.jsx) is the whole app. It gates everything behind a two-phase reveal:
 1. `IntroAnimation` plays a full-screen overlay sequence and fires `onStartFly` / `onLanded` callbacks.
-2. Only after `onStartFly` does `App` mount the actual page (`BlobCursor` + `<main>` with sections in fixed order: `Hero` → `WhatIsTCQ` → `WhoIsBehind` → `WingReel` → `WingsBrandsSection` → `CallOutSection` → `Contact`).
+2. Only after `onStartFly` does `App` mount the actual page (`BlobCursor` + `<main>` with sections in fixed order: `Hero` → `WhatIsTCQ` → `WhoIsBehind` → `WingReel` → `CallOutSection` → `WingsBrandsSection` → `Contact`).
 
-`WingsBrandsSection.jsx`/`.css` (a "Brands We've Worked With" logo grid + marquee) **is mounted** and its `BRAND_SLOTS` array now holds real partner logos, imported from `src/assets/partners/`.
+`App` skips the intro entirely (mounting the page immediately) when the URL has a hash, for `prefers-reduced-motion`, or once it has played in the tab (`sessionStorage`). Clicking the overlay or pressing Escape jumps to the fly phase. **To re-test the intro, open a new tab.**
 
-Section render order in `App.jsx` is: `Hero` → `WhatIsTCQ` → `WhoIsBehind` → `WingReel` → `CallOutSection` → `WingsBrandsSection` → `Contact`.
+`WingsBrandsSection.jsx`/`.css` (a "Brands We've Worked With" logo grid + marquee) holds real partner logos in `BRAND_SLOTS`, imported from `src/assets/partners/`.
 
 The intro→hero handoff is deliberately seamless: the flying logo lands at the exact coordinates (`top:24, left:24`) where Hero renders its own logo — `onLanded` flips `logoLanded` so Hero reveals its logo precisely as the flying clone disappears. **When touching the intro or Hero header positioning, keep these coordinates in sync** ([IntroAnimation.jsx](src/components/IntroAnimation.jsx) `TARGET`, [Hero.css](src/components/Hero.css) `.hero-logo`).
 
@@ -36,21 +34,21 @@ The codebase mixes **framer-motion** and **GSAP ScrollTrigger**, intentionally s
 A recurring, load-bearing convention in [WingReel.jsx](src/components/WingReel.jsx): **CSS owns each photo frame's `transform`/`filter` (polaroid fan rotation + cursor-tilt hover); GSAP only animates `opacity` on those frames.** Writing transforms from GSAP there will fight the CSS. The `gsap.fromTo(..., { immediateRender: false })` pattern is used throughout so panels are never left stuck invisible — preserve it.
 
 ### WingReel scroll model (the most intricate component)
-Each of the 5 wings is its own pinned, horizontally-scrubbing reel. Direction alternates (boustrophedon/snake): even-index wings travel left→right, odd-index wings are laid out `row-reverse` and travel right→left. Stacked pinned sections shift each other's scroll measurements, so the component calls `ScrollTrigger.refresh()` on a timeout + `window.load`. Mobile and `prefers-reduced-motion` bail out of GSAP entirely and fall back to native CSS swipe — guard new scroll logic with the same `matchMedia` checks. Magnetic wing-preview cards (`MagneticCard`/`MagneticCards`) on the reel's opening page scroll-jump straight to a wing's `id="wing-XX"` section on click.
+Each of the 5 wings is its own pinned, horizontally-scrubbing reel. Direction alternates (boustrophedon/snake): even-index wings travel left→right, odd-index wings are laid out `row-reverse` and travel right→left. Stacked pinned sections shift each other's scroll measurements, so the component calls `ScrollTrigger.refresh()` on a timeout. `prefers-reduced-motion` bails out of GSAP entirely and falls back to native sideways scrolling (CSS at the end of `WingReel.css`); mobile still pins and scrubs, with its own sizing under `@media (max-width: 820px)`. Guard new scroll logic with the same reduced-motion `matchMedia` check — `WhoIsBehind` and `CardSwap` do too. Magnetic wing-preview cards (`MagneticCard`/`MagneticCards`) on the reel's opening page scroll-jump straight to a wing's `id="wing-XX"` section on click.
 
 ### Content lives in module-level data arrays
 Editable site content is **not** in a CMS or JSON files — it's `const` arrays at the top of components:
-- [src/components/wingsData.js](src/components/wingsData.js) — the five wings (`WINGS`), their events, and photos. Real photos live in `src/assets/wings/<wing>/<event>/`, imported per event and wrapped with `img(src, w, h)`; a few events still use `ph(w, h)` (`src: null`) where photos haven't landed yet — check the file for current gaps before assuming a given event has real images. `galleryFrom(folder)` (via `import.meta.glob`) pulls every photo in an event's asset folder into `galleryPhotos`, shown in `GalleryModal`'s full gallery view; events without a photo folder yet only get the curated `photos` array (which may itself be `ph()` placeholders). Layout per event is `'fan'` | `'hero'` | `'grid'` | `'split'` | `'collage'` | `'strip'` (each has matching `.wr-photos--*` CSS in [WingReel.css](src/components/WingReel.css)).
-- `timeline` in [WhoIsBehind.jsx](src/components/WhoIsBehind.jsx) (the "Journey So Far" organic path) — most entries have real logos imported from `src/assets/timeline/`; check the file for any remaining `img: null` entries before assuming it's fully populated. `SPARKLES`/`DUST` in [Hero.jsx](src/components/Hero.jsx), `AUDIENCES` in [CallOutSection.jsx](src/components/CallOutSection.jsx), `BRAND_SLOTS` in [WingsBrandsSection.jsx](src/components/WingsBrandsSection.jsx).
+- [src/components/wingsData.js](src/components/wingsData.js) — the five wings (`WINGS`), their events, and photos. Real photos live in `src/assets/wings/<wing>/<event>/`, imported per event and wrapped with `img(src, w, h)`; `ph(w, h)` (`src: null`) remains available for an event whose photos haven't landed yet. `galleryFrom(folder)` (via `import.meta.glob`) pulls every photo in an event's asset folder into `galleryPhotos`, shown in `GalleryModal`'s full gallery view. Layout per event is `'fan'` | `'hero'` | `'thumb'` | `'grid'` | `'split'` | `'collage'` | `'strip'` (each has matching `.wr-photos--*` CSS in [WingReel.css](src/components/WingReel.css)).
+- `timeline` in [WhoIsBehind.jsx](src/components/WhoIsBehind.jsx) (the "Journey So Far" organic path) — entries have real logos imported from `src/assets/timeline/`. `SPARKLES`/`DUST` in [Hero.jsx](src/components/Hero.jsx), `AUDIENCES` in [CallOutSection.jsx](src/components/CallOutSection.jsx), `BRAND_SLOTS` in [WingsBrandsSection.jsx](src/components/WingsBrandsSection.jsx).
 
-`GalleryModal.jsx` renders the per-event photo lightbox opened from `WingReel`'s "Explore images" buttons; it pads an event's gallery with a handful of placeholder tiles only when real photos are too few to fill a reasonable grid, and shows a real per-photo lightbox on click.
+`GalleryModal.jsx` renders the per-event photo lightbox opened from `WingReel`'s "Explore images" buttons; it shows only real photos and opens a per-photo lightbox on click.
 
 ### Reusable "design" components
-Several components under `src/components/` are generic, self-contained animation primitives reused across sections, each with a paired `.css`: `BlobCursor`, `TrueFocus`, `BlurText`, `ScrollReveal`, `CountUp`, `CardSwap`. Treat these as a local mini-library — prefer composing them over re-implementing similar effects.
+Several components under `src/components/` are generic, self-contained animation primitives reused across sections: `BlobCursor`, `TrueFocus`, `CardSwap` (each with a paired `.css`), `BlurText`, `ScrollReveal`, `CountUp`. Treat these as a local mini-library — prefer composing them over re-implementing similar effects.
 
 ## Conventions
 
 - **Styling is mixed**: paired `ComponentName.css` files, large inline `style={{}}` objects, and occasional inline `<style>` blocks (e.g. `WhoIsBehind`, `WhatIsTCQ`, `Contact`, `CallOutSection` inject `<style>` blocks for keyframes/selectors that inline `style={{}}` can't express). There is no CSS framework or CSS-in-JS library. Match whatever the surrounding component already uses.
 - **Brand palette** (recurring hex values, defined as CSS custom properties in [src/index.css](src/index.css) `:root`): `#382525` (brown/near-black), `#D58F6B` (orange, primary accent), `#F7E7C4`/`#E8D0A0` (cream light/dark). Darker maroon tones (`#2e1c1c`, `#4a3030`) appear in `Contact`/`CallOutSection` for contrast sections. Reuse these rather than introducing new colors.
-- Fonts (loaded via Google Fonts `@import` in `index.css` and re-imported locally by a couple of components): `Outfit` (body/UI), `Fredoka` (intro wordmark), `Newsreader` (italic serif accent headings/quotes).
+- Fonts (loaded via Google Fonts `@import` in `index.css` and re-imported locally by a couple of components): `Outfit` (body/UI), `Newsreader` (italic serif accent headings/quotes).
 - React 19 + Vite 8, ESLint flat config. The `react-hooks` exhaustive-deps rule is on — keep effect/callback dependency arrays correct, especially in the GSAP `useEffect`s where they control re-init.

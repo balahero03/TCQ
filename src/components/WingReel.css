@@ -824,4 +824,14 @@
 @media (prefers-reduced-motion: reduce) {
   .wr-scroll-hint span,
   .wr-frame:hover .wr-frame-sheen { animation: none; }
+
+  /* GSAP is skipped here, so each reel falls back to native sideways scrolling. */
+  .wr-section {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .wr-track { will-change: auto; }
+  .wr-section--reverse .wr-track { flex-direction: row; }
+  .wr-wingtitle .wr-scroll-hint span,
+  .wr-dirhint-arrow { display: none; }
 }

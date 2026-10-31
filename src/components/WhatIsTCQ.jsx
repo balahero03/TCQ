@@ -357,18 +357,18 @@ export default function WhatIsTCQ() {
               Since then, TCQ has found its way into classrooms, auditoriums, cafés, galleries, streets and screens. We’ve built quizzes, started discussions, brought unlikely people together, explored new corners of the city and made room for new people that deserved to be seen and heard.
             </p>
             <p>
-              We’re still figuring out on how to bracket it into one title. That, perhaps, is the point.
+              We’re still figuring out how to bracket it into one title. That, perhaps, is the point.
             </p>
 
             {/* Stats strip */}
             <div className="tcq-stats-strip">
               <div className="tcq-strip-stat">
-                <div className="tcq-strip-num"><CountUp to={5} suffix="+" /></div>
+                <div className="tcq-strip-num"><CountUp to={5} /></div>
                 <div className="tcq-strip-label">Wings</div>
               </div>
 
               <div className="tcq-strip-stat tcq-strip-stat--center">
-                <div className="tcq-strip-label" style={{ marginTop: 0, marginBottom: '0.2rem' }}>Found In</div>
+                <div className="tcq-strip-label" style={{ marginTop: 0, marginBottom: '0.2rem' }}>Founded</div>
                 <div className="tcq-strip-num">2023</div>
               </div>
 

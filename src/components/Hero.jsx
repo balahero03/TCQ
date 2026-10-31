@@ -208,9 +208,9 @@ export default function Hero({ logoLanded }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
               <a href="#what-we-do" className="mobile-menu-link" style={{ marginBottom: '4px' }} onClick={(e) => { e.preventDefault(); scrollToSection('what-we-do'); }}>What we do</a>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-                <a href="#wing-01" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-01'); }}>— For Brands</a>
-                <a href="#wing-02" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-02'); }}>— Quizzes</a>
-                <a href="#wing-03" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-03'); }}>— Circles</a>
+                <a href="#wing-01" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-01'); }}>— Quizzes</a>
+                <a href="#wing-02" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-02'); }}>— Circles</a>
+                <a href="#wing-03" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-03'); }}>— Collabs</a>
                 <a href="#wing-04" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-04'); }}>— Writes</a>
                 <a href="#wing-05" className="mobile-menu-link" style={{ fontSize: '1.25rem', color: '#D58F6B', textDecoration: 'none' }} onClick={(e) => { e.preventDefault(); scrollToSection('wing-05'); }}>— Teaches</a>
               </div>
