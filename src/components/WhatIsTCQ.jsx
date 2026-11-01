@@ -284,8 +284,8 @@ export default function WhatIsTCQ() {
               </div>
 
               <div className="tcq-strip-stat tcq-strip-stat--center">
-                <div className="tcq-strip-label" style={{ marginTop: 0, marginBottom: '0.2rem' }}>Founded</div>
                 <div className="tcq-strip-num">2023</div>
+                <div className="tcq-strip-label">Founded</div>
               </div>
 
               <div className="tcq-strip-stat" style={{ alignItems: 'flex-end' }}>

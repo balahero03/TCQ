@@ -224,14 +224,14 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
             left: safe.left,
             height: safe.height,
             width: safe.width,
-            filter: 'brightness(1)',
+            filter: 'brightness(1) drop-shadow(0px 0px 0px #000) drop-shadow(0px 0px 0px #000)',
           }}
           animate={{
             top: TARGET.top,
             left: TARGET.left,
             height: TARGET.height,
             width: Math.round(TARGET.height * (safe.width / safe.height)),
-            filter: 'brightness(0)',
+            filter: 'brightness(0) drop-shadow(0.6px 0.6px 0px #000) drop-shadow(-0.6px -0.6px 0px #000)',
           }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           onAnimationComplete={handleLanded}

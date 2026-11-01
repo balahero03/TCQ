@@ -383,14 +383,16 @@ export default function Contact() {
       {/* ════════ Info row: brand · reach · credit ════════ */}
       <div className="ctf-row">
         {/* Brand */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', marginBottom: '1.1rem' }}>
-            <img src={logoImg} alt="TCQ" style={{ height: 56, width: 'auto', filter: 'brightness(0) invert(1)' }} />
-            <div style={{ fontSize: '0.7rem', letterSpacing: '0.28em', textTransform: 'uppercase', lineHeight: 1.5, opacity: 0.8 }}>
+        <div style={{ alignSelf: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', marginBottom: '1.1rem', fontSize: 'clamp(0.95rem, 1.45vw, 1.25rem)' }}>
+            {/* Negative margins cancel logo.webp's built-in transparent padding, so
+                the mark sits flush left and matches the height of the text block. */}
+            <img src={logoImg} alt="TCQ" style={{ height: '7.5em', width: 'auto', margin: '-1.9em -1.74em -1.85em -1.91em', filter: 'brightness(0) invert(1)' }} />
+            <div style={{ fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', lineHeight: 1.25, opacity: 0.8 }}>
               The<br />Curiosity<br />Quotient
             </div>
           </div>
-          <div style={{ color: '#D58F6B', fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)', fontWeight: 700, letterSpacing: '0.1em' }}>
+          <div style={{ color: '#D58F6B', fontSize: 'clamp(1.65rem, 2.4vw, 2rem)', fontWeight: 700, letterSpacing: '0.1em' }}>
             CQ + PQ &gt; IQ
           </div>
         </div>
@@ -399,7 +401,7 @@ export default function Contact() {
         <div>
           <div className="ctf-col-label">Reach us</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-            <div style={{ color: 'rgba(240,234,226,0.45)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            <div style={{ color:'white', fontSize: '1.00rem', fontWeight: 1000, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
               Vishnu Aravind
             </div>
             <a href="mailto:thecuriosityquotient@gmail.com" className="ctf-link" style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)' }}>

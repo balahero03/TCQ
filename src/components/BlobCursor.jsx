@@ -14,6 +14,7 @@ export default function BlobCursor({
   lineWidth = 3,
   trailLength = 18,   // how many recent points form the line (longer = longer trail)
   zIndex = 9999,
+  hideOver = null,    // CSS selector: cursor disappears while over a match
 }) {
   const canvasRef = useRef(null);
 
@@ -74,6 +75,18 @@ export default function BlobCursor({
         return;
       }
 
+      // Hit-tested every frame so it also updates when the page scrolls under
+      // a still pointer. Nodes stay on the pointer so no trail streaks back
+      // from the old position on reappearing.
+      if (hideOver && document.elementFromPoint(x, y)?.closest(hideOver)) {
+        nodes.forEach((n) => {
+          n.x = x;
+          n.y = y;
+        });
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+
       if (!reduce) {
         // Advance the chain: head chases the pointer, each node chases the
         // previous node. 0.4 = springiness (higher snaps tighter to cursor).
@@ -118,7 +131,7 @@ export default function BlobCursor({
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(raf);
     };
-  }, [fillColor, dotSize, lineWidth, trailLength]);
+  }, [fillColor, dotSize, lineWidth, trailLength, hideOver]);
 
   return (
     <div className="cursor-container" style={{ zIndex }}>

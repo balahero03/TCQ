@@ -155,14 +155,15 @@
   height: 60px;
   width: auto;
   display: block;
-  filter: brightness(0);
+  /* Shadows thicken the thin raster mark. Keep in sync with IntroAnimation's fly target. */
+  filter: brightness(0) drop-shadow(0.6px 0.6px 0px #000) drop-shadow(-0.6px -0.6px 0px #000);
   pointer-events: none;
 }
 
 .hero-wordmark {
   position: absolute;
   top: 42px;
-  left: 92px;
+  left: 80px;
   font-family: 'Outfit', sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
@@ -401,7 +402,7 @@
 
   .hero-wordmark {
     top: 30px;
-    left: 74px;
+    left: 62px;
     font-size: 0.72rem;
   }
 

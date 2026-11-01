@@ -17,7 +17,7 @@
   letter-spacing: 0.02em;
   text-decoration: none;
   color: #1F090C;
-  cursor: pointer;
+  cursor: none;
   transition:
     filter 0.3s ease,
     color 0.3s ease;

@@ -1020,7 +1020,6 @@ export default function WhoIsBehind() {
                   className="pfc-heading"
                 >
                   <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>WHO IS</motion.span>
-                  <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}>BEHIND</motion.span>
                   <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }} className="pfc-accent">TCQ?</motion.span>
                 </motion.h2>
                 <motion.div 

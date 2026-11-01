@@ -24,7 +24,7 @@ const BRAND_SLOTS = [
   { id: 7, name: 'Chennai Quiz Factory', logo: chennaiQuizFactoryLogo },
   { id: 8, name: "Watson's — The Neighbourhood Bar", logo: watsonsLogo },
   { id: 9, name: 'Lectures on the Rocks', logo: lecturesOnTheRocksLogo },
-  { id: 10, name: 'Lit Arcade', logo: litArcadeLogo, darkTile: true },
+  { id: 10, name: 'Lit Arcade', logo: litArcadeLogo },
   { id: 11, name: 'Berty Ashley Think Tank', logo: bertyAshleyLogo },
   { id: 12, name: "Instincts '26, SSN", logo: instinctsSsnLogo },
 ];
@@ -46,7 +46,7 @@ const tileVariants = {
 
 function BrandTile({ slot }) {
   return (
-    <motion.div className="wbs-tile" variants={tileVariants} style={slot.darkTile ? { background: 'var(--brown)' } : undefined}>
+    <motion.div className="wbs-tile" variants={tileVariants}>
       {slot.logo ? (
         <img src={slot.logo} alt={`${slot.name} logo`} style={{ maxWidth: '85%', maxHeight: '85%', width: 'auto', height: 'auto', objectFit: 'contain' }} />
       ) : slot.name ? (
