@@ -13,6 +13,11 @@ import lecturesOnTheRocksLogo from '../assets/partners/lectures-on-the-rocks.web
 import litArcadeLogo from '../assets/partners/lit-arcade.webp';
 import bertyAshleyLogo from '../assets/partners/berty-ashley-think-tank.webp';
 import instinctsSsnLogo from '../assets/partners/instincts-ssn.webp';
+import allianceFrancaiseLogo from '../assets/partners/alliance-francaise-madras.webp';
+import climateWeekLogo from '../assets/partners/climate-week-india.webp';
+import fiveFeetCollectiveLogo from '../assets/partners/five-feet-collective.webp';
+import laNuitBlancheLogo from '../assets/partners/la-nuit-blanche.webp';
+import xtremeGamingTribeLogo from '../assets/partners/xtreme-gaming-tribe.webp';
 
 const BRAND_SLOTS = [
   { id: 1, name: 'Kyn', logo: kynLogo },
@@ -27,6 +32,11 @@ const BRAND_SLOTS = [
   { id: 10, name: 'Lit Arcade', logo: litArcadeLogo },
   { id: 11, name: 'Berty Ashley Think Tank', logo: bertyAshleyLogo },
   { id: 12, name: "Instincts '26, SSN", logo: instinctsSsnLogo },
+  { id: 13, name: 'Alliance Française Madras', logo: allianceFrancaiseLogo },
+  { id: 14, name: 'Climate Week India', logo: climateWeekLogo },
+  { id: 15, name: 'Five Feet Collective', logo: fiveFeetCollectiveLogo },
+  { id: 16, name: 'La Nuit Blanche', logo: laNuitBlancheLogo },
+  { id: 17, name: 'Xtreme Gaming Tribe', logo: xtremeGamingTribeLogo },
 ];
 
 const gridVariants = {
