@@ -18,6 +18,7 @@ import climateWeekLogo from '../assets/partners/climate-week-india.webp';
 import fiveFeetCollectiveLogo from '../assets/partners/five-feet-collective.webp';
 import laNuitBlancheLogo from '../assets/partners/la-nuit-blanche.webp';
 import xtremeGamingTribeLogo from '../assets/partners/xtreme-gaming-tribe.webp';
+import unnamedPartnerLogo from '../assets/partners/unnamed-partner.webp';
 
 const BRAND_SLOTS = [
   { id: 1, name: 'Kyn', logo: kynLogo },
@@ -37,6 +38,7 @@ const BRAND_SLOTS = [
   { id: 15, name: 'Five Feet Collective', logo: fiveFeetCollectiveLogo },
   { id: 16, name: 'La Nuit Blanche', logo: laNuitBlancheLogo },
   { id: 17, name: 'Xtreme Gaming Tribe', logo: xtremeGamingTribeLogo },
+  { id: 18, name: 'Partner', logo: unnamedPartnerLogo }, // TODO: real brand name
 ];
 
 const gridVariants = {
