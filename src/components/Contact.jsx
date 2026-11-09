@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import logoImg from '../assets/logo.webp';
+import logoLockupImg from '../assets/brand/logo-lockup-white.webp';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -181,6 +181,12 @@ export default function Contact() {
           margin: 0 0.4rem;
         }
 
+        /* Info row + bottom bar use exactly two text sizes:
+           --ctf-fs (all content) and --ctf-fs-sm (column labels, copyright). */
+        .ctf-row, .ctf-bottom {
+          --ctf-fs: 1rem;
+          --ctf-fs-sm: 0.75rem;
+        }
         .ctf-row {
           display: grid;
           grid-template-columns: 1.2fr 1fr 1fr;
@@ -192,7 +198,7 @@ export default function Contact() {
           z-index: 2;
         }
         .ctf-col-label {
-          font-size: 0.65rem;
+          font-size: var(--ctf-fs-sm);
           letter-spacing: 0.3em;
           text-transform: uppercase;
           color: rgba(240,234,226,0.45);
@@ -218,7 +224,7 @@ export default function Contact() {
         }
         .ctf-credit-link {
           color: rgba(240,234,226,0.6);
-          font-size: 0.9rem;
+          font-size: var(--ctf-fs);
           text-decoration: none;
           display: flex;
           align-items: center;
@@ -339,7 +345,7 @@ export default function Contact() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
           style={{
-            fontSize: 'clamp(0.95rem, 1.4vw, 1.15rem)',
+            fontSize: 'var(--fs-body)',
             color: 'rgba(240,234,226,0.7)',
             maxWidth: 520,
             margin: '1.2rem auto 0',
@@ -384,15 +390,13 @@ export default function Contact() {
       <div className="ctf-row">
         {/* Brand */}
         <div style={{ alignSelf: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', marginBottom: '1.1rem', fontSize: 'clamp(0.95rem, 1.45vw, 1.25rem)' }}>
-            {/* Negative margins cancel logo.webp's built-in transparent padding, so
-                the mark sits flush left and matches the height of the text block. */}
-            <img src={logoImg} alt="TCQ" style={{ height: '7.5em', width: 'auto', margin: '-1.9em -1.74em -1.85em -1.91em', filter: 'brightness(0) invert(1)' }} />
-            <div style={{ fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', lineHeight: 1.25, opacity: 0.8 }}>
-              The<br />Curiosity<br />Quotient
-            </div>
-          </div>
-          <div style={{ color: '#D58F6B', fontSize: 'clamp(1.65rem, 2.4vw, 2rem)', fontWeight: 700, letterSpacing: '0.1em' }}>
+          {/* Official lockup (icon + wordmark) from the brand PNG, cropped tight */}
+          <img
+            src={logoLockupImg}
+            alt="The Curiosity Quotient"
+            style={{ display: 'block', height: 'clamp(4rem, 6vw, 5.5rem)', width: 'auto', marginBottom: '1.1rem' }}
+          />
+          <div style={{ color: '#D58F6B', fontSize: 'var(--ctf-fs)', fontWeight: 700, letterSpacing: '0.1em' }}>
             CQ + PQ &gt; IQ
           </div>
         </div>
@@ -401,13 +405,13 @@ export default function Contact() {
         <div>
           <div className="ctf-col-label">Reach us</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-            <div style={{ color:'white', fontSize: '1.00rem', fontWeight: 1000, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            <div style={{ color:'white', fontSize: 'var(--ctf-fs)', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
               Vishnu Aravind
             </div>
-            <a href="mailto:thecuriosityquotient@gmail.com" className="ctf-link" style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)' }}>
+            <a href="mailto:thecuriosityquotient@gmail.com" className="ctf-link" style={{ fontSize: 'var(--ctf-fs)' }}>
               thecuriosityquotient@gmail.com
             </a>
-            <a href="tel:+918754400743" className="ctf-link" style={{ fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', color: 'rgba(240,234,226,0.75)' }}>
+            <a href="tel:+918754400743" className="ctf-link" style={{ fontSize: 'var(--ctf-fs)', color: 'rgba(240,234,226,0.75)' }}>
               +91 87544 00743
             </a>
             <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
@@ -429,7 +433,7 @@ export default function Contact() {
         {/* Crafted by */}
         <div>
           <div className="ctf-col-label">Crafted by</div>
-          <div style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '0.9rem' }}>
+          <div style={{ fontSize: 'var(--ctf-fs)', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.9rem' }}>
             VoidTheory
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -447,6 +451,7 @@ export default function Contact() {
 
       {/* ════════ Bottom bar ════════ */}
       <div
+        className="ctf-bottom"
         style={{
           borderTop: '1px solid rgba(240,234,226,0.1)',
           padding: '1.5rem 8vw',
@@ -459,7 +464,7 @@ export default function Contact() {
           zIndex: 2,
         }}
       >
-        <span style={{ color: 'rgba(240,234,226,0.35)', fontSize: '0.78rem' }}>
+        <span style={{ color: 'rgba(240,234,226,0.35)', fontSize: 'var(--ctf-fs-sm)' }}>
           © {new Date().getFullYear()} The Curiosity Quotient. Chennai.
         </span>
       </div>

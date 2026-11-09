@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import logoImg from '../assets/logo.webp';
+import logoIconImg from '../assets/brand/logo-icon-brown.webp';
+import logoWordmarkImg from '../assets/brand/logo-wordmark-brown.webp';
 import TrueFocus from './TrueFocus';
 import CatHeroAnimation from './CatHeroAnimation';
 import BlurText from './BlurText';
@@ -40,23 +41,14 @@ export default function Hero({ logoLanded }) {
     my.set((e.clientY - r.top) / r.height - 0.5);
   };
 
-  // Different parallax depths for layered movement
-  const orb1X = useTransform(sx, (v) => v * 60);
-  const orb1Y = useTransform(sy, (v) => v * 60);
-  const orb2X = useTransform(sx, (v) => v * -45);
-  const orb2Y = useTransform(sy, (v) => v * -45);
+  // Cursor parallax on the cat drawing
   const catX = useTransform(sx, (v) => v * 28);
   const catY = useTransform(sy, (v) => v * 22);
 
   return (
     <section ref={ref} className="hero-section" onMouseMove={handleMouseMove}>
-      {/* ── Breathing gradient wash ── */}
-      <div className="hero-gradient-wash" />
-<div className="hero-divider" />
-
-      {/* ── Ambient floating glow orbs (cursor parallax) ── */}
-      <motion.div className="hero-orb hero-orb-1" style={{ x: orb1X, y: orb1Y }} />
-      <motion.div className="hero-orb hero-orb-2" style={{ x: orb2X, y: orb2Y }} />
+      {/* Solid cream background only: no gradient wash or glow orbs */}
+      <div className="hero-divider" />
 
       {/* ── Full-section cat backdrop ── */}
       <motion.div
@@ -74,21 +66,22 @@ export default function Hero({ logoLanded }) {
 
       <header className="hero-header">
         <motion.img
-          src={logoImg}
-          alt="TCQ Logo"
+          src={logoIconImg}
+          alt=""
+          aria-hidden="true"
           initial={{ opacity: 0 }}
           animate={{ opacity: logoLanded ? 1 : 0 }}
           transition={{ duration: 0.15, ease: 'easeOut' }}
           className="hero-logo"
         />
-        <motion.span
+        <motion.img
+          src={logoWordmarkImg}
+          alt="The Curiosity Quotient"
           className="hero-wordmark"
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: logoLanded ? 1 : 0, x: logoLanded ? 0 : -8 }}
           transition={{ duration: 0.4, ease: 'easeOut', delay: 0.15 }}
-        >
-        The Curiosity Quotient
-        </motion.span>
+        />
         <motion.nav
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -201,7 +194,7 @@ export default function Hero({ logoLanded }) {
                   </span>
                   The Curiosity Quotient (TCQ) is your gateway to all those worlds under one roof, bringing together knowledge, culture and people to create experiences that make learning feel less like learning and more like discovery.
                   <br /><br />
-                  Some of these experiences are our own. Others are created with people, communities, institutions and brands who have something worth sharing. At its heart, TCQ is a culture space. A place for ideas to meet people, for communities to find each other, and for healthy cultures to grow, evolve and discover their place in the microcosm called Chennai.
+                  At its heart, TCQ is a culture space. A place for ideas to meet people, for communities to find each other, and for healthy cultures to grow, evolve and discover their place in the microcosm called Chennai.
                 </motion.p>
               </div>
 

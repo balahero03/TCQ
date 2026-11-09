@@ -23,81 +23,6 @@
   z-index: 10000;
 }
 
-/* ── Breathing gradient wash ── */
-.hero-gradient-wash {
-  position: absolute;
-  inset: 100;
-  z-index: 100;
-  pointer-events: none;
-  background:
-    radial-gradient(60% 50% at 80% 35%, rgba(213, 143, 107, 0.14), transparent 70%),
-    radial-gradient(50% 60% at 15% 80%, rgba(56, 37, 37, 0.07), transparent 70%);
-  animation: hero-wash 12s ease-in-out infinite alternate;
-}
-
-@keyframes hero-wash {
-  0% {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-}
-
-.hero-orb {
-  position: absolute;
-  border-radius: 0%;
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 0;
-  will-change: transform;
-}
-
-.hero-orb-1 {
-  width: 420px;
-  height: 420px;
-  top: -10%;
-  right: 8%;
-  background: rgba(213, 143, 107, 0.15);
-  animation: hero-float-a 16s ease-in-out infinite;
-}
-
-.hero-orb-2 {
-  width: 320px;
-  height: 320px;
-  bottom: 2%;
-  right: 28%;
-  background: rgba(242, 231, 211, 0.35);
-  animation: hero-float-b 20s ease-in-out infinite;
-}
-
-@keyframes hero-float-a {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  50% {
-    transform: translate(-40px, 40px) scale(1.12);
-  }
-}
-
-@keyframes hero-float-b {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  50% {
-    transform: translate(50px, -30px) scale(1.08);
-  }
-}
-
 .hero-cat-backdrop {
   position: absolute;
   bottom: -4%;
@@ -148,29 +73,35 @@
   border-top: 2px solid rgba(213, 143, 107, 0.2);
 }
 
+/* Header lockup = the official brand PNG split into icon + wordmark, so the
+   flying intro icon can land on the icon alone. --logo-top/--logo-left/--logo-h
+   place the icon (keep in sync with IntroAnimation's TARGET); the wordmark's
+   offsets and height are the official lockup's own proportions, measured in
+   its source pixels (icon 539px tall; wordmark 349px tall, 673px right of and
+   113px below the icon's top-left). */
+.hero-header {
+  --logo-top: 24px;
+  --logo-left: 24px;
+  --logo-h: 60px;
+}
+
 .hero-logo {
   position: absolute;
-  top: 24px;
-  left: 24px;
-  height: 60px;
+  top: var(--logo-top);
+  left: var(--logo-left);
+  height: var(--logo-h);
   width: auto;
   display: block;
-  /* Shadows thicken the thin raster mark. Keep in sync with IntroAnimation's fly target. */
-  filter: brightness(0) drop-shadow(0.6px 0.6px 0px #000) drop-shadow(-0.6px -0.6px 0px #000);
   pointer-events: none;
 }
 
 .hero-wordmark {
   position: absolute;
-  top: 42px;
-  left: 80px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #382525;
-  white-space: nowrap;
+  top: calc(var(--logo-top) + var(--logo-h) * 113 / 539);
+  left: calc(var(--logo-left) + var(--logo-h) * 673 / 539);
+  height: calc(var(--logo-h) * 349 / 539);
+  width: auto;
+  display: block;
   pointer-events: none;
   z-index: 10;
 }
@@ -263,7 +194,7 @@
 }
 
 .hero-paragraph {
-  font-size: clamp(0.9rem, 1.05vw, 1.02rem);
+  font-size: var(--fs-body);
   line-height: 1.55;
   font-weight: 400;
   color: #5a3e3e;
@@ -380,10 +311,6 @@
 }
 
 @media (max-width: 768px) {
-  .hero-gradient-wash {
-    opacity: 0.35;
-  }
-
   .hero-header {
     padding: 0 20px;
     height: 80px;
@@ -393,17 +320,14 @@
     top: 80px;
   }
 
-  .hero-logo {
-    top: 16px;
-    left: 16px;
-    height: 48px;
-    z-index: 60;
+  .hero-header {
+    --logo-top: 16px;
+    --logo-left: 16px;
+    --logo-h: 48px;
   }
 
-  .hero-wordmark {
-    top: 30px;
-    left: 62px;
-    font-size: 0.72rem;
+  .hero-logo {
+    z-index: 60;
   }
 
   .hero-nav {
@@ -548,7 +472,7 @@
   }
 
   .hero-paragraph {
-    font-size: clamp(0.88rem, 3.4vw, 0.96rem);
+    font-size: var(--fs-body);
     line-height: 1.65;
     text-align: left;
     color: #5a3e3e;

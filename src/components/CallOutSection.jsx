@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 const AUDIENCES = [
   {
     id: 'schools',
-    emoji: '🎓',
     label: 'Schools, Colleges & Learning Spaces',
     hook: 'Got students who ask too many questions? Good.',
     bullets: [
@@ -18,7 +17,6 @@ const AUDIENCES = [
   },
   {
     id: 'brands',
-    emoji: '✦',
     label: 'Brands & Companies',
     hook: "Want to meet your audience somewhere more interesting than an ad?",
     bullets: [
@@ -32,7 +30,6 @@ const AUDIENCES = [
   },
   {
     id: 'events',
-    emoji: '◎',
     label: 'Event Organisers & Cultural Curators',
     hook: 'Making something worth knowing about?',
     bullets: [
@@ -44,7 +41,6 @@ const AUDIENCES = [
   },
   {
     id: 'curious',
-    emoji: '?',
     label: 'Curious People of Chennai',
     hook: "You're already one of us. Join the community.",
     bullets: [
@@ -53,6 +49,34 @@ const AUDIENCES = [
       'Attend our events and bring something interesting',
     ],
     accentColor: '#D58F6B',
+  },
+];
+
+// Hairline colour shared by every rule in this section (tab underline,
+// bullet separator, and the lines above and below the icon row).
+const RULE_COLOR = 'rgba(250, 243, 230, 0.15)';
+
+// The "We like starting there." row: each starter gets a simple line icon.
+const STARTERS = [
+  {
+    text: 'A question.',
+    icon: (<><path d="M7.5 8a4.5 4.5 0 1 1 6.6 4c-1.3.7-2.1 1.7-2.1 3.2V16" /><path d="M12 20.5h.01" /></>),
+  },
+  {
+    text: 'A half-formed idea.',
+    icon: (<><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></>),
+  },
+  {
+    text: 'A brand looking for its people.',
+    icon: (<><path d="m3 11 18-5v12L3 14v-3z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></>),
+  },
+  {
+    text: 'A school looking to do things differently.',
+    icon: (<><path d="M22 10v6" /><path d="M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></>),
+  },
+  {
+    text: 'An event that deserves a bigger audience.',
+    icon: (<><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" /><path d="M13 5v2" /><path d="M13 17v2" /><path d="M13 11v2" /></>),
   },
 ];
 
@@ -120,7 +144,7 @@ export default function CallOutSection() {
         </h2>
 
         <p style={{
-          fontSize: 'clamp(1rem, 1.3vw, 1.15rem)',
+          fontSize: 'var(--fs-body)',
           lineHeight: 1.6,
           color: '#D3B8A8',
           marginBottom: '3rem',
@@ -138,7 +162,7 @@ export default function CallOutSection() {
           display: 'grid',
           gridTemplateColumns: `repeat(${AUDIENCES.length}, 1fr)`,
           marginBottom: '3rem',
-          borderBottom: '1px solid rgba(250, 243, 230, 0.15)',
+          borderBottom: `1px solid ${RULE_COLOR}`,
           paddingBottom: '1rem',
         }}>
           {AUDIENCES.map((audience, idx) => (
@@ -210,7 +234,8 @@ export default function CallOutSection() {
             transition={{ duration: 0.4, delay: 0.1 }}
             style={{
               paddingLeft: 'clamp(1rem, 3vw, 2rem)',
-              borderLeft: `2px solid ${AUDIENCES[active].accentColor}`,
+              // Same faded cream and 1px weight as the section's horizontal rules
+              borderLeft: `1px solid ${RULE_COLOR}`,
             }}
           >
             <ul style={{
@@ -228,7 +253,7 @@ export default function CallOutSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: idx * 0.05 }}
                   style={{
-                    fontSize: 'clamp(0.9rem, 1.1vw, 1rem)',
+                    fontSize: 'var(--fs-body)',
                     lineHeight: 1.6,
                     color: '#D3B8A8',
                     display: 'flex',
@@ -259,7 +284,7 @@ export default function CallOutSection() {
           style={{
             marginTop: 'clamp(3rem, 6vh, 4rem)',
             paddingTop: '2.5rem',
-            borderTop: '1px solid rgba(250, 243, 230, 0.15)',
+            borderTop: `1px solid ${RULE_COLOR}`,
           }}
         >
           {/* Horizontal timeline */}
@@ -270,13 +295,7 @@ export default function CallOutSection() {
             gap: 'clamp(0.5rem, 2vw, 1rem)',
             alignItems: 'flex-start',
           }}>
-            {[
-              { text: 'A question.', emoji: '?' },
-              { text: 'A half-formed idea.', emoji: '💭' },
-              { text: 'A brand looking for its people.', emoji: '✦' },
-              { text: 'A school looking to do things differently.', emoji: '🎓' },
-              { text: 'An event that deserves a bigger audience.', emoji: '◎' },
-            ].map((item, idx) => (
+            {STARTERS.map((item, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: -20 }}
@@ -290,21 +309,23 @@ export default function CallOutSection() {
                     position: 'relative',
                   }}
                 >
-                  {/* Dot indicator */}
-                  <div style={{
-                    width: 'clamp(2.8rem, 5vw, 3.5rem)',
-                    height: 'clamp(2.8rem, 5vw, 3.5rem)',
-                    borderRadius: '50%',
-                    background: 'rgba(213, 143, 107, 0.15)',
-                    border: '2px solid #D58F6B',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 'clamp(1rem, 2vw, 1.4rem)',
-                    marginBottom: '0.8rem',
-                  }}>
-                    {item.emoji}
-                  </div>
+                  {/* Orange line-drawing icon: no circle, fill or second colour */}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#D58F6B"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    style={{
+                      width: 'clamp(2rem, 3vw, 2.5rem)',
+                      height: 'clamp(2rem, 3vw, 2.5rem)',
+                      marginBottom: '0.8rem',
+                    }}
+                  >
+                    {item.icon}
+                  </svg>
 
                   {/* Text */}
                   <p style={{
@@ -331,7 +352,7 @@ export default function CallOutSection() {
             style={{
               marginTop: 'clamp(1.5rem, 3vh, 2.5rem)',
               paddingTop: '1.5rem',
-              borderTop: '1px solid rgba(213, 143, 107, 0.3)',
+              borderTop: `1px solid ${RULE_COLOR}`,
               textAlign: 'center',
             }}
           >

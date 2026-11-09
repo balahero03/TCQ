@@ -1,7 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import logoImg from '../assets/logo.webp';
+import logoIconWhiteImg from '../assets/brand/logo-icon-white.webp';
+import logoIconBrownImg from '../assets/brand/logo-icon-brown.webp';
 import logoLockupImg from '../assets/brand/logo-lockup-cream.webp';
+
+// Where the icon sits inside logo-lockup-cream.webp (2196×1300 px; icon box
+// 553×539 px at x 448, y 380), as percentages of the lockup image. The fly
+// phase starts from this exact rect, so the icon doesn't jump.
+const LOCKUP_ICON_BOX = {
+  left: `${(448 / 2196) * 100}%`,
+  top: `${(380 / 1300) * 100}%`,
+  width: `${(553 / 2196) * 100}%`,
+  height: `${(539 / 1300) * 100}%`,
+};
+const ICON_ASPECT = 553 / 539; // width / height of the cropped icon files
 
 const CAT_DRAW_MS = 1500;
 const LOGO_HOLD_MS = 3000; // how long the logo sits before flying
@@ -22,6 +34,12 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
   // Stores the exact screen coordinates of the logo just before it flies
   const [flyFrom, setFlyFrom] = useState(null);
   const [progress, setProgress] = useState(0);
+  // The percentage is drawn in Outfit. Fonts load from Google Fonts, so on a
+  // first visit the counter would briefly render in the fallback font. Hide
+  // it until Outfit is ready (or give up after a short wait).
+  const [fontReady, setFontReady] = useState(
+    () => typeof document === 'undefined' || !document.fonts || document.fonts.check("300 1em 'Outfit'")
+  );
   const logoRef = useRef(null);
 
   // Capture logo rect → switch to fly phase → notify App
@@ -55,6 +73,15 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (fontReady) return;
+    let alive = true;
+    const done = () => { if (alive) setFontReady(true); };
+    document.fonts.load("300 1em 'Outfit'").then(done, done);
+    const t = setTimeout(done, 1200);
+    return () => { alive = false; clearTimeout(t); };
+  }, [fontReady]);
 
   useEffect(() => {
     if (phase !== 'logo') return;
@@ -91,7 +118,11 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
 
   // Target position that matches exactly where Hero places its logo
   const isMobileHeader = typeof window !== 'undefined' && window.innerWidth <= 768;
-  const TARGET = isMobileHeader ? { top: 16, left: 16, height: 48 } : { top: 24, left: 24, height: 60 };
+  // (.hero-logo's --logo-top/--logo-left/--logo-h, plus .hero-header's 2px border-top)
+  const HEADER_BORDER = 2;
+  const TARGET = isMobileHeader
+    ? { top: 16 + HEADER_BORDER, left: 16, height: 48 }
+    : { top: 24 + HEADER_BORDER, left: 24, height: 60 };
 
   return (
     <>
@@ -158,20 +189,13 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   alt="The Curiosity Quotient"
                   style={{ height: 'clamp(170px, 26vw, 320px)', width: 'auto', display: 'block' }}
                 />
-                {/* icon-only, invisible — measurement anchor for the fly phase */}
-                <img
+                {/* invisible box over the lockup's icon — measurement anchor for the fly phase */}
+                <div
                   ref={logoRef}
-                  src={logoImg}
-                  alt=""
                   aria-hidden="true"
                   style={{
                     position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    height: '41.5%',
-                    width: 'auto',
-                    opacity: 0,
+                    ...LOCKUP_ICON_BOX,
                     pointerEvents: 'none',
                   }}
                 />
@@ -184,7 +208,7 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                 <motion.div
                   key="progress"
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.6 }}
+                  animate={{ opacity: fontReady ? 0.6 : 0 }}
                   exit={{ opacity: 0, transition: { duration: 0.2 } }}
                   style={{
                     position: 'absolute',
@@ -216,22 +240,19 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
           When it arrives, handleLanded() is called.
          ══════════════════════════════════════════════ */}
       {phase === 'fly' && (
-        <motion.img
-          src={logoImg}
-          alt="The Curiosity Quotient Logo"
+        <motion.div
+          aria-hidden="true"
           initial={{
             top: safe.top,
             left: safe.left,
             height: safe.height,
             width: safe.width,
-            filter: 'brightness(1) drop-shadow(0px 0px 0px #000) drop-shadow(0px 0px 0px #000)',
           }}
           animate={{
             top: TARGET.top,
             left: TARGET.left,
             height: TARGET.height,
-            width: Math.round(TARGET.height * (safe.width / safe.height)),
-            filter: 'brightness(0) drop-shadow(0.6px 0.6px 0px #000) drop-shadow(-0.6px -0.6px 0px #000)',
+            width: TARGET.height * ICON_ASPECT,
           }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           onAnimationComplete={handleLanded}
@@ -240,7 +261,27 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
             zIndex: 9999,
             pointerEvents: 'none',
           }}
-        />
+        >
+          {/* The cream icon (on the dark overlay) crossfades into the brown icon
+              (on the cream hero) as the overlay fades — both are the official
+              artwork, so the stroke weight matches Hero's logo exactly. */}
+          <motion.img
+            src={logoIconWhiteImg}
+            alt=""
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: 'easeInOut' }}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+          />
+          <motion.img
+            src={logoIconBrownImg}
+            alt=""
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: 'easeInOut' }}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+          />
+        </motion.div>
       )}
     </>
   );

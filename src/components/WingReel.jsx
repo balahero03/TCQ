@@ -397,6 +397,16 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
 export default function WingReel() {
   const [lightboxSrc, setLightboxSrc] = useState(null);
 
+  // Escape closes the thumbnail lightbox.
+  useEffect(() => {
+    if (!lightboxSrc) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setLightboxSrc(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [lightboxSrc]);
+
   return (
     <>
       {/* ════════ Opening: its own vertical page (normal scroll) ════════ */}

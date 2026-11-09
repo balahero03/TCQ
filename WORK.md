@@ -6,15 +6,15 @@ Source: `Website Changes.pdf` review notes (7 pages). The numbers match the sect
 
 Work order: design system first, then loading screen and homepage, layout, page-wise changes, content, and finally interaction polish.
 
-## Ask Nisha
+## Logo (round 2: "use existing PNG file")
 
-Parked until the official files arrive. Nothing here gets worked around with a recreated logo.
+The official logo PNGs already existed in git history (`public/Logo/IMG_8957–8962.PNG`). Originals are now in `images-raw/brand/`, cropped tight into `src/assets/brand/`.
 
-- [N] 1.2 Official logo and brand name as a PNG. Send Nisha the required dimensions first.
-- [N] 1.2 Use that one asset everywhere the branding appears, with correct proportions and no distortion
-- [N] 2.2 Replace the logo image with the approved version; no extra text below it
-- [N] 3.2 Top-left homepage logo: correct thickness, matches the official asset
-- [N] 6.4 Bottom-left footer logo: official PNG, slightly larger, not distorted
+- [x] 1.2 Header uses the official PNG: the icon plus the wordmark cropped from the official lockup, at the lockup's exact proportions (no typed text)
+- [x] 1.2 One official asset set everywhere: intro, header, flying logo and footer
+- [x] 2.2 Footer: the official lockup replaces the icon + typed brand name
+- [x] 3.2 Top-left homepage logo: the official icon at its real stroke weight. The old thin `logo.webp` and its black/drop-shadow filter are removed
+- [x] 6.4 Footer logo: the official white lockup, larger, not distorted
 
 ## 1. Branding and typography
 
@@ -77,6 +77,25 @@ Dot-and-line element: a small dot leading a thin line, echoing the cursor. It re
 - [x] 6.4 Remove the text below the footer logo (the logo itself is with Nisha, above)
 - [x] 6.5 Social icons: correct hover, always fully visible, not covered by the cursor
 - [x] 6.6 CQ + PQ element: move it somewhere clearly visible
+
+## Round 2 (highlighted items)
+
+- [x] Loading percentage in Outfit: fonts now load from `index.html`, and the counter waits for Outfit so it never shows the fallback font
+- [x] "WHAT IS" in capitals and bold
+- [x] "Five wings, *one curiosity.*": "one curiosity." moved lower
+- [x] Text font sizes uniform: shared `--fs-body` / `--fs-body-sm` in `src/index.css`, used by every section's paragraphs
+- [x] Footer info: only two font sizes (1rem content, 0.75rem labels and copyright)
+- [x] Intro text: removed "Some of these experiences…worth sharing." and increased the font size
+- [x] Thumbnail lightbox in the reels closes with Esc (the gallery modal already did)
+- [x] Flying intro logo now lands on Hero's icon exactly (it was 2px off, because of the header's border)
+- [x] "one curiosity." moved further down (0.42em), so its i-dots clear the "g" in "wings"
+
+## Round 2 re-check (items the tracker had marked done but weren't)
+
+- [x] 3.3 Hero cats image: solid colour only. The gradient wash and the two blurred glow orbs behind the cats are removed
+- [x] 4.11 What Could We Make Together: the bullet separator is now faded cream at 1px, matching the horizontal rules; the bottom rule is no longer orange; all rules share one colour
+- [x] 4.11 Bottom icons: orange line drawings with no circle, fill or other colour (previously emoji in orange circles)
+- [x] 6.5 Social icons: the cursor now hides over them (it already did over the nav), so the hover state is fully visible
 
 ## 7. General
 

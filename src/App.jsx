@@ -72,7 +72,7 @@ function App() {
             lineWidth={2}
             trailLength={18}
             zIndex={9999}
-            hideOver=".focus-word"
+            hideOver=".focus-word, .ctf-social"
           />
         <main>
           <Hero logoLanded={logoLanded} />

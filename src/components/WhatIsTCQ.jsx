@@ -88,7 +88,7 @@ export default function WhatIsTCQ() {
         .tcq-content-col {
           padding: 4vh 5vw;
           font-family: 'Outfit', sans-serif;
-          font-size: clamp(1rem, 1.25vw, 1.2rem);
+          font-size: var(--fs-body);
           line-height: 1.85;
           color: #5a3e3e;
           border-right: 1px solid rgba(56,37,37,0.08);
@@ -104,8 +104,8 @@ export default function WhatIsTCQ() {
           margin: 0 0 0 1.5rem;
           padding: 0;
           color: #5a3e3e;
-          font-size: clamp(1.1rem, 1.6vw, 1.45rem);
-          line-height: 1.5;
+          font-size: var(--fs-body);
+          line-height: 1.6;
         }
         .tcq-ask-list li { padding-bottom: 1.2rem; }
         .tcq-ask-list li::marker { color: #D58F6B; }
@@ -230,7 +230,7 @@ export default function WhatIsTCQ() {
                   visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] } },
                 }}
               >
-                What is
+                WHAT IS
               </motion.span>
               <br />
               <motion.span

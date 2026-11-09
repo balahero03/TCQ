@@ -410,7 +410,7 @@ function OrganicTimeline() {
                   <div style={{ fontSize: 'clamp(0.78rem, 1vw, 0.9rem)', color: 'var(--orange-deep)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.7rem' }}>
                     {node.data.sub}
                   </div>
-                  <p style={{ color: '#5a3e3e', fontSize: 'clamp(0.82rem, 1.1vw, 0.95rem)', lineHeight: 1.7, margin: 0 }}>
+                  <p style={{ color: '#5a3e3e', fontSize: 'var(--fs-body-sm)', lineHeight: 1.7, margin: 0 }}>
                     {node.data.desc || node.data.sub}
                   </p>
                 </div>
@@ -1056,19 +1056,19 @@ export default function WhoIsBehind() {
             >
               <Card style={{ padding: 'clamp(1.5rem, 4vw, 2.25rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#382525', color: '#FAF3E6' }}>
                 <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.65rem)', marginBottom: '0.85rem', fontWeight: 800, color: '#FAF3E6' }}>The Roots</h3>
-                <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'clamp(0.8rem, 2vw, 0.95rem)' }}>
+                <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'var(--fs-body-sm)' }}>
                   I was born in Chennai, grew up with the internet, and somehow ended up studying medicine. Along the way, I developed a habit that has proved considerably harder to cure by my own standards: asking questions.
                 </p>
-                <p style={{ lineHeight: 1.65, opacity: 0.85, fontSize: 'clamp(0.75rem, 1.8vw, 0.9rem)', marginTop: '0.6rem' }}>
+                <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'var(--fs-body-sm)', marginTop: '0.6rem' }}>
                   One answer usually leads to another question. One niche leads to another. One interesting idea leads to the urge to share it with someone else. And then, one random morning, it became TCQ.
                 </p>
               </Card>
               <Card style={{ padding: 'clamp(1.5rem, 4vw, 2.25rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#FAF3E6', color: '#382525' }}>
                 <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.65rem)', marginBottom: '0.85rem', fontWeight: 800, color: '#382525' }}>The Vision</h3>
-                <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'clamp(0.8rem, 2vw, 0.95rem)' }}>
+                <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'var(--fs-body-sm)' }}>
                   TCQ is an extension of my way of thinking. We connect people to ideas they might not have discovered otherwise. We help schools and colleges open up new worlds for their students. We work with startups, brands and organisations to find interesting ways to connect with their audiences.
                 </p>
-                <p style={{ lineHeight: 1.65, opacity: 0.85, fontSize: 'clamp(0.75rem, 1.8vw, 0.9rem)', marginTop: '0.6rem' }}>
+                <p style={{ lineHeight: 1.65, opacity: 0.9, fontSize: 'var(--fs-body-sm)', marginTop: '0.6rem' }}>
                   Sometimes that means a quiz. Sometimes a workshop. Sometimes a campaign, a community, or something that doesn't have a name yet. And the more nameless things we create, the better.
                 </p>
               </Card>
