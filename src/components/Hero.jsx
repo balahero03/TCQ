@@ -205,7 +205,7 @@ export default function Hero({ logoLanded }) {
                   viewport={{ once: false, amount: 0.1 }}
                   transition={{ delay: (startDelay + 400) / 1000, duration: 0.5 }}
                   className="explore-button"
-                  onClick={() => scrollToSection('what-we-do')}
+                  onClick={() => scrollToSection('about-tcq')}
                 >
                   Explore TCQ
                 </motion.button>

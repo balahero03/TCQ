@@ -26,7 +26,7 @@ TCQ ("The Curiosity Quotient") is a single-page marketing/portfolio site for a C
 
 The intro→hero handoff is deliberately seamless: the flying logo icon lands exactly where Hero renders its own icon (`top:24, left:24`, plus the header's 2px border-top) — `onLanded` flips `logoLanded` so Hero reveals its logo precisely as the flying clone disappears. **When touching the intro or Hero header positioning, keep these coordinates in sync** ([IntroAnimation.jsx](src/components/IntroAnimation.jsx) `TARGET`, [Hero.css](src/components/Hero.css) `--logo-top`/`--logo-left`/`--logo-h` on `.hero-header`).
 
-All branding uses the official TCQ logo files (originals in `images-raw/brand/`, cropped tight into `src/assets/brand/`): `logo-icon-brown`/`logo-icon-white` (icon only), `logo-wordmark-brown` (the wordmark only, placed beside the icon in Hero using the lockup's own proportions), `logo-lockup-white` (footer) and `logo-lockup-cream` (intro). Don't recolour or thicken them with CSS filters.
+All branding uses the official TCQ logo files (originals in `images-raw/brand/`, cropped tight into `src/assets/brand/`): `logo-icon-brown`/`logo-icon-white` (icon only), `logo-wordmark-brown` (the wordmark only, placed beside the icon in Hero using the lockup's own proportions), `logo-lockup-white` (footer) and `logo-icon-white` (intro, beside the wordmark typed in Outfit in cream `#FAF3E6`). Don't recolour or thicken them with CSS filters.
 
 Body text uses two shared sizes from `src/index.css`: `--fs-body` (section paragraphs) and `--fs-body-sm` (text inside fixed-size cards). Use these rather than adding new paragraph sizes.
 

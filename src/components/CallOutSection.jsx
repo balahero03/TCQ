@@ -42,7 +42,7 @@ const AUDIENCES = [
   {
     id: 'curious',
     label: 'Curious People of Chennai',
-    hook: "You're already one of us. Join the community.",
+    hook: "You're already one of us.\nJoin the community.",
     bullets: [
       'Follow us on social media for events and collaborations',
       'Join our WhatsApp groups and meet fellow curious people',
@@ -213,6 +213,7 @@ export default function CallOutSection() {
               marginBottom: '1.5rem',
               fontStyle: 'italic',
               fontFamily: "'Newsreader', Georgia, serif",
+              whiteSpace: 'pre-line', // hooks can force a line break with \n
             }}>
               {AUDIENCES[active].hook}
             </h3>

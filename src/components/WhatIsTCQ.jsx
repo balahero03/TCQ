@@ -7,7 +7,7 @@ export default function WhatIsTCQ() {
   const containerRef = useRef(null);
 
   return (
-    <section ref={containerRef} style={{
+    <section id="about-tcq" ref={containerRef} style={{
       background: '#FAF3E6',
       fontFamily: "'Outfit', sans-serif",
     }}>
@@ -285,7 +285,7 @@ export default function WhatIsTCQ() {
 
               <div className="tcq-strip-stat tcq-strip-stat--center">
                 <div className="tcq-strip-num">2023</div>
-                <div className="tcq-strip-label">Founded</div>
+                <div className="tcq-strip-label">Found</div>
               </div>
 
               <div className="tcq-strip-stat" style={{ alignItems: 'flex-end' }}>

@@ -182,10 +182,15 @@ export default function Contact() {
         }
 
         /* Info row + bottom bar use exactly two text sizes:
-           --ctf-fs (all content) and --ctf-fs-sm (column labels, copyright). */
+           --ctf-fs (all content) and --ctf-fs-sm (column labels, copyright).
+           The footer logo's height is tied to --ctf-fs so its wordmark capitals
+           match the "CQ + PQ > IQ" line (wordmark cap height = 0.143 × logo
+           height; Outfit cap height ≈ 0.7em). --ctf-gap spaces every stacked item. */
         .ctf-row, .ctf-bottom {
-          --ctf-fs: 1rem;
+          --ctf-fs: 1.125rem;
           --ctf-fs-sm: 0.75rem;
+          --ctf-gap: 0.6rem;
+          --ctf-logo-h: calc(var(--ctf-fs) * 0.7 / 0.143);
         }
         .ctf-row {
           display: grid;
@@ -388,23 +393,32 @@ export default function Contact() {
 
       {/* ════════ Info row: brand · reach · credit ════════ */}
       <div className="ctf-row">
-        {/* Brand */}
-        <div style={{ alignSelf: 'center' }}>
+        {/* Brand: the formula spans exactly the logo's width (fit-content
+            wrapper), its parts spread evenly so both edges line up. */}
+        <div style={{ alignSelf: 'center', width: 'fit-content' }}>
           {/* Official lockup (icon + wordmark) from the brand PNG, cropped tight */}
           <img
             src={logoLockupImg}
             alt="The Curiosity Quotient"
-            style={{ display: 'block', height: 'clamp(4rem, 6vw, 5.5rem)', width: 'auto', marginBottom: '1.1rem' }}
+            style={{ display: 'block', height: 'var(--ctf-logo-h)', width: 'auto', marginBottom: 'var(--ctf-gap)' }}
           />
-          <div style={{ color: '#D58F6B', fontSize: 'var(--ctf-fs)', fontWeight: 700, letterSpacing: '0.1em' }}>
-            CQ + PQ &gt; IQ
+          <div
+            aria-label="CQ + PQ > IQ"
+            style={{ display: 'flex', justifyContent: 'space-between', color: '#D58F6B', fontSize: 'var(--ctf-fs)', fontWeight: 700, letterSpacing: '0.1em', lineHeight: 1 }}
+          >
+            {['CQ', '+', 'PQ', '>', 'IQ'].map((part, i, all) => (
+              // the last part drops its trailing letter-spacing so it ends flush
+              <span key={i} aria-hidden="true" style={i === all.length - 1 ? { marginRight: '-0.1em' } : undefined}>
+                {part}
+              </span>
+            ))}
           </div>
         </div>
 
         {/* Reach us */}
         <div>
           <div className="ctf-col-label">Reach us</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ctf-gap)' }}>
             <div style={{ color:'white', fontSize: 'var(--ctf-fs)', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
               Vishnu Aravind
             </div>
@@ -414,7 +428,7 @@ export default function Contact() {
             <a href="tel:+918754400743" className="ctf-link" style={{ fontSize: 'var(--ctf-fs)', color: 'rgba(240,234,226,0.75)' }}>
               +91 87544 00743
             </a>
-            <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
               {SOCIALS.map((s) => (
                 <a
                   key={s.label}
@@ -433,10 +447,10 @@ export default function Contact() {
         {/* Crafted by */}
         <div>
           <div className="ctf-col-label">Crafted by</div>
-          <div style={{ fontSize: 'var(--ctf-fs)', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.9rem' }}>
+          <div style={{ fontSize: 'var(--ctf-fs)', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 'var(--ctf-gap)' }}>
             VoidTheory
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ctf-gap)' }}>
             <a href="https://instagram.com/voidtheory_it" target="_blank" rel="noopener noreferrer" className="ctf-credit-link">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
               @voidtheory_it

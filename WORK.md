@@ -97,6 +97,14 @@ Dot-and-line element: a small dot leading a thin line, echoing the cursor. It re
 - [x] 4.11 Bottom icons: orange line drawings with no circle, fill or other colour (previously emoji in orange circles)
 - [x] 6.5 Social icons: the cursor now hides over them (it already did over the nav), so the hover state is fully visible
 
+## Round 3
+
+- [x] Loading screen: the wordmark beside the icon is typed in Outfit (it was the lockup image's own typeface), and both it and the percentage use the background cream `#FAF3E6`; the percentage is no longer faded to 60%
+- [x] Hero "Explore TCQ" button scrolls to the About TCQ section (`#about-tcq`) instead of What We Do
+- [x] Collaborate, "Curious People Of Chennai" tab: "Join the community." starts on its own line
+- [x] About TCQ stats: the "Founded" label under 2023 now reads "Found" (client's wording)
+- [x] Footer: the "CQ + PQ > IQ" line is now the same letter size as the logo's wordmark (logo height is tied to the footer text size) and spans the logo's full width, starting and ending flush with it; footer text is 1.125rem (was 1rem); Reach us and Crafted by items share one 0.6rem spacing (the social icons no longer have extra space above them)
+
 ## 7. General
 
 - [x] 7.1 All content visible in the viewport at different sizes; no cropping or hiding fixed heights

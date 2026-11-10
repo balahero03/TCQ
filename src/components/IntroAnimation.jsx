@@ -2,17 +2,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoIconWhiteImg from '../assets/brand/logo-icon-white.webp';
 import logoIconBrownImg from '../assets/brand/logo-icon-brown.webp';
-import logoLockupImg from '../assets/brand/logo-lockup-cream.webp';
 
-// Where the icon sits inside logo-lockup-cream.webp (2196×1300 px; icon box
-// 553×539 px at x 448, y 380), as percentages of the lockup image. The fly
-// phase starts from this exact rect, so the icon doesn't jump.
-const LOCKUP_ICON_BOX = {
-  left: `${(448 / 2196) * 100}%`,
-  top: `${(380 / 1300) * 100}%`,
-  width: `${(553 / 2196) * 100}%`,
-  height: `${(539 / 1300) * 100}%`,
-};
+// Loading-screen text (wordmark and percentage) is set in Outfit, in the
+// site's cream background colour.
+const CREAM = '#FAF3E6';
+const OUTFIT = "'Outfit', sans-serif";
+// Icon height on the loading screen; the wordmark is sized from it, using the
+// official lockup's proportions (cap height ≈ 0.15, line pitch ≈ 0.24, gap ≈ 0.22).
+const INTRO_ICON_H = 'clamp(70px, 10.8vw, 133px)';
 const ICON_ASPECT = 553 / 539; // width / height of the cropped icon files
 
 const CAT_DRAW_MS = 1500;
@@ -163,12 +160,9 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
               )}
             </AnimatePresence>
 
-            {/* ── Centered logo lockup (icon + wordmark, single image) ── */}
-            {/* Shown during logo phase only. The visible lockup is one flattened
-                image; a zero-size icon-only clone sits alongside it purely so
-                logoRef can capture the icon's own screen rect for the fly phase
-                (Hero's header keeps icon/wordmark as separate elements, so the
-                fly clone must be the icon alone, not the full lockup). */}
+            {/* ── Centered logo: the official icon + the wordmark as Outfit text ── */}
+            {/* The icon image doubles as logoRef, so the fly phase starts from its
+                exact screen rect. */}
             {phase === 'logo' && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.3, y: 40, filter: 'blur(24px)' }}
@@ -181,24 +175,32 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  gap: `calc(${INTRO_ICON_H} * 0.22)`,
                   zIndex: 2,
                 }}
               >
                 <img
-                  src={logoLockupImg}
-                  alt="The Curiosity Quotient"
-                  style={{ height: 'clamp(170px, 26vw, 320px)', width: 'auto', display: 'block' }}
-                />
-                {/* invisible box over the lockup's icon — measurement anchor for the fly phase */}
-                <div
                   ref={logoRef}
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    ...LOCKUP_ICON_BOX,
-                    pointerEvents: 'none',
-                  }}
+                  src={logoIconWhiteImg}
+                  alt=""
+                  style={{ height: INTRO_ICON_H, width: 'auto', aspectRatio: ICON_ASPECT, display: 'block' }}
                 />
+                <span
+                  role="img"
+                  aria-label="The Curiosity Quotient"
+                  style={{
+                    color: CREAM,
+                    fontFamily: OUTFIT,
+                    fontWeight: 700,
+                    fontSize: `calc(${INTRO_ICON_H} * 0.21)`,
+                    lineHeight: 1.14,
+                    letterSpacing: '0.02em',
+                    textTransform: 'uppercase',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  The<br />Curiosity<br />Quotient
+                </span>
               </motion.div>
             )}
 
@@ -208,14 +210,14 @@ export default function IntroAnimation({ onStartFly, onLanded }) {
                 <motion.div
                   key="progress"
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: fontReady ? 0.6 : 0 }}
+                  animate={{ opacity: fontReady ? 1 : 0 }}
                   exit={{ opacity: 0, transition: { duration: 0.2 } }}
                   style={{
                     position: 'absolute',
                     bottom: '17%',
                     right: '8vw',
-                    color: '#FAF3E6',
-                    fontFamily: "'Outfit', sans-serif",
+                    color: CREAM,
+                    fontFamily: OUTFIT,
                     fontWeight: 300,
                     fontSize: 'clamp(2rem, 4vw, 3.5rem)',
                     fontVariantNumeric: 'tabular-nums',
