@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import gsap from 'gsap';
@@ -139,7 +139,7 @@ function PhotoFrame({ photo, idx, label, onPhotoClick }) {
       style={{ '--i': idx }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      onClick={() => onPhotoClick(photo.src || 'placeholder')}
+      onClick={() => onPhotoClick(photo.src || 'placeholder', label)}
     >
       {photo.src ? (
         <img src={photo.src} alt={label} loading="lazy" decoding="async" />
@@ -396,6 +396,11 @@ function WingPin({ wing, index, isLast, onPhotoClick }) {
 
 export default function WingReel() {
   const [lightboxSrc, setLightboxSrc] = useState(null);
+  const [lightboxAlt, setLightboxAlt] = useState('');
+  const openLightbox = useCallback((src, label) => {
+    setLightboxAlt(label ? `Photo from ${label}` : '');
+    setLightboxSrc(src);
+  }, []);
 
   // Escape closes the thumbnail lightbox.
   useEffect(() => {
@@ -439,7 +444,7 @@ export default function WingReel() {
           wing={wing}
           index={i}
           isLast={i === WINGS.length - 1}
-          onPhotoClick={setLightboxSrc}
+          onPhotoClick={openLightbox}
         />
       ))}
 
@@ -493,7 +498,7 @@ export default function WingReel() {
                 {lightboxSrc !== 'placeholder' ? (
                   <img
                     src={lightboxSrc}
-                    alt="Enlarged view"
+                    alt={lightboxAlt}
                     style={{
                       maxWidth: '100%',
                       maxHeight: '85vh',

@@ -24,7 +24,7 @@ function buildColumns(tiles, cols) {
   return columns;
 }
 
-function GalleryTile({ tile, index, onOpen }) {
+function GalleryTile({ tile, index, alt, onOpen }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -47,7 +47,7 @@ function GalleryTile({ tile, index, onOpen }) {
     >
       <img
         src={tile.src}
-        alt="Gallery photo"
+        alt={alt}
         style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
       />
     </motion.div>
@@ -192,6 +192,7 @@ export default function GalleryModal({ event, onClose }) {
                     key={tile.key}
                     tile={tile}
                     index={ci * 4 + ti}
+                    alt={`Photo from ${event.name}`}
                     onOpen={(t) => setLightboxSrc(t.src)}
                   />
                 ))}
@@ -245,7 +246,7 @@ export default function GalleryModal({ event, onClose }) {
             exit={{ scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 180 }}
             src={lightboxSrc}
-            alt="Enlarged view"
+            alt={`${event.name}, enlarged photo`}
             onClick={(e) => e.stopPropagation()}
             style={{
               maxWidth: '90vw',

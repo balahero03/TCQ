@@ -1,24 +1,118 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- With JS on, React replaces #seo-fallback; hide it so it never flashes first. -->
+    <script>document.documentElement.classList.add('js')</script>
+    <style>.js #seo-fallback{display:none}</style>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <!-- Fonts start loading with the HTML (not only once index.css is parsed),
          so the intro's percentage counter can render in Outfit straight away. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" />
-    <title>The Curiosity Quotient — Making Curiosity Social</title>
-    <meta name="description" content="The Curiosity Quotient (TCQ) is a Chennai culture space bringing together knowledge, culture and people through quizzes, circles, collabs, writing and learning experiences." />
+
+    <title>The Curiosity Quotient (TCQ) — Making Curiosity Social in Chennai</title>
+    <meta name="description" content="The Curiosity Quotient (TCQ) is a Chennai culture space bringing together knowledge, culture and people through quizzes, community circles, brand collabs, writing and learning experiences for schools and colleges." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="The Curiosity Quotient" />
     <meta name="theme-color" content="#382525" />
+    <meta name="geo.region" content="IN-TN" />
+    <meta name="geo.placename" content="Chennai" />
+
+    <!-- Open Graph / Twitter. og:url, og:image and canonical are injected at build from SITE_URL (seo.config.js). -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_IN" />
     <meta property="og:site_name" content="The Curiosity Quotient" />
-    <meta property="og:title" content="The Curiosity Quotient — Making Curiosity Social" />
+    <meta property="og:title" content="The Curiosity Quotient (TCQ) — Making Curiosity Social" />
     <meta property="og:description" content="A Chennai culture space bringing together knowledge, culture and people through quizzes, circles, collabs, writing and learning experiences." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Curiosity Quotient (TCQ) — Making Curiosity Social" />
+    <meta name="twitter:description" content="A Chennai culture space bringing together knowledge, culture and people through quizzes, circles, collabs, writing and learning experiences." />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Crawlable copy of the page's content for search engines and visitors without
+           JavaScript. React replaces it on mount. Keep it in sync with the components'
+           copy (Hero, WhatIsTCQ, WhoIsBehind, wingsData.js, CallOutSection, Contact). -->
+      <div id="seo-fallback" style="max-width:760px;margin:0 auto;padding:48px 20px;font-family:Outfit,system-ui,sans-serif;color:#382525;background:#FAF3E6;line-height:1.6">
+        <header>
+          <p><strong>The Curiosity Quotient</strong></p>
+          <nav aria-label="Sections">
+            <a href="#about-tcq">About</a> ·
+            <a href="#who-s-behind-tcq">Who's behind TCQ</a> ·
+            <a href="#what-we-do">What we do</a> ·
+            <a href="#collaborate">Collaborate</a> ·
+            <a href="#contact">Contact</a>
+          </nav>
+        </header>
+        <main>
+          <h1>Making Curiosity Social</h1>
+          <p><em>What if every question was an invitation to discover a new world?</em>
+            The Curiosity Quotient (TCQ) is your gateway to all those worlds under one roof, bringing together knowledge, culture and people to create experiences that make learning feel less like learning and more like discovery.</p>
+          <p>At its heart, TCQ is a culture space. A place for ideas to meet people, for communities to find each other, and for healthy cultures to grow, evolve and discover their place in the microcosm called Chennai.</p>
+
+          <section id="about-tcq">
+            <h2>What is The Curiosity Quotient?</h2>
+            <p>TCQ began in 2023 with a very practical ask: that learning shouldn't have to end with a degree, that curiosity shouldn't have to be a solitary pursuit, and that curious people deserve a place to come home to. There wasn't anything around, so we started building one.</p>
+            <p>What began with a quiz slowly became a gathering of people who liked knowing things simply because they were interesting. Over time, that grew into a community of more than 2,000 curious people in Chennai.</p>
+            <p>Since then, TCQ has found its way into classrooms, auditoriums, cafés, galleries, streets and screens. Five wings, founded 2023, 2,000+ curious cats.</p>
+          </section>
+
+          <section id="who-s-behind-tcq">
+            <h2>Who's behind TCQ: Dr. Vishnu Aravind, MBBS, MD</h2>
+            <p>Born in Chennai, grew up with the internet, and somehow ended up studying medicine, with a habit of asking questions. TCQ connects people to ideas they might not have discovered otherwise, helps schools and colleges open up new worlds for their students, and works with startups, brands and organisations to find interesting ways to connect with their audiences.</p>
+            <h3>The Journey So Far</h3>
+            <ul>
+              <li>2019 — Red Bull: brought the brand to life on campus through events.</li>
+              <li>2020 — Fully Filmy: created and hosted content on film, social and cultural commentary.</li>
+              <li>2021 — Greater Chennai Corporation: Medical Officer during the COVID-19 pandemic.</li>
+              <li>2023 — JioCinema: fan commentator for Chennai Super Kings matches in Tamil and English.</li>
+              <li>2024 — Carrom Ball Media: translated subtitles for Ravichandran Ashwin's YouTube channel.</li>
+              <li>2025 — Sri Ramachandra Hospital: MD in Preventive and Social Medicine.</li>
+            </ul>
+          </section>
+
+          <section id="what-we-do">
+            <h2>What we do: five wings, one curiosity</h2>
+            <h3 id="wing-01">Quizzes</h3>
+            <p>This is where TCQ was born. The Typical Chennai Question is what gave us our name. Events include 6 to 60 Quizzes at KIS Cafe, Abuzz 2025 (PSBB Group of Schools), Fundamavan '26 (SSN Instincts), Typical Chennai Quiz 2025 for KYN, and The Hungry Quiz for Kraft Collective.</p>
+            <h3 id="wing-02">Circles</h3>
+            <p>The crossroads of Chennai's communities: Circles Season One (indie music, stargazing, Madras history, cricket) and Hysterically Speaking / Vinyl Destination with Berty Ashley.</p>
+            <h3 id="wing-03">Collabs</h3>
+            <p>Discovery-led experiences for brands and culture: Walls on Wheels for Five Feet Collective, How to Name It? for KYN, and Madras D-Coded, a 40-day puzzle campaign on Madras and its journey to Chennai.</p>
+            <h3 id="wing-04">Writes</h3>
+            <p>Millennial long-form content about Chennai, its newest cultures, icons and trends, published on <a href="https://thecuriosityquotient.substack.com/">our Substack</a>.</p>
+            <h3 id="wing-05">Teaches</h3>
+            <p>Schools beyond exams, colleges beyond degrees: the Intellect Club at MOP Vaishnav College for Women, workshops at Ethiraj College for Women, and a beginner's quizzing workshop at Goethe-Institut Chennai.</p>
+          </section>
+
+          <section id="collaborate">
+            <h2>What could we make together?</h2>
+            <ul>
+              <li><strong>Schools, colleges and learning spaces:</strong> quizzes, workshops, moderated conversations and alternative learning programmes.</li>
+              <li><strong>Brands and companies:</strong> integrated physical and digital campaigns, focus groups and community conversations.</li>
+              <li><strong>Event organisers and cultural curators:</strong> publicity partnerships and long-form event stories.</li>
+              <li><strong>Curious people of Chennai:</strong> join our community, WhatsApp groups and events.</li>
+            </ul>
+            <p>Partners include KYN, KIS Cafe, MOP Vaishnav College, Kraft Collective, Goethe-Institut Chennai, Chennai Quiz Factory, Lectures on the Rocks and SSN Instincts.</p>
+          </section>
+        </main>
+        <footer id="contact">
+          <h2>Contact</h2>
+          <p><a href="mailto:thecuriosityquotient@gmail.com">thecuriosityquotient@gmail.com</a> · <a href="tel:+918754400743">+91 87544 00743</a></p>
+          <p>
+            <a href="https://instagram.com/tcq_india">Instagram</a> ·
+            <a href="https://www.linkedin.com/company/the-curiosity-quotient">LinkedIn</a> ·
+            <a href="https://thecuriosityquotient.substack.com/">Substack</a> ·
+            <a href="https://youtube.com/@thecuriosityquotientindia">YouTube</a>
+          </p>
+        </footer>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

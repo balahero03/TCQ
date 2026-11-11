@@ -30,6 +30,9 @@ All branding uses the official TCQ logo files (originals in `images-raw/brand/`,
 
 Body text uses two shared sizes from `src/index.css`: `--fs-body` (section paragraphs) and `--fs-body-sm` (text inside fixed-size cards). Use these rather than adding new paragraph sizes.
 
+### SEO
+[seo.config.js](seo.config.js) is a Vite plugin: from `SITE_URL` (env or `.env`) it injects canonical, `og:url`/`og:image` and Organization/WebSite JSON-LD, and emits `robots.txt` + `sitemap.xml`. `SITE_URL=https://tcqindia.com` is committed in `.env` (not a secret), so Vercel builds pick it up; `vercel.json` 308-redirects `www.tcqindia.com` to the apex domain. [index.html](index.html) holds the static meta tags plus `#seo-fallback`, a plain-HTML copy of the page content for crawlers and no-JS visitors that React replaces on mount; **when you change site copy, update the fallback too.** `App` skips the intro for bot user agents. Share card and icons in `public/` come from `node scripts/make-seo-images.mjs`.
+
 ### Two animation systems — know which one owns a property
 The codebase mixes **framer-motion** and **GSAP ScrollTrigger**, intentionally split by job:
 - **framer-motion** — entrance/in-view reveals, cursor parallax (`useMotionValue`/`useSpring`/`useTransform`), hover springs, the intro sequence. Used in `Hero`, `Contact`, `WhatIsTCQ`, `CallOutSection`, `WingsBrandsSection`, the magnetic cards in `WingReel`.

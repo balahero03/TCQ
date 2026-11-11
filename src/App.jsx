@@ -17,8 +17,13 @@ const INTRO_SEEN_KEY = 'tcq-intro-seen';
 if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
 
 // The intro plays once per tab session, and never for reduced motion or deep links.
+// Crawlers and link-preview bots get the page straight away, so the content they
+// index and screenshot is the real page, not the intro overlay.
+const BOT_UA = /bot|crawl|spider|slurp|facebookexternalhit|embedly|whatsapp|telegram|linkedin|lighthouse|headless/i;
+
 function shouldSkipIntro() {
   if (window.location.hash) return true;
+  if (BOT_UA.test(navigator.userAgent)) return true;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
   try {
     return sessionStorage.getItem(INTRO_SEEN_KEY) === '1';

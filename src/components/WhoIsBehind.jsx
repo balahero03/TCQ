@@ -268,9 +268,9 @@ function OrganicTimeline() {
                 Journey
               </div>
             </div>
-            <div style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#382525', letterSpacing: '-0.04em', lineHeight: 1 }}>
+            <h2 style={{ margin: 0, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#382525', letterSpacing: '-0.04em', lineHeight: 1 }}>
               The Journey <span style={{ fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--orange-deep)' }}>So Far</span>
-            </div>
+            </h2>
           </div>
 
           {/* Dynamic Wavy SVG Background */}
@@ -1026,12 +1026,12 @@ export default function WhoIsBehind() {
                   className="pfc-divider" 
                   variants={{ hidden: { scaleX: 0, opacity: 0, transformOrigin: 'left' }, visible: { scaleX: 1, opacity: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
                 />
-                <motion.p 
+                <motion.h2
                   className="pfc-name"
                   variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
                 >
                   Dr. Vishnu Aravind, MBBS, MD
-                </motion.p>
+                </motion.h2>
                 <motion.p 
                   className="pfc-tagline"
                   variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
