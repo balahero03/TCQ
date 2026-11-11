@@ -5,6 +5,7 @@ import logoWordmarkImg from '../assets/brand/logo-wordmark-brown.webp';
 import TrueFocus from './TrueFocus';
 import CatHeroAnimation from './CatHeroAnimation';
 import BlurText from './BlurText';
+import { EXPLORE_PAGE } from '../seo/pages';
 import './Hero.css';
 
 export default function Hero({ logoLanded }) {
@@ -90,8 +91,9 @@ export default function Hero({ logoLanded }) {
           className="hero-nav"
         >
           <TrueFocus
-            sentence="Who's behind TCQ|What we do|Collaborate|Contact"
+            sentence="Who's behind TCQ|What we do|Explore|Collaborate|Contact"
             separator="|"
+            links={{ Explore: `/${EXPLORE_PAGE.slug}` }}
             manualMode
             blurAmount={0}
             borderColor="#D58F6B"
@@ -142,6 +144,7 @@ export default function Hero({ logoLanded }) {
               </div>
             </div>
 
+            <a href={`/${EXPLORE_PAGE.slug}`} className="mobile-menu-link">Explore</a>
             <a href="#collaborate" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); scrollToSection('collaborate'); }}>Collaborate</a>
             <a href="#contact" className="mobile-menu-link" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
           </motion.div>

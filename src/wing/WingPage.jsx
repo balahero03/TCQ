@@ -1,21 +1,10 @@
 import { useState, lazy, Suspense } from 'react';
 import { WINGS } from '../components/wingsData';
-import { WING_PAGES } from '../seo/pages';
-import logoIconBrown from '../assets/brand/logo-icon-brown.webp';
-import logoWordmarkBrown from '../assets/brand/logo-wordmark-brown.webp';
-import logoLockupWhite from '../assets/brand/logo-lockup-white.webp';
+import { EXPLORE_PAGE, WING_PAGES } from '../seo/pages';
+import { SiteHeader, SiteTagline, EMAIL } from './PageChrome';
 import './WingPage.css';
 
 const GalleryModal = lazy(() => import('../components/GalleryModal'));
-
-const EMAIL = 'thecuriosityquotient@gmail.com';
-const WHATSAPP = 'https://api.whatsapp.com/send?phone=918754400743';
-const SOCIALS = [
-  ['Instagram', 'https://instagram.com/tcq_india'],
-  ['LinkedIn', 'https://www.linkedin.com/company/the-curiosity-quotient'],
-  ['Substack', 'https://thecuriosityquotient.substack.com/'],
-  ['YouTube', 'https://youtube.com/@thecuriosityquotientindia'],
-];
 
 function EventCard({ event, index, hideIndex }) {
   const [open, setOpen] = useState(false);
@@ -67,23 +56,12 @@ export default function WingPage({ slug }) {
 
   return (
     <div className="wp">
-      <header className="wp-header">
-        <a href="/" className="wp-logo" aria-label="The Curiosity Quotient home">
-          <img src={logoIconBrown} alt="" className="wp-logo-icon" />
-          <img src={logoWordmarkBrown} alt="The Curiosity Quotient" className="wp-logo-word" />
-        </a>
-        <nav className="wp-nav" aria-label="What we do">
-          {WING_PAGES.map((p) => (
-            <a key={p.slug} href={`/${p.slug}`} aria-current={p.slug === slug ? 'page' : undefined}>{p.wing}</a>
-          ))}
-          <a href="/#contact" className="wp-nav-cta">Contact</a>
-        </nav>
-      </header>
+      <SiteHeader current={slug} />
 
       <main>
         <section className="wp-hero">
           <nav className="wp-crumbs" aria-label="Breadcrumb">
-            <a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/#what-we-do">What we do</a>{' '}
+            <a href="/">Home</a> <span aria-hidden="true">/</span> <a href={`/${EXPLORE_PAGE.slug}`}>{EXPLORE_PAGE.name}</a>{' '}
             <span aria-hidden="true">/</span> <span aria-current="page">{wing.title}</span>
           </nav>
           <p className="wp-eyebrow"><span className="dot-line" aria-hidden="true" />Wing {wing.no} · {wing.tag}</p>
@@ -125,17 +103,10 @@ export default function WingPage({ slug }) {
           ))}
         </section>
 
-        <section className="wp-cta">
-          <h2 className="wp-h2">What could we make together?</h2>
-          <p>A question, a half-formed idea, a brand looking for its people. We like starting there.</p>
-          <div className="wp-hero-ctas">
-            <a className="outline-btn" href={`mailto:${EMAIL}`}>Email us</a>
-            <a className="outline-btn" href={WHATSAPP} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          </div>
-        </section>
 
         <nav className="wp-others" aria-label="Other wings">
           <h2 className="wp-h2">Explore the other wings</h2>
+          <p className="wp-others-all"><a href={`/${EXPLORE_PAGE.slug}`}>See all five wings <span className="dot-line" aria-hidden="true" /></a></p>
           <ul>
             {others.map((p) => (
               <li key={p.slug}>
@@ -150,22 +121,7 @@ export default function WingPage({ slug }) {
         </nav>
       </main>
 
-      <footer className="wp-footer">
-        <img src={logoLockupWhite} alt="The Curiosity Quotient" className="wp-footer-logo" loading="lazy" />
-        <div className="wp-footer-cols">
-          <div>
-            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-            <a href="tel:+918754400743">+91 87544 00743</a>
-            <span>Chennai, Tamil Nadu, India</span>
-          </div>
-          <div>
-            {SOCIALS.map(([label, href]) => (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer">{label}</a>
-            ))}
-          </div>
-        </div>
-        <p className="wp-footer-note">© {new Date().getFullYear()} The Curiosity Quotient · <a href="/">Making Curiosity Social</a></p>
-      </footer>
+      <SiteTagline />
     </div>
   );
 }

@@ -20,6 +20,23 @@ export const HOME = {
   ],
 };
 
+// The "What we do" hub (/what-we-do): an overview of the five wings that links
+// into each wing page. Reached from "Explore" in the site nav.
+export const EXPLORE_PAGE = {
+  slug: 'what-we-do',
+  name: 'What we do',
+  title: 'What We Do | Quizzes, Circles, Collabs, Writes & Teaches by TCQ Chennai',
+  description:
+    'Explore the five wings of The Curiosity Quotient (TCQ) in Chennai: quiz events, community circles, brand collaborations, long-form writing about the city, and workshops for schools and colleges.',
+  h1: 'Five wings, one curiosity.',
+  lede: 'End-to-end experiences designed to make curiosity social. Say hello to the five wings of TCQ.',
+  keywords: [
+    'what TCQ does', 'TCQ services', 'quiz events Chennai', 'community events Chennai',
+    'brand activation Chennai', 'Chennai culture writing', 'workshops for schools Chennai',
+    'things to do in Chennai',
+  ],
+};
+
 export const WING_PAGES = [
   {
     slug: 'quizzes',

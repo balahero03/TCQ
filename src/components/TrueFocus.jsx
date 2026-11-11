@@ -10,7 +10,10 @@ const TrueFocus = ({
   borderColor = 'green',
   glowColor = 'rgba(0, 255, 0, 0.6)',
   animationDuration = 0.5,
-  pauseBetweenAnimations = 1
+  pauseBetweenAnimations = 1,
+  // Optional { word: href } for words that go to another page instead of
+  // scrolling to a section on this one.
+  links = {}
 }) => {
   const words = sentence.split(separator);
   const [currentIndex, setCurrentIndex] = useState(manualMode ? null : 0);
@@ -59,9 +62,10 @@ const TrueFocus = ({
     <div className="focus-container" ref={containerRef}>
       {words.map((word, index) => {
         const isActive = index === currentIndex;
+        const pageHref = links[word];
         return (
           <a
-            href={`#${word.toLowerCase().replace(/[^a-z]+/g, '-')}`}
+            href={pageHref ?? `#${word.toLowerCase().replace(/[^a-z]+/g, '-')}`}
             key={index}
             ref={el => (wordRefs.current[index] = el)}
             className={`focus-word ${manualMode ? 'manual' : ''} ${isActive && !manualMode ? 'active' : ''}`}
@@ -72,6 +76,7 @@ const TrueFocus = ({
               transition: `filter ${animationDuration}s ease`
             }}
             onClick={(e) => {
+              if (pageHref) return;
               const id = word.toLowerCase().replace(/[^a-z]+/g, '-');
               const target = document.getElementById(id);
               if (target) {

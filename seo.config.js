@@ -1,14 +1,16 @@
 // Build-time SEO for tcqindia.com.
 //
-// Pages: the animated homepage (index.html) plus one landing page per wing
-// (/quizzes, /circles, /collabs, /writes, /teaches), all built from wing.html.
+// Pages: the animated homepage (index.html), the "What we do" hub (/what-we-do)
+// and one landing page per wing (/quizzes, /circles, /collabs, /writes, /teaches);
+// the hub and the wing pages are all built from wing.html.
 // Copy for every page lives in src/seo/pages.js; events come from wingsData.js.
 //
 // This plugin:
 //   • fills <!--seo-head--> in each page: title, description, keywords, Open Graph,
 //     Twitter, canonical, search-console verification and JSON-LD structured data
 //   • fills <!--seo-fallback--> on wing pages with crawlable HTML of the page's content
-//   • writes dist/<slug>.html per wing (served at /<slug> by vercel.json cleanUrls)
+//   • writes dist/what-we-do.html and dist/<slug>.html per wing (served at /<slug>
+//     by vercel.json cleanUrls)
 //   • emits robots.txt, sitemap.xml (with every photo) and llms.txt
 //
 // Absolute URLs come from SITE_URL (.env). Optional: GOOGLE_SITE_VERIFICATION and
@@ -16,7 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { loadEnv } from 'vite';
-import { HOME, WING_PAGES } from './src/seo/pages.js';
+import { HOME, EXPLORE_PAGE, WING_PAGES } from './src/seo/pages.js';
 
 const SITE = {
   name: 'The Curiosity Quotient',
@@ -185,13 +187,49 @@ function wingGraph(url, page, events) {
       '@id': `${pageUrl}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${url}/` },
-        { '@type': 'ListItem', position: 2, name: page.wing, item: pageUrl },
+        { '@type': 'ListItem', position: 2, name: EXPLORE_PAGE.name, item: `${url}/${EXPLORE_PAGE.slug}` },
+        { '@type': 'ListItem', position: 3, name: page.wing, item: pageUrl },
       ],
     },
     {
       '@type': 'FAQPage',
       '@id': `${pageUrl}#faq`,
       mainEntity: page.faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+    },
+  ];
+}
+
+function exploreGraph(url) {
+  const pageUrl = `${url}/${EXPLORE_PAGE.slug}`;
+  return [
+    organization(url),
+    founder(url),
+    website(url),
+    {
+      '@type': 'CollectionPage',
+      '@id': `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: EXPLORE_PAGE.title,
+      description: EXPLORE_PAGE.description,
+      isPartOf: { '@id': `${url}/#website` },
+      about: { '@id': `${url}/#organization` },
+      breadcrumb: { '@id': `${pageUrl}#breadcrumb` },
+      mainEntity: { '@id': `${pageUrl}#wings` },
+      inLanguage: 'en-IN',
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${pageUrl}#wings`,
+      name: 'Five wings of The Curiosity Quotient',
+      itemListElement: WING_PAGES.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.wing, url: `${url}/${p.slug}` })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${pageUrl}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${url}/` },
+        { '@type': 'ListItem', position: 2, name: EXPLORE_PAGE.name, item: pageUrl },
+      ],
     },
   ];
 }
@@ -251,17 +289,59 @@ const wingHead = (page, events, env) =>
     env,
   );
 
+const exploreHead = (env) =>
+  headHtml(
+    {
+      title: EXPLORE_PAGE.title,
+      description: EXPLORE_PAGE.description,
+      keywords: [...EXPLORE_PAGE.keywords, 'The Curiosity Quotient', 'TCQ Chennai'],
+      pagePath: `/${EXPLORE_PAGE.slug}`,
+      graph: exploreGraph,
+    },
+    env,
+  );
+
+// Plain-HTML header and footer shared by the hub's and wing pages' fallbacks.
+const FALLBACK_OPEN =
+  '<div id="seo-fallback" style="max-width:760px;margin:0 auto;padding:48px 20px;font-family:Outfit,system-ui,sans-serif;color:#382525;background:#FAF3E6;line-height:1.6">';
+const fallbackHeader = () => `
+        <header>
+          <p><a href="/"><strong>The Curiosity Quotient</strong></a></p>
+          <nav aria-label="Site"><a href="/${EXPLORE_PAGE.slug}">Explore</a> · ${WING_PAGES.map((p) => `<a href="/${p.slug}">${esc(p.wing)}</a>`).join(' · ')} · <a href="/#contact">Contact</a></nav>
+        </header>`;
+const fallbackFooter = () =>
+  `<footer><p>The Curiosity Quotient · Chennai, Tamil Nadu, India · ${SITE.sameAs.map((s) => `<a href="${s}">${s.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</a>`).join(' · ')}</p></footer>`;
+
+// Crawlable copy of the "What we do" hub; React replaces it on mount.
+function exploreFallback(events) {
+  return `
+      ${FALLBACK_OPEN}${fallbackHeader()}
+        <main>
+          <nav aria-label="Breadcrumb"><a href="/">Home</a> / ${esc(EXPLORE_PAGE.name)}</nav>
+          <h1>${esc(EXPLORE_PAGE.h1)}</h1>
+          <p><em>${esc(EXPLORE_PAGE.lede)}</em></p>
+          ${WING_PAGES.map((p) => `<section>
+            <h2><a href="/${p.slug}">${esc(p.wing)}</a></h2>
+            <p>${esc(p.lede)}</p>
+            <ul>${p.offers.map((o) => `<li>${esc(o)}</li>`).join('')}</ul>
+            <p>Recent: ${events[p.wing].map((e) => esc(e.name)).join(', ')}.</p>
+            <p><a href="/${p.slug}">Explore ${esc(p.wing)}</a></p>
+          </section>`).join('\n          ')}
+          <h2>What could we make together?</h2>
+          <p>Email <a href="mailto:${SITE.email}">${SITE.email}</a> or call <a href="tel:+918754400743">+91 87544 00743</a>.</p>
+        </main>
+        ${fallbackFooter()}
+      </div>
+    `;
+}
+
 // Crawlable copy of a wing page; React replaces it on mount (same pattern as index.html).
 function wingFallback(page, events) {
   const others = WING_PAGES.filter((p) => p.slug !== page.slug);
   return `
-      <div id="seo-fallback" style="max-width:760px;margin:0 auto;padding:48px 20px;font-family:Outfit,system-ui,sans-serif;color:#382525;background:#FAF3E6;line-height:1.6">
-        <header>
-          <p><a href="/"><strong>The Curiosity Quotient</strong></a></p>
-          <nav aria-label="What we do">${WING_PAGES.map((p) => `<a href="/${p.slug}">${esc(p.wing)}</a>`).join(' · ')} · <a href="/#contact">Contact</a></nav>
-        </header>
+      ${FALLBACK_OPEN}${fallbackHeader()}
         <main>
-          <nav aria-label="Breadcrumb"><a href="/">Home</a> / ${esc(page.wing)}</nav>
+          <nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/${EXPLORE_PAGE.slug}">${esc(EXPLORE_PAGE.name)}</a> / ${esc(page.wing)}</nav>
           <h1>${esc(page.h1)}</h1>
           <p><em>${esc(page.lede)}</em></p>
           ${page.body.map((b) => `<p>${esc(b)}</p>`).join('\n          ')}
@@ -275,14 +355,18 @@ function wingFallback(page, events) {
           <p>Email <a href="mailto:${SITE.email}">${SITE.email}</a> or call <a href="tel:+918754400743">+91 87544 00743</a>.</p>
           <h2>Explore the other wings</h2>
           <ul>${others.map((p) => `<li><a href="/${p.slug}">${esc(p.wing)}: ${esc(p.h1)}</a></li>`).join('')}</ul>
+          <p><a href="/${EXPLORE_PAGE.slug}">See all five wings</a></p>
         </main>
-        <footer><p>The Curiosity Quotient · Chennai, Tamil Nadu, India · ${SITE.sameAs.map((s) => `<a href="${s}">${s.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</a>`).join(' · ')}</p></footer>
+        ${fallbackFooter()}
       </div>
     `;
 }
 
 const fillWing = (html, page, events, env) =>
   html.replace('<!--seo-head-->', wingHead(page, events, env).trimStart()).replace('<!--seo-fallback-->', wingFallback(page, events));
+
+const fillExplore = (html, events, env) =>
+  html.replace('<!--seo-head-->', exploreHead(env).trimStart()).replace('<!--seo-fallback-->', exploreFallback(events));
 
 export default function seo() {
   let root = process.cwd();
@@ -319,9 +403,9 @@ export default function seo() {
       events = readWingEvents(root);
     },
 
-    // Dev: serve wing.html at /quizzes, /circles, …
+    // Dev: serve wing.html at /what-we-do, /quizzes, /circles, …
     configureServer(server) {
-      const re = new RegExp(`^/(${WING_PAGES.map((p) => p.slug).join('|')})/?(\\?.*)?$`);
+      const re = new RegExp(`^/(${[EXPLORE_PAGE.slug, ...WING_PAGES.map((p) => p.slug)].join('|')})/?(\\?.*)?$`);
       server.middlewares.use((req, _res, next) => {
         if (re.test(req.url)) req.url = '/wing.html';
         next();
@@ -332,9 +416,10 @@ export default function seo() {
       order: 'pre',
       handler(html, ctx) {
         if (!ctx.filename.endsWith('wing.html')) return html.replace('<!--seo-head-->', homeHead(env).trimStart());
-        // Dev: fill for the requested wing. Build: left for generateBundle, which writes one file per wing.
+        // Dev: fill for the requested page. Build: left for generateBundle, which writes one file per page.
         if (!ctx.server) return html;
         const slug = (ctx.originalUrl || '').replace(/^\/+|\/?(\?.*)?$/g, '');
+        if (slug === EXPLORE_PAGE.slug) return fillExplore(html, events, env);
         const page = WING_PAGES.find((p) => p.slug === slug) || WING_PAGES[0];
         return fillWing(html, page, events[page.wing], env);
       },
@@ -343,11 +428,12 @@ export default function seo() {
     generateBundle: {
       order: 'post',
       handler(_opts, bundle) {
-        // One HTML file per wing from the built template.
+        // The hub and one HTML file per wing, from the built template.
         const tpl = bundle['wing.html'];
         if (tpl) {
           const html = String(tpl.source);
           delete bundle['wing.html'];
+          this.emitFile({ type: 'asset', fileName: `${EXPLORE_PAGE.slug}.html`, source: fillExplore(html, events, env) });
           for (const page of WING_PAGES) {
             this.emitFile({ type: 'asset', fileName: `${page.slug}.html`, source: fillWing(html, page, events[page.wing], env) });
           }
@@ -378,6 +464,7 @@ export default function seo() {
           '<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
           entry(`${url}/`, '1.0', [`${url}/og-image.png`]),
+          entry(`${url}/${EXPLORE_PAGE.slug}`, '0.9'),
           ...WING_PAGES.map((p) => entry(`${url}/${p.slug}`, '0.8', (photos[p.slug] || []).sort())),
           '</urlset>',
           '',
@@ -395,6 +482,7 @@ export default function seo() {
           '## Pages',
           '',
           `- [Home](${url}/): ${HOME.description}`,
+          `- [${EXPLORE_PAGE.name}](${url}/${EXPLORE_PAGE.slug}): ${EXPLORE_PAGE.description}`,
           ...WING_PAGES.map((p) => `- [${p.wing}](${url}/${p.slug}): ${p.description}`),
           '',
           ...WING_PAGES.flatMap((p) => [

@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { WINGS } from './wingsData';
 import GalleryModal from './GalleryModal';
-import { WING_PAGES } from '../seo/pages';
+import { EXPLORE_PAGE, WING_PAGES } from '../seo/pages';
 import './WingReel.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -434,6 +434,10 @@ export default function WingReel() {
             End-to-end experiences designed to make curiosity social. Say hello
             to the five wings of TCQ.
           </p>
+          <a className="wr-more-link" href={`/${EXPLORE_PAGE.slug}`}>
+            See all five wings
+            <span className="dot-line" aria-hidden="true" />
+          </a>
           <span className="wr-scroll-hint">
             Scroll to Explore <span className="dot-line" aria-hidden="true" />
           </span>
