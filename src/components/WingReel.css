@@ -299,6 +299,21 @@
   line-height: 1.5;
   letter-spacing: 0.01em;
 }
+/* Link to the wing's own page (/quizzes, …), styled like the scroll hint. */
+.wr-more-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: fit-content;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brown);
+  text-decoration: none;
+  border-bottom: 1.5px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.wr-more-link:hover { color: var(--orange-deep); border-color: var(--orange); }
 .wr-scroll-hint {
   display: inline-flex;
   align-items: center;

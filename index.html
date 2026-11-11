@@ -9,29 +9,16 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- Fonts start loading with the HTML (not only once index.css is parsed),
-         so the intro's percentage counter can render in Outfit straight away. -->
+    <!-- Fonts load with the HTML but don't block the first paint (preload → stylesheet). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap" /></noscript>
 
-    <title>The Curiosity Quotient (TCQ) — Making Curiosity Social in Chennai</title>
-    <meta name="description" content="The Curiosity Quotient (TCQ) is a Chennai culture space bringing together knowledge, culture and people through quizzes, community circles, brand collabs, writing and learning experiences for schools and colleges." />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="author" content="The Curiosity Quotient" />
     <meta name="theme-color" content="#382525" />
-    <meta name="geo.region" content="IN-TN" />
-    <meta name="geo.placename" content="Chennai" />
-
-    <!-- Open Graph / Twitter. og:url, og:image and canonical are injected at build from SITE_URL (seo.config.js). -->
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_IN" />
-    <meta property="og:site_name" content="The Curiosity Quotient" />
-    <meta property="og:title" content="The Curiosity Quotient (TCQ) — Making Curiosity Social" />
-    <meta property="og:description" content="A Chennai culture space bringing together knowledge, culture and people through quizzes, circles, collabs, writing and learning experiences." />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="The Curiosity Quotient (TCQ) — Making Curiosity Social" />
-    <meta name="twitter:description" content="A Chennai culture space bringing together knowledge, culture and people through quizzes, circles, collabs, writing and learning experiences." />
+    <!-- Title, description, keywords, Open Graph, Twitter, canonical and JSON-LD come
+         from src/seo/pages.js (HOME) via seo.config.js. -->
+    <!--seo-head-->
   </head>
   <body>
     <div id="root">
@@ -78,15 +65,15 @@
 
           <section id="what-we-do">
             <h2>What we do: five wings, one curiosity</h2>
-            <h3 id="wing-01">Quizzes</h3>
+            <h3 id="wing-01"><a href="/quizzes">Quizzes</a></h3>
             <p>This is where TCQ was born. The Typical Chennai Question is what gave us our name. Events include 6 to 60 Quizzes at KIS Cafe, Abuzz 2025 (PSBB Group of Schools), Fundamavan '26 (SSN Instincts), Typical Chennai Quiz 2025 for KYN, and The Hungry Quiz for Kraft Collective.</p>
-            <h3 id="wing-02">Circles</h3>
+            <h3 id="wing-02"><a href="/circles">Circles</a></h3>
             <p>The crossroads of Chennai's communities: Circles Season One (indie music, stargazing, Madras history, cricket) and Hysterically Speaking / Vinyl Destination with Berty Ashley.</p>
-            <h3 id="wing-03">Collabs</h3>
+            <h3 id="wing-03"><a href="/collabs">Collabs</a></h3>
             <p>Discovery-led experiences for brands and culture: Walls on Wheels for Five Feet Collective, How to Name It? for KYN, and Madras D-Coded, a 40-day puzzle campaign on Madras and its journey to Chennai.</p>
-            <h3 id="wing-04">Writes</h3>
+            <h3 id="wing-04"><a href="/writes">Writes</a></h3>
             <p>Millennial long-form content about Chennai, its newest cultures, icons and trends, published on <a href="https://thecuriosityquotient.substack.com/">our Substack</a>.</p>
-            <h3 id="wing-05">Teaches</h3>
+            <h3 id="wing-05"><a href="/teaches">Teaches</a></h3>
             <p>Schools beyond exams, colleges beyond degrees: the Intellect Club at MOP Vaishnav College for Women, workshops at Ethiraj College for Women, and a beginner's quizzing workshop at Goethe-Institut Chennai.</p>
           </section>
 

@@ -12,7 +12,6 @@ export default function WhatIsTCQ() {
       fontFamily: "'Outfit', sans-serif",
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
         .tcq-section-grid {
           width: 100%;

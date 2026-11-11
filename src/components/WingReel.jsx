@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { WINGS } from './wingsData';
 import GalleryModal from './GalleryModal';
+import { WING_PAGES } from '../seo/pages';
 import './WingReel.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -205,6 +206,12 @@ function WingTitlePanel({ wing, reverse }) {
           <p className="wr-byline">"{wing.byline}"</p>
         )}
         <p className="wr-blurb">{wing.blurb}</p>
+        {WING_PAGES.some((p) => p.wing === wing.title) && (
+          <a className="wr-more-link" href={`/${WING_PAGES.find((p) => p.wing === wing.title).slug}`}>
+            More about {wing.title}
+            <span className="dot-line" aria-hidden="true" />
+          </a>
+        )}
         <span className="wr-scroll-hint">
           {reverse && <span className="dot-line dot-line--reverse" aria-hidden="true" />}
           Scroll to Explore
