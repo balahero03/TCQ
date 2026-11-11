@@ -1,7 +1,7 @@
 import { useState, lazy, Suspense } from 'react';
 import { WINGS } from '../components/wingsData';
 import { EXPLORE_PAGE, WING_PAGES } from '../seo/pages';
-import { SiteHeader, SiteTagline, EMAIL } from './PageChrome';
+import { SiteHeader, SiteTagline } from './PageChrome';
 import './WingPage.css';
 
 const GalleryModal = lazy(() => import('../components/GalleryModal'));
@@ -72,7 +72,7 @@ export default function WingPage({ slug }) {
           <p className="wp-lede">{page.lede}</p>
           {page.body.map((para) => <p key={para} className="wp-body">{para}</p>)}
           <div className="wp-hero-ctas">
-            <a className="outline-btn" href={`mailto:${EMAIL}?subject=${encodeURIComponent(`${wing.title} with TCQ`)}`}>Plan something with us</a>
+            <a className="outline-btn" href="/#collaborate">Plan something with us</a>
             {page.externalUrl && (
               <a className="outline-btn" href={page.externalUrl} target="_blank" rel="noopener noreferrer">Read on Substack</a>
             )}
