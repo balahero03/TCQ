@@ -186,6 +186,12 @@ export default function Contact() {
            The footer logo's height is tied to --ctf-fs so its wordmark capitals
            match the "CQ + PQ > IQ" line (wordmark cap height = 0.143 × logo
            height; Outfit cap height ≈ 0.7em). --ctf-gap spaces every stacked item. */
+        /* Side gutter for every footer block; phones share the site-wide one. */
+        #contact { --ctf-gutter: 8vw; }
+        @media (max-width: 768px) {
+          #contact { --ctf-gutter: var(--m-gutter); }
+        }
+
         .ctf-row, .ctf-bottom {
           --ctf-fs: 1.125rem;
           --ctf-fs-sm: 0.75rem;
@@ -197,7 +203,7 @@ export default function Contact() {
           grid-template-columns: 1.2fr 1fr 1fr;
           gap: 3rem;
           align-items: start;
-          padding: clamp(1.5rem, 3vh, 2.5rem) 8vw;
+          padding: clamp(1.5rem, 3vh, 2.5rem) var(--ctf-gutter);
           border-top: 1px solid rgba(240,234,226,0.12);
           position: relative;
           z-index: 2;
@@ -301,7 +307,7 @@ export default function Contact() {
           maxWidth: 1100,
           margin: '0 auto',
           width: '100%',
-          padding: 'clamp(3rem, 8vh, 6rem) 8vw clamp(1.5rem, 3vh, 2.5rem)',
+          padding: 'clamp(3rem, 8vh, 6rem) var(--ctf-gutter) clamp(1.5rem, 3vh, 2.5rem)',
           textAlign: 'center',
         }}
       >
@@ -468,7 +474,7 @@ export default function Contact() {
         className="ctf-bottom"
         style={{
           borderTop: '1px solid rgba(240,234,226,0.1)',
-          padding: '1.5rem 8vw',
+          padding: '1.5rem var(--ctf-gutter)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',

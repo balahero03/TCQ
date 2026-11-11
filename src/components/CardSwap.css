@@ -41,3 +41,25 @@
     transform: translateX(calc(-50% - 16px)) translateY(30px) scale(0.82);
   }
 }
+
+/* Phones: plain vertical stack (CardSwap.jsx skips the GSAP deck here). */
+.card-swap-container--stacked {
+  position: relative;
+  bottom: auto;
+  right: auto;
+  left: auto;
+  width: 100%;
+  transform: none !important;
+  perspective: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card-swap-container--stacked .card {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  will-change: auto;
+}

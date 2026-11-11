@@ -406,14 +406,14 @@
   }
 
   .hero-heading-making {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    font-size: clamp(2.3rem, 10.5vw, 3.2rem);
     font-weight: 700;
     line-height: 1.05;
     display: inline-block;
   }
 
   .hero-heading-curiosity {
-    font-size: clamp(1.6rem, 5.5vw, 2.3rem);
+    font-size: clamp(2.1rem, 9.5vw, 3rem);
     font-weight: 400;
     font-family: 'Newsreader', Georgia, serif;
     font-style: italic;
@@ -425,7 +425,7 @@
   }
 
   .hero-heading-social {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    font-size: clamp(2.3rem, 10.5vw, 3.2rem);
     font-weight: 700;
     line-height: 1.05;
     display: inline-block;

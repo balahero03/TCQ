@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef } from 'react';
+import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef, useState } from 'react';
 import gsap from 'gsap';
 import './CardSwap.css';
 
@@ -25,6 +25,9 @@ const placeNow = (el, slot, skew) =>
     zIndex: slot.zIndex,
     force3D: true
   });
+
+// On phones the cards are shown as a plain vertical stack instead of the 3D deck.
+const STACK_QUERY = '(max-width: 768px)';
 
 const CardSwap = ({
   width = 500,
@@ -64,6 +67,14 @@ const CardSwap = ({
     [childArr.length]
   );
 
+  const [stacked, setStacked] = useState(() => window.matchMedia(STACK_QUERY).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(STACK_QUERY);
+    const onChange = e => setStacked(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
   const order = useRef(Array.from({ length: childArr.length }, (_, i) => i));
 
   const tlRef = useRef(null);
@@ -71,6 +82,11 @@ const CardSwap = ({
   const container = useRef(null);
 
   useEffect(() => {
+    if (stacked) {
+      tlRef.current?.kill();
+      refs.forEach(r => gsap.set(r.current, { clearProps: 'transform,zIndex' }));
+      return;
+    }
     const total = refs.length;
     refs.forEach((r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
 
@@ -181,14 +197,14 @@ const CardSwap = ({
       clearInterval(intervalRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
+  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, stacked]);
 
   const rendered = childArr.map((child, i) =>
     isValidElement(child)
       ? cloneElement(child, {
           key: i,
           ref: refs[i],
-          style: { width, height, ...(child.props.style ?? {}) },
+          style: stacked ? child.props.style : { width, height, ...(child.props.style ?? {}) },
           onClick: e => {
             child.props.onClick?.(e);
             onCardClick?.(i);
@@ -198,7 +214,11 @@ const CardSwap = ({
   );
 
   return (
-    <div ref={container} className="card-swap-container" style={{ width, height }}>
+    <div
+      ref={container}
+      className={`card-swap-container${stacked ? ' card-swap-container--stacked' : ''}`}
+      style={stacked ? undefined : { width, height }}
+    >
       {rendered}
     </div>
   );

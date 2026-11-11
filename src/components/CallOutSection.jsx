@@ -87,6 +87,7 @@ export default function CallOutSection() {
   return (
     <section
       id="collaborate"
+      className="callout-section"
       ref={containerRef}
       style={{
         background: '#2e1c1c',
@@ -122,7 +123,7 @@ export default function CallOutSection() {
         transition={{ duration: 0.7 }}
         style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', position: 'relative', zIndex: 2 }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '2rem' }}>
+        <div className="m-eyebrow" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '2rem' }}>
           <span className="dot-line" aria-hidden="true" />
           <span style={{
             fontSize: '0.72rem', fontWeight: 700,
@@ -132,7 +133,7 @@ export default function CallOutSection() {
           </span>
         </div>
 
-        <h2 style={{
+        <h2 className="m-title" style={{
           fontSize: 'clamp(2.5rem, 6vw, 5rem)',
           fontWeight: 800,
           lineHeight: 1.1,
@@ -143,7 +144,7 @@ export default function CallOutSection() {
           What Could We Make Together?
         </h2>
 
-        <p style={{
+        <p className="callout-sub" style={{
           fontSize: 'var(--fs-body)',
           lineHeight: 1.6,
           color: '#D3B8A8',
@@ -158,7 +159,7 @@ export default function CallOutSection() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', position: 'relative', zIndex: 2 }}>
 
         {/* TABS */}
-        <div style={{
+        <div className="callout-tabs" style={{
           display: 'grid',
           gridTemplateColumns: `repeat(${AUDIENCES.length}, 1fr)`,
           marginBottom: '3rem',
@@ -169,6 +170,7 @@ export default function CallOutSection() {
             <button
               key={audience.id}
               onClick={() => setActive(idx)}
+              className={`callout-tab${active === idx ? ' is-active' : ''}`}
               style={{
                 background: 'none',
                 border: 'none',

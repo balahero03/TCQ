@@ -178,6 +178,7 @@
   .wbs-section {
     min-height: auto;
     gap: 2.5rem;
+    padding: var(--m-section-y) var(--m-gutter);
   }
   .wbs-grid {
     grid-template-columns: repeat(3, 1fr);

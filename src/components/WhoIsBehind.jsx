@@ -261,14 +261,14 @@ function OrganicTimeline() {
         <div ref={scrollContentRef} style={{ position: reduce ? 'relative' : 'absolute', top: 0, left: 0, width: '100%', height: isMobile ? 'max(165vh, 3000px)' : 'max(220vh, 2200px)', willChange: 'transform', overflow: 'hidden' }}>
           
           {/* Title Header matching WhatIsTCQ style - now scrolls away naturally */}
-          <div style={{ position: 'absolute', top: '7vh', left: '5vw', zIndex: 3 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+          <div className="journey-head" style={{ position: 'absolute', top: '7vh', left: '5vw', zIndex: 3 }}>
+            <div className="m-eyebrow" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
               <span className="dot-line" aria-hidden="true" />
               <div style={{ fontSize: '0.7rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--orange-deep)', fontWeight: 700 }}>
                 Journey
               </div>
             </div>
-            <h2 style={{ margin: 0, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#382525', letterSpacing: '-0.04em', lineHeight: 1 }}>
+            <h2 className="m-title" style={{ margin: 0, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, color: '#382525', letterSpacing: '-0.04em', lineHeight: 1 }}>
               The Journey <span style={{ fontFamily: "'Newsreader', Georgia, serif", fontStyle: 'italic', fontWeight: 400, color: 'var(--orange-deep)' }}>So Far</span>
             </h2>
           </div>
@@ -800,6 +800,22 @@ export default function WhoIsBehind() {
           .wib-right-col {
             height: 340px;
           }
+        }
+
+        /* Phones: CardSwap becomes a plain stack, so let the column size to it.
+           Same gutter and section spacing as every other section. */
+        @media (max-width: 768px) {
+          .wib-container { padding: var(--m-section-y) var(--m-gutter); }
+          .wib-grid { gap: 1.25rem; }
+          .pfc-card { max-width: none; }
+          .pfc-text { padding: 1.5rem; }
+          .wib-right-col {
+            height: auto;
+            display: block;
+            max-width: none;
+            margin: 0;
+          }
+          .journey-head { left: var(--m-gutter) !important; }
         }
 
         /* New Joyful Timeline Styles */

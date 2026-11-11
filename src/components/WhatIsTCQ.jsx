@@ -178,24 +178,43 @@ export default function WhatIsTCQ() {
 
         /* ── Mobile ── */
         @media (max-width: 768px) {
+          /* Heading block: no half-screen band, same gutter as every section */
           .tcq-top-band {
-            padding: 10vw 5vw 5vw;
+            min-height: 0;
+            padding: var(--m-section-y) var(--m-gutter) 1.5rem;
+            border-bottom: none;
           }
-          .tcq-bold-word {
-            font-size: clamp(2rem, 11vw, 5rem);
-          }
-          .tcq-cursive-word {
-            font-size: clamp(1.8rem, 9vw, 4rem);
-          }
+          .tcq-heading > span { margin-top: 0 !important; }
+          .tcq-heading .accent { padding: 0.05em 0 0.15em; line-height: 1.1; }
           .tcq-bottom-band {
             grid-template-columns: 1fr;
           }
           .tcq-content-col {
             border-right: none;
-            border-bottom: 1px solid rgba(56,37,37,0.08);
-            padding: 6vw 5vw;
+            padding: 0 var(--m-gutter) 2rem;
+            line-height: 1.7;
           }
-          .tcq-content-col:last-child { border-bottom: none; }
+          .tcq-content-col:last-child { padding-bottom: var(--m-section-y); }
+          .tcq-content-col--intro { gap: 1rem; }
+          .tcq-content-col p.lead { font-size: 1.25rem; margin-bottom: 1.25rem; }
+          .tcq-ask-list { margin-left: 1.1rem; }
+          .tcq-ask-list li { padding-bottom: 0.75rem; }
+          .tcq-content-col--intro > p {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(56,37,37,0.08);
+          }
+          /* Stats: three equal, centred columns */
+          .tcq-stats-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+          }
+          .tcq-strip-stat,
+          .tcq-strip-stat--center {
+            align-items: center !important;
+            min-width: 0;
+            padding: 0;
+            text-align: center;
+          }
         }
       `}</style>
 
@@ -211,7 +230,7 @@ export default function WhatIsTCQ() {
             viewport={{ once: false, amount: 0.1, margin: '0px' }}
           >
             <motion.div
-              className="tcq-eyebrow-row"
+              className="tcq-eyebrow-row m-eyebrow"
               variants={{
                 hidden: { opacity: 0, x: -20 },
                 visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
@@ -221,7 +240,7 @@ export default function WhatIsTCQ() {
               <span className="tcq-eyebrow">About TCQ</span>
             </motion.div>
 
-            <h2 className="tcq-heading">
+            <h2 className="tcq-heading m-title">
               <motion.span
                 style={{ display: 'inline-block', position: 'relative', zIndex: 2 }}
                 variants={{

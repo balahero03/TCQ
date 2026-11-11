@@ -112,3 +112,29 @@ body {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* ── Phone rhythm ──
+   One set of values every section uses below 768px, so the page reads as a
+   single system on phones: same side gutter, section spacing, eyebrow label
+   and section-title size. Desktop is untouched (these only apply on phones).
+   !important is needed where a section sets these with inline styles. */
+:root {
+  --m-gutter: 6vw;
+  --m-section-y: 64px;
+}
+@media (max-width: 768px) {
+  .m-eyebrow {
+    gap: 0.85rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .m-eyebrow,
+  .m-eyebrow * {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.25em !important;
+  }
+  .m-title {
+    font-size: clamp(2.1rem, 9.5vw, 2.6rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.03em !important;
+  }
+}

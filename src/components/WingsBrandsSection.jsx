@@ -79,8 +79,8 @@ export default function WingsBrandsSection() {
       <div className="wbs-glow" />
 
       <div className="wbs-header">
-        <span className="wbs-eyebrow"><i className="dot-line" aria-hidden="true" />Our Partners</span>
-        <h2 className="wbs-title">
+        <span className="wbs-eyebrow m-eyebrow"><i className="dot-line" aria-hidden="true" />Our Partners</span>
+        <h2 className="wbs-title m-title">
           Brands we've<br /><span className="wbs-title-accent">worked with</span>
         </h2>
         <p className="wbs-sub">

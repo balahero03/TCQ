@@ -200,8 +200,8 @@ function WingTitlePanel({ wing, reverse }) {
     <div className="wr-panel wr-wingtitle" data-wing={wing.no}>
       <span className="wr-ghost-no">{wing.no}</span>
       <div className="wr-intro-inner">
-        <span className="wr-tag"><i className="dot-line" aria-hidden="true" />{wing.tag}</span>
-        <h2 className="wr-title">{wing.title}</h2>
+        <span className="wr-tag m-eyebrow"><i className="dot-line" aria-hidden="true" />{wing.tag}</span>
+        <h2 className="wr-title m-title">{wing.title}</h2>
         {wing.byline && (
           <p className="wr-byline">"{wing.byline}"</p>
         )}
@@ -424,8 +424,8 @@ export default function WingReel() {
       {/* ════════ Opening: its own vertical page (normal scroll) ════════ */}
       <section id="what-we-do" className="wr-opening-page">
         <div className="wr-opening">
-          <span className="wr-opening-eyebrow"><i className="dot-line" aria-hidden="true" />What we do</span>
-          <h2 className="wr-opening-title">
+          <span className="wr-opening-eyebrow m-eyebrow"><i className="dot-line" aria-hidden="true" />What we do</span>
+          <h2 className="wr-opening-title m-title">
             Five wings,
             <br />
             <span className="wr-opening-accent">one curiosity.</span>
